@@ -33,3 +33,25 @@ marketplace-standard-app-api = "marketplace_standard_app_api.__main__:cli"
 
 [tool.mypy]
 plugins = ["pydantic.mypy"]
+
+[tool.bumpver]
+current_version = "v0.1.0"
+version_pattern = "vMAJOR.MINOR.PATCH"
+commit_message = "bump version {old_version} -> {new_version}"
+commit = true
+tag = true
+push = false
+
+[tool.bumpver.file_patterns]
+"pyproject.toml" = [
+    'current_version = "{version}"',
+]
+"marketplace_standard_app_api/version.py" = [
+    '__version__ = "{pep440_version}"'
+]
+"README.md" = [
+    "{pep440_version}",
+]
+"openapi.json" = [
+    '"version": "{pep440_version}"'
+]

@@ -18,6 +18,7 @@ from .models import (
     TransformationUpdateResponse,
 )
 from .security import AuthTokenBearer
+from .version import __version__
 
 
 async def catch_authentication_request_errors_middleware(
@@ -42,7 +43,7 @@ class MarketPlaceAPI(FastAPI):
 api = MarketPlaceAPI(
     title="Marketplace Template App",
     description="This is a template app for the Materials Marketplace.",
-    version="0.1.0",
+    version=__version__,
     contact={
         "name": "My organization",
         "url": "https://www.example.com/contact",
