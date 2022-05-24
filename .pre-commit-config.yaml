@@ -45,3 +45,20 @@ repos:
                 - types-requests==2.27.27
                 - types-ujson==4.2.1
             args: [--config-file=pyproject.toml]
+
+    - repo: local
+
+      hooks:
+
+          - id: sync-openapi-json
+            name: sync-openapi-json
+            entry: python -m marketplace_standard_app_api show --output=./openapi.json
+            language: python
+            language_version: '3.10'
+            types_or: [json, python]
+            pass_filenames: false
+            additional_dependencies:
+                - click==8.1.3
+                - email-validator==1.2.1
+                - fastapi==0.75.2
+                - requests==2.26.0
