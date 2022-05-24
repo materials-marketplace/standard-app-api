@@ -46,6 +46,11 @@ repos:
                 - types-ujson==4.2.1
             args: [--config-file=pyproject.toml]
 
+    - repo: https://github.com/sirosen/check-jsonschema
+      rev: 0.15.0
+      hooks:
+          - id: check-github-workflows
+
     - repo: local
 
       hooks:
