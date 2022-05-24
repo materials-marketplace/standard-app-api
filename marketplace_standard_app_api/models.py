@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Literal, NewType, Optional
+from typing import List, Literal, NewType, Optional
 
 from pydantic import UUID4, BaseModel
 
@@ -74,4 +74,4 @@ class TransformationStatusResponse(BaseModel):
 
 
 class TransformationListResponse(BaseModel):
-    items: list[TransformationModel]
+    items: List[TransformationModel]

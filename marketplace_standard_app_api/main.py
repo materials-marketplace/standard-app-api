@@ -1,4 +1,4 @@
-from typing import Any, Callable, Optional
+from typing import Any, Callable, Dict, Optional
 
 import requests
 from fastapi import Depends, FastAPI, HTTPException, Request
@@ -34,7 +34,7 @@ async def catch_authentication_request_errors_middleware(
 
 
 class MarketPlaceAPI(FastAPI):
-    def openapi(self) -> dict[str, Any]:
+    def openapi(self) -> Dict[str, Any]:
         openapi_schema = super().openapi()
         openapi_schema["info"]["x-application-name"] = "MarketPlace Template App"
         return openapi_schema
