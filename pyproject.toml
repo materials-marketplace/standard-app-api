@@ -24,6 +24,9 @@ Home = "https://github.com/materials-marketplace/standard-app-api"
 cli = [
   "click==8.1.3"
 ]
+tests = [
+  "pytest==7.1.2",
+]
 
 [project.scripts]
 marketplace-standard-app-api = "marketplace_standard_app_api.__main__:cli"
