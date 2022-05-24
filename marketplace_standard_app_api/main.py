@@ -1,4 +1,4 @@
-from typing import Any, Callable
+from typing import Any, Callable, Optional
 
 import requests
 from fastapi import Depends, FastAPI, HTTPException, Request
@@ -179,7 +179,7 @@ async def get_transformation(
 )
 async def delete_transformation(
     transformation_id: TransformationId,
-) -> HTTPException | None:
+) -> Optional[HTTPException]:
     """Delete an existing transformation."""
     raise HTTPException(status_code=501, detail="Not implemented.")
 

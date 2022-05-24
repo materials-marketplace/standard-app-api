@@ -657,7 +657,6 @@
               "CREATED",
               "RUNNING"
             ],
-            "type": "string",
             "default": "CREATED"
           }
         }
@@ -723,7 +722,6 @@
           "COMPLETED",
           "FAILED"
         ],
-        "type": "string",
         "description": "An enumeration."
       },
       "TransformationStatusResponse": {
@@ -756,8 +754,7 @@
             "enum": [
               "RUNNING",
               "STOPPED"
-            ],
-            "type": "string"
+            ]
           }
         }
       },
@@ -779,8 +776,7 @@
             "enum": [
               "RUNNING",
               "STOPPED"
-            ],
-            "type": "string"
+            ]
           }
         }
       },

@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Literal, NewType, TypeAlias
+from typing import Literal, NewType, Optional
 
 from pydantic import UUID4, BaseModel
 
@@ -20,7 +20,7 @@ class DatasetCreateResponse(BaseModel):
 TransformationId = NewType("TransformationId", UUID4)
 
 
-class TransformationStatus(str, Enum):
+class TransformationStatus(Enum):
     # The following statuses can be set by the user:
     CREATED = "CREATED"
     RUNNING = "RUNNING"
@@ -48,12 +48,13 @@ class TransformationCreateResponse(BaseModel):
 class TransformationModel(BaseModel):
     id: TransformationId
     parameters: dict
-    status: TransformationStatus | None = None
+    status: Optional[TransformationStatus] = None
 
 
 # When updating a transformation, the status can be toggled between RUNNING and
 # STOPPED.
-UpdateTransformationStates: TypeAlias = Literal[
+# TODO (py310): Use TypeAlias to explcitly define the type.
+UpdateTransformationStates = Literal[
     TransformationStatus.RUNNING, TransformationStatus.STOPPED
 ]
 

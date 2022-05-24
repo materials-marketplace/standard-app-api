@@ -9,7 +9,7 @@ readme = "README.md"
 license = {file = "LICENSE"}
 classifiers = ["License :: OSI Approved :: MIT License"]
 dynamic = ["version", "description"]
-requires-python = ">=3.10,<4"
+requires-python = ">=3.9,<4"
 dependencies = [
   "email-validator==1.2.1",
   "fastapi==0.75.2",
