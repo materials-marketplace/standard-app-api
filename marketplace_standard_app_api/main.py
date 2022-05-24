@@ -41,17 +41,16 @@ class MarketPlaceAPI(FastAPI):
 
 
 api = MarketPlaceAPI(
-    title="Marketplace Template App",
-    description="This is a template app for the Materials Marketplace.",
+    title="MarketPlace Standard App API",
+    description="Standard app API for the MarketPlace applications.",
     version=__version__,
     contact={
-        "name": "My organization",
-        "url": "https://www.example.com/contact",
-        "email": "mail@example.com",
+        "name": "The Materials MarketPlace Consortium",
+        "url": "https://www.materials-marketplace.eu/",
+        "email": "dirk.helm@iwm.fraunhofer.de",
     },
     license_info={"name": "MIT", "url": "https://opensource.org/licenses/MIT"},
     dependencies=[Depends(AuthTokenBearer())],
-    servers=[{"url": "https://marketplace.example.com"}],
 )
 api.middleware("http")(catch_authentication_request_errors_middleware)
 

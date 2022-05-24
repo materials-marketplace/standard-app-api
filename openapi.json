@@ -1,12 +1,12 @@
 {
   "openapi": "3.0.2",
   "info": {
-    "title": "Marketplace Template App",
-    "description": "This is a template app for the Materials Marketplace.",
+    "title": "MarketPlace Standard App API",
+    "description": "Standard app API for the MarketPlace applications.",
     "contact": {
-      "name": "My organization",
-      "url": "https://www.example.com/contact",
-      "email": "mail@example.com"
+      "name": "The Materials MarketPlace Consortium",
+      "url": "https://www.materials-marketplace.eu/",
+      "email": "dirk.helm@iwm.fraunhofer.de"
     },
     "license": {
       "name": "MIT",
@@ -15,11 +15,6 @@
     "version": "0.1.0",
     "x-application-name": "MarketPlace Template App"
   },
-  "servers": [
-    {
-      "url": "https://marketplace.example.com"
-    }
-  ],
   "paths": {
     "/": {
       "get": {
