@@ -1,0 +1,828 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Marketplace Template App",
+    "description": "This is a template app for the Materials Marketplace.",
+    "contact": {
+      "name": "My organization",
+      "url": "https://www.example.com/contact",
+      "email": "mail@example.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    },
+    "version": "0.1.0",
+    "x-application-name": "MarketPlace Template App"
+  },
+  "servers": [
+    {
+      "url": "https://marketplace.example.com"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "FrontPage"
+        ],
+        "summary": "Frontpage",
+        "description": "Open the frontpage of the app.",
+        "operationId": "frontend",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found."
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
+    "/health": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Heartbeat",
+        "description": "Check whether the application is running and available.",
+        "operationId": "heartbeat",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
+    "/datasets": {
+      "post": {
+        "tags": [
+          "DataSink"
+        ],
+        "summary": "Create Dataset",
+        "description": "Create a new dataset.",
+        "operationId": "createDataset",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatasetModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatasetCreateResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
+    "/datasets/{dataset_id}": {
+      "get": {
+        "tags": [
+          "DataSource"
+        ],
+        "summary": "Get Dataset",
+        "description": "Retrieve an existing data set.",
+        "operationId": "getDataset",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Dataset Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "dataset_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatasetModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "404": {
+            "description": "Not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
+    "/transformations": {
+      "get": {
+        "tags": [
+          "Transformation"
+        ],
+        "summary": "List Transformation",
+        "description": "Retrieve a list of transformations.",
+        "operationId": "getTransformationList",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "type": "integer",
+              "default": 100
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Offset",
+              "type": "integer",
+              "default": 0
+            },
+            "name": "offset",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransformationListResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Transformation"
+        ],
+        "summary": "Create Transformation",
+        "description": "Create a new transformation.",
+        "operationId": "newTransformation",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewTransformationModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransformationCreateResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
+    "/transformations/{transformation_id}": {
+      "get": {
+        "tags": [
+          "Transformation"
+        ],
+        "summary": "Get Transformation",
+        "description": "Retrieve an existing transformation.",
+        "operationId": "getTransformation",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Transformation Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "transformation_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransformationModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "404": {
+            "description": "Not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Transformation"
+        ],
+        "summary": "Delete Transformation",
+        "description": "Delete an existing transformation.",
+        "operationId": "deleteTransformation",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Transformation Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "transformation_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "404": {
+            "description": "Not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Transformation"
+        ],
+        "summary": "Update Transformation",
+        "description": "Update an existing transformation.",
+        "operationId": "updateTransformation",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "query"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransformationUpdateModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransformationUpdateResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "404": {
+            "description": "Not found."
+          },
+          "409": {
+            "description": "The requested state is unavailable (example: trying to stop an already completed transformation)."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
+    "/transformations/{transformation_id}/status": {
+      "get": {
+        "tags": [
+          "Transformation"
+        ],
+        "summary": "Get Transformation Status",
+        "description": "Retrieve the status of a transformation.",
+        "operationId": "getTransformationStatus",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Transformation Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "transformation_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransformationStatusResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "404": {
+            "description": "Not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DatasetCreateResponse": {
+        "title": "DatasetCreateResponse",
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid4"
+          }
+        }
+      },
+      "DatasetModel": {
+        "title": "DatasetModel",
+        "type": "object",
+        "properties": {}
+      },
+      "HTTPValidationError": {
+        "title": "HTTPValidationError",
+        "type": "object",
+        "properties": {
+          "detail": {
+            "title": "Detail",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            }
+          }
+        }
+      },
+      "NewTransformationModel": {
+        "title": "NewTransformationModel",
+        "required": [
+          "parameters"
+        ],
+        "type": "object",
+        "properties": {
+          "parameters": {
+            "title": "Parameters",
+            "type": "object"
+          },
+          "status": {
+            "title": "Status",
+            "enum": [
+              "CREATED",
+              "RUNNING"
+            ],
+            "type": "string",
+            "default": "CREATED"
+          }
+        }
+      },
+      "TransformationCreateResponse": {
+        "title": "TransformationCreateResponse",
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid4"
+          }
+        }
+      },
+      "TransformationListResponse": {
+        "title": "TransformationListResponse",
+        "required": [
+          "items"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "title": "Items",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransformationModel"
+            }
+          }
+        }
+      },
+      "TransformationModel": {
+        "title": "TransformationModel",
+        "required": [
+          "id",
+          "parameters"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "parameters": {
+            "title": "Parameters",
+            "type": "object"
+          },
+          "status": {
+            "$ref": "#/components/schemas/TransformationStatus"
+          }
+        }
+      },
+      "TransformationStatus": {
+        "title": "TransformationStatus",
+        "enum": [
+          "CREATED",
+          "RUNNING",
+          "STOPPED",
+          "COMPLETED",
+          "FAILED"
+        ],
+        "type": "string",
+        "description": "An enumeration."
+      },
+      "TransformationStatusResponse": {
+        "title": "TransformationStatusResponse",
+        "required": [
+          "id",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "status": {
+            "$ref": "#/components/schemas/TransformationStatus"
+          }
+        }
+      },
+      "TransformationUpdateModel": {
+        "title": "TransformationUpdateModel",
+        "required": [
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "status": {
+            "title": "Status",
+            "enum": [
+              "RUNNING",
+              "STOPPED"
+            ],
+            "type": "string"
+          }
+        }
+      },
+      "TransformationUpdateResponse": {
+        "title": "TransformationUpdateResponse",
+        "required": [
+          "id",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "status": {
+            "title": "Status",
+            "enum": [
+              "RUNNING",
+              "STOPPED"
+            ],
+            "type": "string"
+          }
+        }
+      },
+      "ValidationError": {
+        "title": "ValidationError",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "loc": {
+            "title": "Location",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            }
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "AuthTokenBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
