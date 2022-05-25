@@ -69,7 +69,7 @@ api.middleware("http")(catch_authentication_request_errors_middleware)
 )
 async def frontpage() -> HTMLResponse:
     """Open the frontpage of the app."""
-    raise HTTPException(status_code=404, detail="Not found.")
+    raise HTTPException(status_code=501, detail="Not implemented.")
 
 
 @api.get(
