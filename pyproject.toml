@@ -50,7 +50,7 @@ push = false
     '__version__ = "{pep440_version}"'
 ]
 "README.md" = [
-    "{pep440_version}",
+    "This repository contains the API version: {pep440_version}",
 ]
 "openapi.json" = [
     '"version": "{pep440_version}"'
