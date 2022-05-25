@@ -12,8 +12,7 @@
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
     },
-    "version": "0.1.0",
-    "x-application-name": "MarketPlace Template App"
+    "version": "0.1.0"
   },
   "paths": {
     "/": {

@@ -36,7 +36,8 @@ async def catch_authentication_request_errors_middleware(
 class MarketPlaceAPI(FastAPI):
     def openapi(self) -> Dict[str, Any]:
         openapi_schema = super().openapi()
-        openapi_schema["info"]["x-application-name"] = "MarketPlace Template App"
+        # Example on how to add extra info to the OpenAPI schema:
+        # openapi_schema["info"]["x-application-name"] = "My MarketPlace App"
         return openapi_schema
 
 
