@@ -20,7 +20,7 @@ class DatasetCreateResponse(BaseModel):
 TransformationId = NewType("TransformationId", UUID4)
 
 
-class TransformationStatus(Enum):
+class TransformationStatus(str, Enum):
     # The following statuses can be set by the user:
     CREATED = "CREATED"
     RUNNING = "RUNNING"
@@ -31,14 +31,18 @@ class TransformationStatus(Enum):
     FAILED = "FAILED"
 
 
+# TODO (py310): Use TypeAlias to explcitly define the type.
+NewTransformationStates = Literal[
+    TransformationStatus.CREATED, TransformationStatus.RUNNING
+]
+
+
 class NewTransformationModel(BaseModel):
     parameters: dict
 
     # When creating a new transformation, the default status is CREATED, but the
     # user can request it to be changed to RUNNING immediately.
-    status: Literal[
-        TransformationStatus.CREATED, TransformationStatus.RUNNING
-    ] = TransformationStatus.CREATED
+    status: NewTransformationStates = TransformationStatus.CREATED
 
 
 class TransformationCreateResponse(BaseModel):

@@ -139,7 +139,16 @@ async def get_dataset(dataset_id: DatasetId) -> DatasetModel:
 async def create_transformation(
     transformation: NewTransformationModel,
 ) -> TransformationCreateResponse:
-    """Create a new transformation."""
+    """Create a new transformation.
+
+    By default when creating a new transformation resource its status is set to
+    CREATED, meaning it is created on the remote system, but is not yet
+    executed. To execute a transformation either set the status field directly
+    to RUNNING when creating the transformation or toggle it later via the
+    updateTransformation operation.
+
+    Note that the parameters of an existing transformation can not be changed.
+    """
     raise HTTPException(status_code=501, detail="Not implemented.")
 
 
@@ -192,7 +201,7 @@ async def delete_transformation(
         401: {"description": "Not authenticated."},
         404: {"description": "Not found."},
         409: {
-            "description": "The requested state is unavailable (example: trying to stop an already completed transformation)."
+            "description": "The requested status is unavailable (example: trying to stop an already completed transformation)."
         },
         500: {"description": "Internal server error."},
         501: {"description": "Not implemented."},
@@ -202,7 +211,13 @@ async def delete_transformation(
 async def update_transformation(
     id: TransformationId, update: TransformationUpdateModel
 ) -> TransformationUpdateResponse:
-    """Update an existing transformation."""
+    """Update an existing transformation.
+
+    Used to change the status of a transformation. When a transformation is
+    first created it is either in a CREATED or RUNNING status. The status can
+    then be changed from CREATED to RUNNING or from RUNNING to STOPPED.  All
+    other status update requests will result in a 409 conflict error.
+    """
     raise HTTPException(status_code=501, detail="Not implemented.")
 
 

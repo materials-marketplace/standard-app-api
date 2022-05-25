@@ -289,7 +289,7 @@
           "Transformation"
         ],
         "summary": "Create Transformation",
-        "description": "Create a new transformation.",
+        "description": "Create a new transformation.\n\nBy default when creating a new transformation resource its status is set to\nCREATED, meaning it is created on the remote system, but is not yet\nexecuted. To execute a transformation either set the status field directly\nto RUNNING when creating the transformation or toggle it later via the\nupdateTransformation operation.\n\nNote that the parameters of an existing transformation can not be changed.",
         "operationId": "newTransformation",
         "requestBody": {
           "content": {
@@ -465,7 +465,7 @@
           "Transformation"
         ],
         "summary": "Update Transformation",
-        "description": "Update an existing transformation.",
+        "description": "Update an existing transformation.\n\nUsed to change the status of a transformation. When a transformation is\nfirst created it is either in a CREATED or RUNNING status. The status can\nthen be changed from CREATED to RUNNING or from RUNNING to STOPPED.  All\nother status update requests will result in a 409 conflict error.",
         "operationId": "updateTransformation",
         "parameters": [
           {
@@ -507,7 +507,7 @@
             "description": "Not found."
           },
           "409": {
-            "description": "The requested state is unavailable (example: trying to stop an already completed transformation)."
+            "description": "The requested status is unavailable (example: trying to stop an already completed transformation)."
           },
           "500": {
             "description": "Internal server error."
@@ -652,6 +652,7 @@
               "CREATED",
               "RUNNING"
             ],
+            "type": "string",
             "default": "CREATED"
           }
         }
@@ -717,6 +718,7 @@
           "COMPLETED",
           "FAILED"
         ],
+        "type": "string",
         "description": "An enumeration."
       },
       "TransformationStatusResponse": {
@@ -749,7 +751,8 @@
             "enum": [
               "RUNNING",
               "STOPPED"
-            ]
+            ],
+            "type": "string"
           }
         }
       },
@@ -771,7 +774,8 @@
             "enum": [
               "RUNNING",
               "STOPPED"
-            ]
+            ],
+            "type": "string"
           }
         }
       },
