@@ -72,6 +72,24 @@ async def frontpage() -> HTMLResponse:
 
 
 @api.get(
+    "/dataform",
+    operation_id="dataform",
+    tags=["FrontPage"],
+    responses={
+        404: {"description": "Not found."},
+        401: {"description": "Not authenticated."},
+        500: {"description": "Internal server error."},
+        501: {"description": "Not implemented."},
+        503: {"description": "Service unavailable."},
+    },
+    response_class=HTMLResponse,
+)
+async def dataform() -> HTMLResponse:
+    """Open the dataform page of the app."""
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+
+@api.get(
     "/health",
     operation_id="heartbeat",
     tags=["System"],

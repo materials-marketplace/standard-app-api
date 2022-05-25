@@ -54,6 +54,48 @@
         ]
       }
     },
+    "/dataform": {
+      "get": {
+        "tags": [
+          "FrontPage"
+        ],
+        "summary": "Dataform",
+        "description": "Open the dataform page of the app.",
+        "operationId": "dataform",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found."
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "503": {
+            "description": "Service unavailable."
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
     "/health": {
       "get": {
         "tags": [
