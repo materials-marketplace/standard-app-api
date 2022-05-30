@@ -5,6 +5,7 @@ from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse, Response
 
 from .models.data_sink import DatasetCreateResponse, DatasetId, DatasetModel
+from .models.system import GlobalSearchQueryResponse
 from .models.transformation import (
     NewTransformationModel,
     TransformationCreateResponse,
@@ -68,6 +69,26 @@ api.middleware("http")(catch_authentication_request_errors_middleware)
 )
 async def frontpage() -> HTMLResponse:
     """Open the frontpage of the app."""
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+
+@api.get(
+    "/globalSearch",
+    operation_id="globalSearch",
+    tags=["System"],
+    responses={
+        401: {"description": "Not authenticated."},
+        422: {"description": "Validation error."},
+        500: {"description": "Internal server error."},
+        501: {"description": "Not implemented."},
+        503: {"description": "Service unavailable."},
+    },
+    response_model=GlobalSearchQueryResponse,
+)
+async def global_search(
+    query: str, limit: Optional[int] = 100, offset: Optional[int] = 0
+) -> GlobalSearchQueryResponse:
+    """Respond to global search queries."""
     raise HTTPException(status_code=501, detail="Not implemented.")
 
 
