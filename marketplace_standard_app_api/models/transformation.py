@@ -5,18 +5,6 @@ from pydantic import UUID4, BaseModel
 
 ApplicationId = NewType("ApplicationId", UUID4)
 
-
-DatasetId = NewType("DatasetId", UUID4)
-
-
-class DatasetModel(BaseModel):
-    pass
-
-
-class DatasetCreateResponse(BaseModel):
-    id: DatasetId
-
-
 TransformationId = NewType("TransformationId", UUID4)
 
 
