@@ -288,7 +288,7 @@
           "Transformation"
         ],
         "summary": "Create Transformation",
-        "description": "Create a new transformation.\n\nBy default when creating a new transformation resource its status is set to\nCREATED, meaning it is created on the remote system, but is not yet\nexecuted. To execute a transformation either set the status field directly\nto RUNNING when creating the transformation or toggle it later via the\nupdateTransformation operation.\n\nNote that the parameters of an existing transformation can not be changed.",
+        "description": "Create a new transformation.\n\nBy default when creating a new transformation resource its state is set to\nCREATED, meaning it is created on the remote system, but is not yet\nexecuted. To execute a transformation either set the state field directly to\nRUNNING when creating the transformation or toggle it later via the\nupdateTransformation operation.\n\nNote that the parameters of an existing transformation can not be changed.",
         "operationId": "newTransformation",
         "requestBody": {
           "content": {
@@ -464,7 +464,7 @@
           "Transformation"
         ],
         "summary": "Update Transformation",
-        "description": "Update an existing transformation.\n\nUsed to change the status of a transformation. When a transformation is\nfirst created it is either in a CREATED or RUNNING status. The status can\nthen be changed from CREATED to RUNNING or from RUNNING to STOPPED.  All\nother status update requests will result in a 409 conflict error.",
+        "description": "Update an existing transformation.\n\nUsed to change the state of a transformation. When a transformation is first\ncreated it is either in a CREATED or RUNNING state. The state can then be\nchanged from CREATED to RUNNING or from RUNNING to STOPPED.  All other state\nupdate requests will result in a 409 conflict error.",
         "operationId": "updateTransformation",
         "parameters": [
           {
@@ -506,7 +506,7 @@
             "description": "Not found."
           },
           "409": {
-            "description": "The requested status is unavailable (example: trying to stop an already completed transformation)."
+            "description": "The requested state is unavailable (example: trying to stop an already completed transformation)."
           },
           "500": {
             "description": "Internal server error."
@@ -535,14 +535,14 @@
         ]
       }
     },
-    "/transformations/{transformation_id}/status": {
+    "/transformations/{transformation_id}/state": {
       "get": {
         "tags": [
           "Transformation"
         ],
-        "summary": "Get Transformation Status",
-        "description": "Retrieve the status of a transformation.",
-        "operationId": "getTransformationStatus",
+        "summary": "Get Transformation State",
+        "description": "Retrieve the state of a transformation.",
+        "operationId": "getTransformationState",
         "parameters": [
           {
             "required": true,
@@ -561,7 +561,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TransformationStatusResponse"
+                  "$ref": "#/components/schemas/TransformationStateResponse"
                 }
               }
             }
@@ -645,8 +645,8 @@
             "title": "Parameters",
             "type": "object"
           },
-          "status": {
-            "title": "Status",
+          "state": {
+            "title": "State",
             "enum": [
               "CREATED",
               "RUNNING"
@@ -703,13 +703,13 @@
             "title": "Parameters",
             "type": "object"
           },
-          "status": {
-            "$ref": "#/components/schemas/TransformationStatus"
+          "state": {
+            "$ref": "#/components/schemas/TransformationState"
           }
         }
       },
-      "TransformationStatus": {
-        "title": "TransformationStatus",
+      "TransformationState": {
+        "title": "TransformationState",
         "enum": [
           "CREATED",
           "RUNNING",
@@ -720,11 +720,11 @@
         "type": "string",
         "description": "An enumeration."
       },
-      "TransformationStatusResponse": {
-        "title": "TransformationStatusResponse",
+      "TransformationStateResponse": {
+        "title": "TransformationStateResponse",
         "required": [
           "id",
-          "status"
+          "state"
         ],
         "type": "object",
         "properties": {
@@ -733,20 +733,20 @@
             "type": "string",
             "format": "uuid4"
           },
-          "status": {
-            "$ref": "#/components/schemas/TransformationStatus"
+          "state": {
+            "$ref": "#/components/schemas/TransformationState"
           }
         }
       },
       "TransformationUpdateModel": {
         "title": "TransformationUpdateModel",
         "required": [
-          "status"
+          "state"
         ],
         "type": "object",
         "properties": {
-          "status": {
-            "title": "Status",
+          "state": {
+            "title": "State",
             "enum": [
               "RUNNING",
               "STOPPED"
@@ -759,7 +759,7 @@
         "title": "TransformationUpdateResponse",
         "required": [
           "id",
-          "status"
+          "state"
         ],
         "type": "object",
         "properties": {
@@ -768,8 +768,8 @@
             "type": "string",
             "format": "uuid4"
           },
-          "status": {
-            "title": "Status",
+          "state": {
+            "title": "State",
             "enum": [
               "RUNNING",
               "STOPPED"

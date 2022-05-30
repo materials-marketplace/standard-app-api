@@ -11,7 +11,7 @@ from .models.transformation import (
     TransformationId,
     TransformationListResponse,
     TransformationModel,
-    TransformationStatusResponse,
+    TransformationStateResponse,
     TransformationUpdateModel,
     TransformationUpdateResponse,
 )
@@ -140,10 +140,10 @@ async def create_transformation(
 ) -> TransformationCreateResponse:
     """Create a new transformation.
 
-    By default when creating a new transformation resource its status is set to
+    By default when creating a new transformation resource its state is set to
     CREATED, meaning it is created on the remote system, but is not yet
-    executed. To execute a transformation either set the status field directly
-    to RUNNING when creating the transformation or toggle it later via the
+    executed. To execute a transformation either set the state field directly to
+    RUNNING when creating the transformation or toggle it later via the
     updateTransformation operation.
 
     Note that the parameters of an existing transformation can not be changed.
@@ -200,7 +200,7 @@ async def delete_transformation(
         401: {"description": "Not authenticated."},
         404: {"description": "Not found."},
         409: {
-            "description": "The requested status is unavailable (example: trying to stop an already completed transformation)."
+            "description": "The requested state is unavailable (example: trying to stop an already completed transformation)."
         },
         500: {"description": "Internal server error."},
         501: {"description": "Not implemented."},
@@ -212,19 +212,19 @@ async def update_transformation(
 ) -> TransformationUpdateResponse:
     """Update an existing transformation.
 
-    Used to change the status of a transformation. When a transformation is
-    first created it is either in a CREATED or RUNNING status. The status can
-    then be changed from CREATED to RUNNING or from RUNNING to STOPPED.  All
-    other status update requests will result in a 409 conflict error.
+    Used to change the state of a transformation. When a transformation is first
+    created it is either in a CREATED or RUNNING state. The state can then be
+    changed from CREATED to RUNNING or from RUNNING to STOPPED.  All other state
+    update requests will result in a 409 conflict error.
     """
     raise HTTPException(status_code=501, detail="Not implemented.")
 
 
 @api.get(
-    "/transformations/{transformation_id}/status",
-    operation_id="getTransformationStatus",
+    "/transformations/{transformation_id}/state",
+    operation_id="getTransformationState",
     tags=["Transformation"],
-    response_model=TransformationStatusResponse,
+    response_model=TransformationStateResponse,
     responses={
         401: {"description": "Not authenticated."},
         404: {"description": "Not found."},
@@ -233,10 +233,10 @@ async def update_transformation(
         503: {"description": "Service unavailable."},
     },
 )
-async def get_transformation_status(
+async def get_transformation_state(
     transformation_id: TransformationId,
-) -> TransformationStatusResponse:
-    """Retrieve the status of a transformation."""
+) -> TransformationStateResponse:
+    """Retrieve the state of a transformation."""
     raise HTTPException(status_code=501, detail="Not implemented.")
 
 
