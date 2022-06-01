@@ -3,7 +3,7 @@ requires = ["flit_core >=3.2,<4"]
 build-backend = "flit_core.buildapi"
 
 [project]
-name = "marketplace_standard_app_api"
+name = "marketplace-standard-app-api"
 authors = [{name = "Carl Simon Adorf et al", email = "simon.adorf@epfl.ch"}]
 readme = "README.md"
 license = {file = "LICENSE"}
@@ -30,6 +30,10 @@ tests = [
 
 [project.scripts]
 marketplace-standard-app-api = "marketplace_standard_app_api.__main__:cli"
+
+[tool.flit.module]
+name = "marketplace_standard_app_api"
+
 
 [tool.mypy]
 plugins = ["pydantic.mypy"]
