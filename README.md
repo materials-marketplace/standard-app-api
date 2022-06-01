@@ -24,16 +24,9 @@ Tip: You can use the `marketplace-standard-app-api show` command to generate the
 
 Note: Users should use the [MarketPlace Python SDK](https://github.com/materials-marketplace/python-sdk) for app development.
 
-You can install this package from source with:
+You can install this package from PyPI with:
 ```console
-pip install git+https://github.com/materials-marketplace/standard-app-api
-```
-
-To install extras, first clone the repository, e.g.,:
-```console
-git clone https://github.com/materials-marketplace/standard-app-api
-cd standard-app-api/
-pip install '.[cli]'
+pip install marketplace-standard-app-api
 ```
 
 ## Tests
