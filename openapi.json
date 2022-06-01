@@ -54,6 +54,79 @@
         ]
       }
     },
+    "/globalSearch": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Global Search",
+        "description": "Respond to global search queries.",
+        "operationId": "globalSearch",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Query",
+              "type": "string"
+            },
+            "name": "query",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "type": "integer",
+              "default": 100
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Offset",
+              "type": "integer",
+              "default": 0
+            },
+            "name": "offset",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GlobalSearchResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "422": {
+            "description": "Validation error."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "503": {
+            "description": "Service unavailable."
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
     "/health": {
       "get": {
         "tags": [
@@ -620,6 +693,52 @@
         "title": "DatasetModel",
         "type": "object",
         "properties": {}
+      },
+      "GlobalSearchResponse": {
+        "title": "GlobalSearchResponse",
+        "required": [
+          "items"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "title": "Items",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GlobalSearchResponseItemModel"
+            }
+          }
+        }
+      },
+      "GlobalSearchResponseItemModel": {
+        "title": "GlobalSearchResponseItemModel",
+        "type": "object",
+        "properties": {
+          "label": {
+            "title": "Label",
+            "type": "string",
+            "description": "Short label describing the search result"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string",
+            "description": "Short label describing the search result"
+          },
+          "url": {
+            "title": "Url",
+            "maxLength": 65536,
+            "minLength": 1,
+            "type": "string",
+            "description": "URL to search results",
+            "format": "uri"
+          },
+          "score": {
+            "title": "Score",
+            "type": "number",
+            "description": "Semantic relevance of search result. Can be used to infer the ordering of search result"
+          }
+        },
+        "description": "Default query reply model"
       },
       "HTTPValidationError": {
         "title": "HTTPValidationError",
