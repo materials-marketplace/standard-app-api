@@ -99,11 +99,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Response Globalsearch",
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/GlobalSearchResponseItemModel"
-                  }
+                  "$ref": "#/components/schemas/GlobalSearchResponse"
                 }
               }
             }
@@ -697,6 +693,22 @@
         "title": "DatasetModel",
         "type": "object",
         "properties": {}
+      },
+      "GlobalSearchResponse": {
+        "title": "GlobalSearchResponse",
+        "required": [
+          "items"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "title": "Items",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GlobalSearchResponseItemModel"
+            }
+          }
+        }
       },
       "GlobalSearchResponseItemModel": {
         "title": "GlobalSearchResponseItemModel",

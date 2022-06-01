@@ -22,10 +22,5 @@ class GlobalSearchResponseItemModel(BaseModel):
     )
 
 
-# TODO: See below for an alternative definition.
-GlobalSearchResponse = List[GlobalSearchResponseItemModel]
-
-# TODO: I think we should deprecate the direct exposure of the items and instead
-# return them as part of an object similar to the transformationList response.
-# class GlobalSearchResponse(BaseModel):
-#     items: List[GlobalSearchResponseItemModel]
+class GlobalSearchResponse(BaseModel):
+    items: List[GlobalSearchResponseItemModel]
