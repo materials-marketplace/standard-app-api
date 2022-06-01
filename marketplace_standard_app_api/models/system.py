@@ -3,7 +3,7 @@ from typing import List, Optional
 from pydantic import AnyUrl, BaseModel, Field
 
 
-class GlobalSearchQueryResponseItemModel(BaseModel):
+class GlobalSearchResponseItemModel(BaseModel):
     """Default query reply model"""
 
     label: Optional[str] = Field(
@@ -23,9 +23,9 @@ class GlobalSearchQueryResponseItemModel(BaseModel):
 
 
 # TODO: See below for an alternative definition.
-GlobalSearchQueryResponse = List[GlobalSearchQueryResponseItemModel]
+GlobalSearchResponse = List[GlobalSearchResponseItemModel]
 
 # TODO: I think we should deprecate the direct exposure of the items and instead
 # return them as part of an object similar to the transformationList response.
-# class GlobalSearchQueryResponse(BaseModel):
-#     items: List[GlobalSearchQueryResponseItemModel]
+# class GlobalSearchResponse(BaseModel):
+#     items: List[GlobalSearchResponseItemModel]

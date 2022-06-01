@@ -5,7 +5,7 @@ from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse, Response
 
 from .models.data_sink import DatasetCreateResponse, DatasetId, DatasetModel
-from .models.system import GlobalSearchQueryResponse
+from .models.system import GlobalSearchResponse
 from .models.transformation import (
     NewTransformationModel,
     TransformationCreateResponse,
@@ -83,11 +83,11 @@ async def frontpage() -> HTMLResponse:
         501: {"description": "Not implemented."},
         503: {"description": "Service unavailable."},
     },
-    response_model=GlobalSearchQueryResponse,
+    response_model=GlobalSearchResponse,
 )
 async def global_search(
     query: str, limit: Optional[int] = 100, offset: Optional[int] = 0
-) -> GlobalSearchQueryResponse:
+) -> GlobalSearchResponse:
     """Respond to global search queries."""
     raise HTTPException(status_code=501, detail="Not implemented.")
 

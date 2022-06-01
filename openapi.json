@@ -102,7 +102,7 @@
                   "title": "Response Globalsearch",
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/GlobalSearchQueryResponseItemModel"
+                    "$ref": "#/components/schemas/GlobalSearchResponseItemModel"
                   }
                 }
               }
@@ -698,8 +698,8 @@
         "type": "object",
         "properties": {}
       },
-      "GlobalSearchQueryResponseItemModel": {
-        "title": "GlobalSearchQueryResponseItemModel",
+      "GlobalSearchResponseItemModel": {
+        "title": "GlobalSearchResponseItemModel",
         "type": "object",
         "properties": {
           "label": {
