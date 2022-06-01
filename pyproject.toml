@@ -24,6 +24,9 @@ Home = "https://github.com/materials-marketplace/standard-app-api"
 cli = [
   "click==8.1.3"
 ]
+dev = [
+  "bumpver==2021.1114",
+]
 tests = [
   "pytest==7.1.2",
 ]
@@ -44,7 +47,7 @@ version_pattern = "vMAJOR.MINOR.PATCH"
 commit_message = "bump version {old_version} -> {new_version}"
 commit = true
 tag = true
-push = false
+push = true
 
 [tool.bumpver.file_patterns]
 "pyproject.toml" = [
