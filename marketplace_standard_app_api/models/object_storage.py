@@ -1,9 +1,13 @@
 from datetime import datetime
-from typing import List, Optional
+from typing import List, NewType, Optional
 
-from pydantic import BaseModel
+from pydantic import UUID4, BaseModel
 
-from .data_sink import DatasetId
+DatasetId = NewType("DatasetId", UUID4)
+
+
+class DatasetCreateResponse(BaseModel):
+    last_modified: datetime
 
 
 class DatasetModel(BaseModel):

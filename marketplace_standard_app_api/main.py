@@ -4,8 +4,7 @@ import requests
 from fastapi import Depends, FastAPI, HTTPException, Request, UploadFile
 from fastapi.responses import HTMLResponse, Response
 
-from .models.data_sink import DatasetCreateResponse, DatasetId
-from .models.data_source import DatasetListResponse
+from .models.object_storage import DatasetCreateResponse, DatasetId, DatasetListResponse
 from .models.system import GlobalSearchResponse
 from .models.transformation import (
     NewTransformationModel,
