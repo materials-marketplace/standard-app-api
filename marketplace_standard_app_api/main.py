@@ -1,10 +1,11 @@
 from typing import Any, Callable, Dict, Optional
 
 import requests
-from fastapi import Depends, FastAPI, HTTPException, Request
-from fastapi.responses import HTMLResponse, JSONResponse, Response
+from fastapi import Depends, FastAPI, HTTPException, Request, UploadFile
+from fastapi.responses import HTMLResponse, Response
 
-from .models.data_sink import DatasetCreateResponse, DatasetId, DatasetModel
+from .models.data_sink import DatasetCreateResponse, DatasetId
+from .models.data_source import DatasetListResponse
 from .models.system import GlobalSearchResponse
 from .models.transformation import (
     NewTransformationModel,
@@ -108,11 +109,81 @@ async def heartbeat() -> HTMLResponse:
     return HTMLResponse(content="<html><body>OK</body></html>", status_code=200)
 
 
-@api.post(
+@api.get(
     "/datasets",
+    operation_id="listDatasets",
+    tags=["DataSource"],
+    response_model=DatasetListResponse,
+    responses={
+        204: {"description": "No datasets found."},
+        401: {"description": "Not authenticated."},
+        500: {"description": "Internal server error."},
+        501: {"description": "Not implemented."},
+        503: {"description": "Service unavailable."},
+    },
+)
+async def list_datasets(limit: int = 100, offset: int = 0) -> DatasetListResponse:
+    """List all datasets."""
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+
+CREATE_DATASET_DESCRIPTION = """
+To add custom metadata, add keys to the header of the form:
+
+- X-Object-Metadata-name: value
+
+Where 'name' is the name of the metadata key and 'value' is the
+corresponding value.
+
+Note: This operation is in compliance with the OpenStack Swift object
+storage API:
+https://docs.openstack.org/api-ref/object-store/index.html#create-or-replace-object
+"""
+
+
+@api.put(
+    "/datasets/{dataset_id}",
+    name="Create or Replace Dataset",
+    operation_id="createOrReplaceDataset",
+    tags=["DataSink"],
+    response_model=DatasetCreateResponse,
+    status_code=201,
+    responses={
+        401: {"description": "Not authenticated."},
+        500: {"description": "Internal server error."},
+        501: {"description": "Not implemented."},
+        503: {"description": "Service unavailable."},
+    },
+    description="Create or replace a dataset.\n" + CREATE_DATASET_DESCRIPTION,
+)
+@api.put(
+    "/datasets/",
     operation_id="createDataset",
     tags=["DataSink"],
     response_model=DatasetCreateResponse,
+    status_code=201,
+    responses={
+        401: {"description": "Not authenticated."},
+        500: {"description": "Internal server error."},
+        501: {"description": "Not implemented."},
+        503: {"description": "Service unavailable."},
+    },
+    description="Create a dataset.\n" + CREATE_DATASET_DESCRIPTION,
+)
+async def create_dataset(
+    file: UploadFile,
+    dataset_id: Optional[DatasetId] = None,
+) -> DatasetCreateResponse:
+    """Create a new or replace an existing dataset."""
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+
+@api.post(
+    "/datasets/",
+    operation_id="createDatasetMetadata",
+    name="Create Dataset Metadata",
+    tags=["DataSink"],
+    status_code=202,
     responses={
         401: {"description": "Not authenticated."},
         500: {"description": "Internal server error."},
@@ -120,17 +191,37 @@ async def heartbeat() -> HTMLResponse:
         503: {"description": "Service unavailable."},
     },
 )
-async def create_dataset(dataset: DatasetModel) -> DatasetCreateResponse:
-    """Create a new dataset."""
+@api.post(
+    "datasets/{dataset_id}",
+    operation_id="createOrReplaceDatasetMetadata",
+    name="Create or Replace Dataset Metadata",
+    tags=["DataSink"],
+    status_code=202,
+    responses={
+        401: {"description": "Not authenticated."},
+        500: {"description": "Internal server error."},
+        501: {"description": "Not implemented."},
+        503: {"description": "Service unavailable."},
+    },
+)
+async def create_or_replace_dataset_metadata(
+    dataset_id: Optional[DatasetId] = None,
+):
+    """Create or replace dataset metadata.
+
+    Note: This operation is in compliance with the OpenStack Swift object
+    storage API:
+    https://docs.openstack.org/api-ref/object-store/index.html#create-or-update-object-metadata
+    """
     raise HTTPException(status_code=501, detail="Not implemented.")
 
 
-@api.get(
+@api.head(
     "/datasets/{dataset_id}",
-    operation_id="getDataset",
+    operation_id="getDatasetMetadata",
     tags=["DataSource"],
-    response_class=JSONResponse,
-    response_model=DatasetModel,
+    status_code=200,
+    response_class=Response,
     responses={
         401: {"description": "Not authenticated."},
         404: {"description": "Not found."},
@@ -139,8 +230,90 @@ async def create_dataset(dataset: DatasetModel) -> DatasetCreateResponse:
         503: {"description": "Service unavailable."},
     },
 )
-async def get_dataset(dataset_id: DatasetId) -> DatasetModel:
-    """Retrieve an existing data set."""
+async def get_dataset_metadata(dataset_id: DatasetId) -> Response:
+    """Get dataset metadata.
+
+    Returns the dataset metadata in the response header in the form of:
+
+    - X-Object-Metadata-name: value
+
+    Where 'name' is the name of the metadata key and 'value' is the
+    corresponding value.
+
+    Example response header for a plain-text file:
+    - Content-Type: text/plain;charset=UTF-8
+    - Content-Length: 1234
+    - X-Object-Meta-my-key: some-value
+
+    Note: This operation is in compliance with the OpenStack Swift object
+    storage API:
+    https://docs.openstack.org/api-ref/object-store/index.htmld#show-object-metadata
+    """
+    # return Response(content=None, headers={"X-Object-Meta-my-key": "some-value"})
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+
+@api.get(
+    "/datasets/{dataset_id}",
+    operation_id="getDataset",
+    tags=["DataSource"],
+    response_class=Response,
+    responses={
+        401: {"description": "Not authenticated."},
+        404: {"description": "Not found."},
+        500: {"description": "Internal server error."},
+        501: {"description": "Not implemented."},
+        503: {"description": "Service unavailable."},
+    },
+)
+async def get_dataset(dataset_id: DatasetId) -> Response:
+    """Get a dataset.
+
+    Returns the object as part of the request body and metadata as part of the
+    response headers.
+
+    In addition to the standard response header keys (Content-Type and
+    Content-Length), the header may also contain metadata key-value pairs in the
+    form of:
+
+    - X-Object-Meta-name: value
+
+    Where 'name' is the name of the metadata key and 'value' is the
+    corresponding value.
+
+    Example response header for a plain-text file:
+    - Content-Type: text/plain;charset=UTF-8
+    - Content-Length: 1234
+    - X-Object-Meta-my-key: some-value
+
+    Note: This operation is in compliance with the OpenStack Swift object
+    storage API:
+    https://docs.openstack.org/api-ref/object-store/index.html#get-object-content-and-metadata
+    """
+    # return Response(content=data, headers={"X-Object-Meta-my-key": "some-value"})
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+
+@api.delete(
+    "/datasets/{dataset_id}",
+    operation_id="deleteDataset",
+    tags=["DataSink"],
+    status_code=204,
+    responses={
+        401: {"description": "Not authenticated."},
+        404: {"description": "Not found."},
+        500: {"description": "Internal server error."},
+        501: {"description": "Not implemented."},
+        503: {"description": "Service unavailable."},
+    },
+)
+def delete_dataset(dataset_id: DatasetId):
+    """Delete a dataset with the given dataset id.
+
+    Note: This operation is in compliance with the OpenStack Swift object
+    storage API:
+    https://docs.openstack.org/api-ref/object-store/index.html#delete-object
+    """
     raise HTTPException(status_code=501, detail="Not implemented.")
 
 
