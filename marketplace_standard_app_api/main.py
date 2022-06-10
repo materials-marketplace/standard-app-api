@@ -246,7 +246,7 @@ async def get_dataset_metadata(dataset_id: DatasetId) -> Response:
 
     Note: This operation is in compliance with the OpenStack Swift object
     storage API:
-    https://docs.openstack.org/api-ref/object-store/index.htmld#show-object-metadata
+    https://docs.openstack.org/api-ref/object-store/index.html#show-object-metadata
     """
     # return Response(content=None, headers={"X-Object-Meta-my-key": "some-value"})
     raise HTTPException(status_code=501, detail="Not implemented.")
