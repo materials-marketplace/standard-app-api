@@ -4,7 +4,13 @@ import requests
 from fastapi import Depends, FastAPI, HTTPException, Request, UploadFile
 from fastapi.responses import HTMLResponse, Response
 
-from .models.object_storage import DatasetCreateResponse, DatasetId, DatasetListResponse
+from .models.object_storage import (
+    CollectionId,
+    CollectionListResponse,
+    DatasetCreateResponse,
+    DatasetId,
+    DatasetListResponse,
+)
 from .models.system import GlobalSearchResponse
 from .models.transformation import (
     NewTransformationModel,
@@ -109,20 +115,97 @@ async def heartbeat() -> HTMLResponse:
 
 
 @api.get(
-    "/datasets",
-    operation_id="listDatasets",
-    tags=["DataSource"],
-    response_model=DatasetListResponse,
+    "/data",
+    operation_id="listCollections",
+    tags=["DataSource", "DataSink"],
+    response_model=CollectionListResponse,
     responses={
-        204: {"description": "No datasets found."},
+        204: {"description": "No collections found."},
         401: {"description": "Not authenticated."},
         500: {"description": "Internal server error."},
         501: {"description": "Not implemented."},
         503: {"description": "Service unavailable."},
     },
 )
-async def list_datasets(limit: int = 100, offset: int = 0) -> DatasetListResponse:
+async def list_collections(limit: int = 100, offset: int = 0) -> CollectionListResponse:
+    """List all collections."""
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+
+@api.get(
+    "/data/{collection_id}",
+    operation_id="listDatasets",
+    tags=["DataSource"],
+    response_model=DatasetListResponse,
+    responses={
+        204: {"description": "No datasets found."},
+        401: {"description": "Not authenticated."},
+        404: {"description": "Container not found."},
+        500: {"description": "Internal server error."},
+        501: {"description": "Not implemented."},
+        503: {"description": "Service unavailable."},
+    },
+)
+async def list_datasets(
+    collection_id: CollectionId, limit: int = 100, offset: int = 0
+) -> DatasetListResponse:
     """List all datasets."""
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+
+CREATE_COLLECTION_DESCRIPTION = """
+To add custom metadata, add keys to the header of the form:
+
+- X-Object-Metadata-name: value
+
+Where 'name' is the name of the metadata key and 'value' is the
+corresponding value.
+
+Note: This operation is in compliance with the OpenStack Swift object
+storage API:
+https://docs.openstack.org/api-ref/object-store/index.html#create-container
+"""
+
+
+@api.put(
+    "/data/{collection_id}",
+    name="Create or update Collection",
+    operation_id="createOrUpdateCollection",
+    tags=["DataSink"],
+    status_code=201,
+    response_class=Response,
+    responses={
+        201: {"description": "Collection has been created."},
+        202: {"description": "Collection has been updated."},
+        400: {"description": "Bad request."},
+        401: {"description": "Not authenticated."},
+        500: {"description": "Internal server error."},
+        501: {"description": "Not implemented."},
+        503: {"description": "Service unavailable."},
+        507: {"description": "Insufficient storage."},
+    },
+    description="Create or update a collection.\n" + CREATE_COLLECTION_DESCRIPTION,
+)
+@api.put(
+    "/data/",
+    operation_id="createCollection",
+    name="Create Collection",
+    tags=["DataSink"],
+    status_code=201,
+    response_class=Response,
+    responses={
+        201: {"description": "Collection has been created."},
+        400: {"description": "Bad request."},
+        401: {"description": "Not authenticated."},
+        500: {"description": "Internal server error."},
+        501: {"description": "Not implemented."},
+        503: {"description": "Service unavailable."},
+        507: {"description": "Insufficient storage."},
+    },
+    description="Create a collection.\n" + CREATE_COLLECTION_DESCRIPTION,
+)
+async def create_collection(collection_id: CollectionId = None) -> None:
+    """Create a new or replace an existing collection."""
     raise HTTPException(status_code=501, detail="Not implemented.")
 
 
@@ -141,7 +224,7 @@ https://docs.openstack.org/api-ref/object-store/index.html#create-or-replace-obj
 
 
 @api.put(
-    "/datasets/{dataset_id}",
+    "/data/{collection_id}/{dataset_id}",
     name="Create or Replace Dataset",
     operation_id="createOrReplaceDataset",
     tags=["DataSink"],
@@ -152,11 +235,12 @@ https://docs.openstack.org/api-ref/object-store/index.html#create-or-replace-obj
         500: {"description": "Internal server error."},
         501: {"description": "Not implemented."},
         503: {"description": "Service unavailable."},
+        507: {"description": "Insufficient storage."},
     },
     description="Create or replace a dataset.\n" + CREATE_DATASET_DESCRIPTION,
 )
 @api.put(
-    "/datasets/",
+    "/data/{collection_id}/",
     operation_id="createDataset",
     tags=["DataSink"],
     response_model=DatasetCreateResponse,
@@ -166,11 +250,13 @@ https://docs.openstack.org/api-ref/object-store/index.html#create-or-replace-obj
         500: {"description": "Internal server error."},
         501: {"description": "Not implemented."},
         503: {"description": "Service unavailable."},
+        507: {"description": "Insufficient storage."},
     },
     description="Create a dataset.\n" + CREATE_DATASET_DESCRIPTION,
 )
 async def create_dataset(
     file: UploadFile,
+    collection_id: CollectionId,
     dataset_id: Optional[DatasetId] = None,
 ) -> DatasetCreateResponse:
     """Create a new or replace an existing dataset."""
@@ -178,12 +264,14 @@ async def create_dataset(
 
 
 @api.post(
-    "/datasets/",
+    "/data/{collection_id}/",
     operation_id="createDatasetMetadata",
     name="Create Dataset Metadata",
     tags=["DataSink"],
     status_code=202,
+    response_class=Response,
     responses={
+        202: {"description": "Dataset metadata has been created."},
         401: {"description": "Not authenticated."},
         500: {"description": "Internal server error."},
         501: {"description": "Not implemented."},
@@ -191,12 +279,14 @@ async def create_dataset(
     },
 )
 @api.post(
-    "datasets/{dataset_id}",
+    "datasets/{collection_id}/{dataset_id}",
     operation_id="createOrReplaceDatasetMetadata",
     name="Create or Replace Dataset Metadata",
     tags=["DataSink"],
     status_code=202,
+    response_class=Response,
     responses={
+        202: {"description": "Dataset metadata has been created/updated."},
         401: {"description": "Not authenticated."},
         500: {"description": "Internal server error."},
         501: {"description": "Not implemented."},
@@ -204,6 +294,7 @@ async def create_dataset(
     },
 )
 async def create_or_replace_dataset_metadata(
+    collection_id: CollectionId,
     dataset_id: Optional[DatasetId] = None,
 ):
     """Create or replace dataset metadata.
@@ -216,7 +307,7 @@ async def create_or_replace_dataset_metadata(
 
 
 @api.head(
-    "/datasets/{dataset_id}",
+    "/data/{collection_id}/{dataset_id}",
     operation_id="getDatasetMetadata",
     tags=["DataSource"],
     status_code=200,
@@ -229,7 +320,9 @@ async def create_or_replace_dataset_metadata(
         503: {"description": "Service unavailable."},
     },
 )
-async def get_dataset_metadata(dataset_id: DatasetId) -> Response:
+async def get_dataset_metadata(
+    collection_id: CollectionId, dataset_id: DatasetId
+) -> Response:
     """Get dataset metadata.
 
     Returns the dataset metadata in the response header in the form of:
@@ -253,7 +346,7 @@ async def get_dataset_metadata(dataset_id: DatasetId) -> Response:
 
 
 @api.get(
-    "/datasets/{dataset_id}",
+    "/data/{collection_id}/{dataset_id}",
     operation_id="getDataset",
     tags=["DataSource"],
     response_class=Response,
@@ -265,7 +358,7 @@ async def get_dataset_metadata(dataset_id: DatasetId) -> Response:
         503: {"description": "Service unavailable."},
     },
 )
-async def get_dataset(dataset_id: DatasetId) -> Response:
+async def get_dataset(collection_id: CollectionId, dataset_id: DatasetId) -> Response:
     """Get a dataset.
 
     Returns the object as part of the request body and metadata as part of the
@@ -294,7 +387,7 @@ async def get_dataset(dataset_id: DatasetId) -> Response:
 
 
 @api.delete(
-    "/datasets/{dataset_id}",
+    "/data/{collection_id}/{dataset_id}",
     operation_id="deleteDataset",
     tags=["DataSink"],
     status_code=204,
@@ -306,7 +399,7 @@ async def get_dataset(dataset_id: DatasetId) -> Response:
         503: {"description": "Service unavailable."},
     },
 )
-def delete_dataset(dataset_id: DatasetId):
+def delete_dataset(collection_id: CollectionId, dataset_id: DatasetId):
     """Delete a dataset with the given dataset id.
 
     Note: This operation is in compliance with the OpenStack Swift object
