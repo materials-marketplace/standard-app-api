@@ -242,7 +242,7 @@
         ]
       }
     },
-    "/data/{collection_id}": {
+    "/data/{collection_name}": {
       "get": {
         "tags": [
           "DataSource"
@@ -254,12 +254,12 @@
           {
             "required": true,
             "schema": {
-              "title": "Collection Id",
+              "title": "Collection Name",
               "maxLength": 255,
               "minLength": 1,
               "type": "string"
             },
-            "name": "collection_id",
+            "name": "collection_name",
             "in": "path"
           },
           {
@@ -344,12 +344,12 @@
           {
             "required": true,
             "schema": {
-              "title": "Collection Id",
+              "title": "Collection Name",
               "maxLength": 255,
               "minLength": 1,
               "type": "string"
             },
-            "name": "collection_id",
+            "name": "collection_name",
             "in": "path"
           }
         ],
@@ -408,12 +408,12 @@
           {
             "required": false,
             "schema": {
-              "title": "Collection Id",
+              "title": "Collection Name",
               "maxLength": 255,
               "minLength": 1,
               "type": "string"
             },
-            "name": "collection_id",
+            "name": "collection_name",
             "in": "query"
           }
         ],
@@ -457,7 +457,7 @@
         ]
       }
     },
-    "/data/{collection_id}/": {
+    "/data/{collection_name}/": {
       "put": {
         "tags": [
           "DataSink"
@@ -469,12 +469,12 @@
           {
             "required": true,
             "schema": {
-              "title": "Collection Id",
+              "title": "Collection Name",
               "maxLength": 255,
               "minLength": 1,
               "type": "string"
             },
-            "name": "collection_id",
+            "name": "collection_name",
             "in": "path"
           },
           {
@@ -552,12 +552,12 @@
           {
             "required": true,
             "schema": {
-              "title": "Collection Id",
+              "title": "Collection Name",
               "maxLength": 255,
               "minLength": 1,
               "type": "string"
             },
-            "name": "collection_id",
+            "name": "collection_name",
             "in": "path"
           },
           {
@@ -605,7 +605,7 @@
         ]
       }
     },
-    "/data/{collection_id}/{dataset_id}": {
+    "/data/{collection_name}/{dataset_id}": {
       "get": {
         "tags": [
           "DataSource"
@@ -617,12 +617,12 @@
           {
             "required": true,
             "schema": {
-              "title": "Collection Id",
+              "title": "Collection Name",
               "maxLength": 255,
               "minLength": 1,
               "type": "string"
             },
-            "name": "collection_id",
+            "name": "collection_name",
             "in": "path"
           },
           {
@@ -683,12 +683,12 @@
           {
             "required": true,
             "schema": {
-              "title": "Collection Id",
+              "title": "Collection Name",
               "maxLength": 255,
               "minLength": 1,
               "type": "string"
             },
-            "name": "collection_id",
+            "name": "collection_name",
             "in": "path"
           },
           {
@@ -766,12 +766,12 @@
           {
             "required": true,
             "schema": {
-              "title": "Collection Id",
+              "title": "Collection Name",
               "maxLength": 255,
               "minLength": 1,
               "type": "string"
             },
-            "name": "collection_id",
+            "name": "collection_name",
             "in": "path"
           },
           {
@@ -832,12 +832,12 @@
           {
             "required": true,
             "schema": {
-              "title": "Collection Id",
+              "title": "Collection Name",
               "maxLength": 255,
               "minLength": 1,
               "type": "string"
             },
-            "name": "collection_id",
+            "name": "collection_name",
             "in": "path"
           },
           {
@@ -888,7 +888,7 @@
         ]
       }
     },
-    "datasets/{collection_id}/{dataset_id}": {
+    "datasets/{collection_name}/{dataset_id}": {
       "post": {
         "tags": [
           "DataSink"
@@ -900,12 +900,12 @@
           {
             "required": true,
             "schema": {
-              "title": "Collection Id",
+              "title": "Collection Name",
               "maxLength": 255,
               "minLength": 1,
               "type": "string"
             },
-            "name": "collection_id",
+            "name": "collection_name",
             "in": "path"
           },
           {

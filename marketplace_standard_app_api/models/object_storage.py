@@ -4,7 +4,7 @@ from typing import List, NewType, Optional
 from pydantic import UUID4, BaseModel, ConstrainedStr
 
 
-class CollectionId(ConstrainedStr):
+class CollectionName(ConstrainedStr):
     min_length = 1
     max_length = 255
 
@@ -12,7 +12,7 @@ class CollectionId(ConstrainedStr):
 class CollectionListItemModel(BaseModel):
     count: int
     bytes: int
-    name: CollectionId
+    name: CollectionName
     last_modified: Optional[datetime]
 
 
