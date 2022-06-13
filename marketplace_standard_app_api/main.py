@@ -209,6 +209,28 @@ async def create_collection(collection_name: CollectionName = None) -> None:
     raise HTTPException(status_code=501, detail="Not implemented.")
 
 
+@api.delete(
+    "/data/{collection_name}",
+    name="Delete Collection",
+    operation_id="deleteCollection",
+    response_class=Response,
+    tags=["DataSink"],
+    responses={
+        204: {"description": "Collection has been deleted."},
+        401: {"description": "Not authenticated."},
+        404: {"description": "Collection not found."},
+        409: {"description": "Collection is not empty."},
+        422: {"description": "Validation error."},
+        500: {"description": "Internal server error."},
+        501: {"description": "Not implemented."},
+        503: {"description": "Service unavailable."},
+    },
+)
+async def delete_collection(collection_name: CollectionName) -> None:
+    """Delete an empty collection."""
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+
 CREATE_DATASET_DESCRIPTION = """
 To add custom metadata, add keys to the header of the form:
 
