@@ -8,8 +8,8 @@ from .models.object_storage import (
     CollectionListResponse,
     CollectionName,
     DatasetCreateResponse,
-    DatasetId,
     DatasetListResponse,
+    DatasetName,
 )
 from .models.system import GlobalSearchResponse
 from .models.transformation import (
@@ -224,7 +224,7 @@ https://docs.openstack.org/api-ref/object-store/index.html#create-or-replace-obj
 
 
 @api.put(
-    "/data/{collection_name}/{dataset_id}",
+    "/data/{collection_name}/{dataset_name}",
     name="Create or Replace Dataset",
     operation_id="createOrReplaceDataset",
     tags=["DataSink"],
@@ -257,7 +257,7 @@ https://docs.openstack.org/api-ref/object-store/index.html#create-or-replace-obj
 async def create_dataset(
     file: UploadFile,
     collection_name: CollectionName,
-    dataset_id: Optional[DatasetId] = None,
+    dataset_name: Optional[DatasetName] = None,
 ) -> DatasetCreateResponse:
     """Create a new or replace an existing dataset."""
     raise HTTPException(status_code=501, detail="Not implemented.")
@@ -279,7 +279,7 @@ async def create_dataset(
     },
 )
 @api.post(
-    "datasets/{collection_name}/{dataset_id}",
+    "datasets/{collection_name}/{dataset_name}",
     operation_id="createOrReplaceDatasetMetadata",
     name="Create or Replace Dataset Metadata",
     tags=["DataSink"],
@@ -295,7 +295,7 @@ async def create_dataset(
 )
 async def create_or_replace_dataset_metadata(
     collection_name: CollectionName,
-    dataset_id: Optional[DatasetId] = None,
+    dataset_name: Optional[DatasetName] = None,
 ):
     """Create or replace dataset metadata.
 
@@ -307,7 +307,7 @@ async def create_or_replace_dataset_metadata(
 
 
 @api.head(
-    "/data/{collection_name}/{dataset_id}",
+    "/data/{collection_name}/{dataset_name}",
     operation_id="getDatasetMetadata",
     tags=["DataSource"],
     status_code=200,
@@ -321,7 +321,7 @@ async def create_or_replace_dataset_metadata(
     },
 )
 async def get_dataset_metadata(
-    collection_name: CollectionName, dataset_id: DatasetId
+    collection_name: CollectionName, dataset_name: DatasetName
 ) -> Response:
     """Get dataset metadata.
 
@@ -346,7 +346,7 @@ async def get_dataset_metadata(
 
 
 @api.get(
-    "/data/{collection_name}/{dataset_id}",
+    "/data/{collection_name}/{dataset_name}",
     operation_id="getDataset",
     tags=["DataSource"],
     response_class=Response,
@@ -359,7 +359,7 @@ async def get_dataset_metadata(
     },
 )
 async def get_dataset(
-    collection_name: CollectionName, dataset_id: DatasetId
+    collection_name: CollectionName, dataset_name: DatasetName
 ) -> Response:
     """Get a dataset.
 
@@ -389,7 +389,7 @@ async def get_dataset(
 
 
 @api.delete(
-    "/data/{collection_name}/{dataset_id}",
+    "/data/{collection_name}/{dataset_name}",
     operation_id="deleteDataset",
     tags=["DataSink"],
     status_code=204,
@@ -401,7 +401,7 @@ async def get_dataset(
         503: {"description": "Service unavailable."},
     },
 )
-def delete_dataset(collection_name: CollectionName, dataset_id: DatasetId):
+def delete_dataset(collection_name: CollectionName, dataset_name: DatasetName):
     """Delete a dataset with the given dataset id.
 
     Note: This operation is in compliance with the OpenStack Swift object

@@ -480,11 +480,11 @@
           {
             "required": false,
             "schema": {
-              "title": "Dataset Id",
-              "type": "string",
-              "format": "uuid4"
+              "title": "Dataset Name",
+              "minLength": 1,
+              "type": "string"
             },
-            "name": "dataset_id",
+            "name": "dataset_name",
             "in": "query"
           }
         ],
@@ -563,11 +563,11 @@
           {
             "required": false,
             "schema": {
-              "title": "Dataset Id",
-              "type": "string",
-              "format": "uuid4"
+              "title": "Dataset Name",
+              "minLength": 1,
+              "type": "string"
             },
-            "name": "dataset_id",
+            "name": "dataset_name",
             "in": "query"
           }
         ],
@@ -605,7 +605,7 @@
         ]
       }
     },
-    "/data/{collection_name}/{dataset_id}": {
+    "/data/{collection_name}/{dataset_name}": {
       "get": {
         "tags": [
           "DataSource"
@@ -628,11 +628,11 @@
           {
             "required": true,
             "schema": {
-              "title": "Dataset Id",
-              "type": "string",
-              "format": "uuid4"
+              "title": "Dataset Name",
+              "minLength": 1,
+              "type": "string"
             },
-            "name": "dataset_id",
+            "name": "dataset_name",
             "in": "path"
           }
         ],
@@ -694,11 +694,11 @@
           {
             "required": true,
             "schema": {
-              "title": "Dataset Id",
-              "type": "string",
-              "format": "uuid4"
+              "title": "Dataset Name",
+              "minLength": 1,
+              "type": "string"
             },
-            "name": "dataset_id",
+            "name": "dataset_name",
             "in": "path"
           }
         ],
@@ -777,11 +777,11 @@
           {
             "required": true,
             "schema": {
-              "title": "Dataset Id",
-              "type": "string",
-              "format": "uuid4"
+              "title": "Dataset Name",
+              "minLength": 1,
+              "type": "string"
             },
-            "name": "dataset_id",
+            "name": "dataset_name",
             "in": "path"
           }
         ],
@@ -843,11 +843,11 @@
           {
             "required": true,
             "schema": {
-              "title": "Dataset Id",
-              "type": "string",
-              "format": "uuid4"
+              "title": "Dataset Name",
+              "minLength": 1,
+              "type": "string"
             },
-            "name": "dataset_id",
+            "name": "dataset_name",
             "in": "path"
           }
         ],
@@ -888,7 +888,7 @@
         ]
       }
     },
-    "datasets/{collection_name}/{dataset_id}": {
+    "datasets/{collection_name}/{dataset_name}": {
       "post": {
         "tags": [
           "DataSink"
@@ -911,11 +911,11 @@
           {
             "required": true,
             "schema": {
-              "title": "Dataset Id",
-              "type": "string",
-              "format": "uuid4"
+              "title": "Dataset Name",
+              "minLength": 1,
+              "type": "string"
             },
-            "name": "dataset_id",
+            "name": "dataset_name",
             "in": "path"
           }
         ],
@@ -1423,8 +1423,8 @@
         "properties": {
           "id": {
             "title": "Id",
-            "type": "string",
-            "format": "uuid4"
+            "minLength": 1,
+            "type": "string"
           },
           "hash": {
             "title": "Hash",

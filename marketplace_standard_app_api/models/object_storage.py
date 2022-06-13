@@ -1,7 +1,7 @@
 from datetime import datetime
-from typing import List, NewType, Optional
+from typing import List, Optional
 
-from pydantic import UUID4, BaseModel, ConstrainedStr
+from pydantic import BaseModel, ConstrainedStr
 
 
 class CollectionName(ConstrainedStr):
@@ -19,7 +19,8 @@ class CollectionListItemModel(BaseModel):
 CollectionListResponse = List[CollectionListItemModel]
 
 
-DatasetId = NewType("DatasetId", UUID4)
+class DatasetName(ConstrainedStr):
+    min_length = 1
 
 
 class DatasetCreateResponse(BaseModel):
@@ -27,7 +28,7 @@ class DatasetCreateResponse(BaseModel):
 
 
 class DatasetModel(BaseModel):
-    id: DatasetId
+    id: DatasetName
     hash: Optional[str]
     bytes: Optional[int]
     content_type: Optional[str]
