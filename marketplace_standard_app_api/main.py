@@ -158,7 +158,7 @@ async def list_datasets(
 CREATE_COLLECTION_DESCRIPTION = """
 To add custom metadata, add keys to the header of the form:
 
-- X-Object-Metadata-name: value
+- X-Object-Meta-name: value
 
 Where 'name' is the name of the metadata key and 'value' is the
 corresponding value.
@@ -259,7 +259,7 @@ async def delete_collection(collection_name: CollectionName) -> Response:
 CREATE_DATASET_DESCRIPTION = """
 To add custom metadata, add keys to the header of the form:
 
-- X-Object-Metadata-name: value
+- X-Object-Meta-name: value
 
 Where 'name' is the name of the metadata key and 'value' is the
 corresponding value.
@@ -375,7 +375,7 @@ async def get_dataset_metadata(
 
     Returns the dataset metadata in the response header in the form of:
 
-    - X-Object-Metadata-name: value
+    - X-Object-Meta-name: value
 
     Where 'name' is the name of the metadata key and 'value' is the
     corresponding value.
