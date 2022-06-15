@@ -209,6 +209,27 @@ async def create_collection(collection_name: CollectionName = None) -> None:
     raise HTTPException(status_code=501, detail="Not implemented.")
 
 
+@api.head(
+    "/data/{collection_name}",
+    name="Get Collection Metadata",
+    operation_id="getCollectionMetadata",
+    tags=["DataSource"],
+    response_class=Response,
+    status_code=204,
+    responses={
+        204: {"description": "Normal response."},
+        401: {"description": "Not authenticated."},
+        404: {"description": "Not found."},
+        500: {"description": "Internal server error."},
+        501: {"description": "Not implemented."},
+        503: {"description": "Service unavailable."},
+    },
+)
+async def get_collection_metadata(collection_name: CollectionName) -> Response:
+    """Get the metadata for a collection."""
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+
 @api.delete(
     "/data/{collection_name}",
     name="Delete Collection",

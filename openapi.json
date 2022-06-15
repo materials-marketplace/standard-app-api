@@ -449,6 +449,62 @@
             "AuthTokenBearer": []
           }
         ]
+      },
+      "head": {
+        "tags": [
+          "DataSource"
+        ],
+        "summary": "Get Collection Metadata",
+        "description": "Get the metadata for a collection.",
+        "operationId": "getCollectionMetadata",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Collection Name",
+              "maxLength": 255,
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "collection_name",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Normal response."
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "404": {
+            "description": "Not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
       }
     },
     "/data/": {
