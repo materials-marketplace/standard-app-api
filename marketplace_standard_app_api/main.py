@@ -1,4 +1,4 @@
-from typing import Any, Callable, Dict, Optional
+from typing import Any, Callable, Dict, Optional, Union
 
 import requests
 from fastapi import Depends, FastAPI, HTTPException, Request, UploadFile
@@ -127,7 +127,9 @@ async def heartbeat() -> HTMLResponse:
         503: {"description": "Service unavailable."},
     },
 )
-async def list_collections(limit: int = 100, offset: int = 0) -> CollectionListResponse:
+async def list_collections(
+    limit: int = 100, offset: int = 0
+) -> Union[CollectionListResponse, Response]:
     """List all collections."""
     raise HTTPException(status_code=501, detail="Not implemented.")
 
@@ -148,7 +150,7 @@ async def list_collections(limit: int = 100, offset: int = 0) -> CollectionListR
 )
 async def list_datasets(
     collection_name: CollectionName, limit: int = 100, offset: int = 0
-) -> DatasetListResponse:
+) -> Union[DatasetListResponse, Response]:
     """List all datasets."""
     raise HTTPException(status_code=501, detail="Not implemented.")
 
@@ -204,7 +206,9 @@ https://docs.openstack.org/api-ref/object-store/index.html#create-container
     },
     description="Create a collection.\n" + CREATE_COLLECTION_DESCRIPTION,
 )
-async def create_collection(collection_name: CollectionName = None) -> None:
+async def create_collection(
+    request: Request, collection_name: CollectionName = None
+) -> Response:
     """Create a new or replace an existing collection."""
     raise HTTPException(status_code=501, detail="Not implemented.")
 
@@ -247,7 +251,7 @@ async def get_collection_metadata(collection_name: CollectionName) -> Response:
         503: {"description": "Service unavailable."},
     },
 )
-async def delete_collection(collection_name: CollectionName) -> None:
+async def delete_collection(collection_name: CollectionName) -> Response:
     """Delete an empty collection."""
     raise HTTPException(status_code=501, detail="Not implemented.")
 
@@ -298,10 +302,11 @@ https://docs.openstack.org/api-ref/object-store/index.html#create-or-replace-obj
     description="Create a dataset.\n" + CREATE_DATASET_DESCRIPTION,
 )
 async def create_dataset(
+    request: Request,
     file: UploadFile,
     collection_name: CollectionName,
     dataset_name: Optional[DatasetName] = None,
-) -> DatasetCreateResponse:
+) -> Union[DatasetCreateResponse, Response]:
     """Create a new or replace an existing dataset."""
     raise HTTPException(status_code=501, detail="Not implemented.")
 
@@ -339,7 +344,7 @@ async def create_dataset(
 async def create_or_replace_dataset_metadata(
     collection_name: CollectionName,
     dataset_name: Optional[DatasetName] = None,
-):
+) -> Response:
     """Create or replace dataset metadata.
 
     Note: This operation is in compliance with the OpenStack Swift object
@@ -444,7 +449,9 @@ async def get_dataset(
         503: {"description": "Service unavailable."},
     },
 )
-def delete_dataset(collection_name: CollectionName, dataset_name: DatasetName):
+def delete_dataset(
+    collection_name: CollectionName, dataset_name: DatasetName
+) -> Response:
     """Delete a dataset with the given dataset id.
 
     Note: This operation is in compliance with the OpenStack Swift object
