@@ -238,8 +238,9 @@ async def get_collection_metadata(collection_name: CollectionName) -> Response:
     "/data/{collection_name}",
     name="Delete Collection",
     operation_id="deleteCollection",
-    response_class=Response,
     tags=["DataSink"],
+    response_class=Response,
+    status_code=204,
     responses={
         204: {"description": "Collection has been deleted."},
         401: {"description": "Not authenticated."},
@@ -449,7 +450,7 @@ async def get_dataset(
         503: {"description": "Service unavailable."},
     },
 )
-def delete_dataset(
+async def delete_dataset(
     collection_name: CollectionName, dataset_name: DatasetName
 ) -> Response:
     """Delete a dataset with the given dataset id.

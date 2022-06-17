@@ -416,9 +416,6 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Successful Response"
-          },
           "204": {
             "description": "Collection has been deleted."
           },
