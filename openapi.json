@@ -163,34 +163,54 @@
         ]
       }
     },
-    "/datasets": {
-      "post": {
+    "/data": {
+      "get": {
         "tags": [
+          "DataSource",
           "DataSink"
         ],
-        "summary": "Create Dataset",
-        "description": "Create a new dataset.",
-        "operationId": "createDataset",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DatasetModel"
-              }
-            }
+        "summary": "List Collections",
+        "description": "List all collections.",
+        "operationId": "listCollections",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "type": "integer",
+              "default": 100
+            },
+            "name": "limit",
+            "in": "query"
           },
-          "required": true
-        },
+          {
+            "required": false,
+            "schema": {
+              "title": "Offset",
+              "type": "integer",
+              "default": 0
+            },
+            "name": "offset",
+            "in": "query"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DatasetCreateResponse"
+                  "title": "Response Listcollections",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CollectionListItemModel"
+                  }
                 }
               }
             }
+          },
+          "204": {
+            "description": "No collections found."
           },
           "401": {
             "description": "Not authenticated."
@@ -222,24 +242,45 @@
         ]
       }
     },
-    "/datasets/{dataset_id}": {
+    "/data/{collection_name}": {
       "get": {
         "tags": [
           "DataSource"
         ],
-        "summary": "Get Dataset",
-        "description": "Retrieve an existing data set.",
-        "operationId": "getDataset",
+        "summary": "List Datasets",
+        "description": "List all datasets.",
+        "operationId": "listDatasets",
         "parameters": [
           {
             "required": true,
             "schema": {
-              "title": "Dataset Id",
-              "type": "string",
-              "format": "uuid4"
+              "title": "Collection Name",
+              "maxLength": 255,
+              "minLength": 1,
+              "type": "string"
             },
-            "name": "dataset_id",
+            "name": "collection_name",
             "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "type": "integer",
+              "default": 100
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Offset",
+              "type": "integer",
+              "default": 0
+            },
+            "name": "offset",
+            "in": "query"
           }
         ],
         "responses": {
@@ -248,7 +289,330 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DatasetModel"
+                  "title": "Response Listdatasets",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DatasetModel"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No datasets found."
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "404": {
+            "description": "Container not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "DataSink"
+        ],
+        "summary": "Create Or Update Collection",
+        "description": "Create or update a collection.\n\nTo add custom metadata, add keys to the header of the form:\n\n- X-Object-Meta-name: value\n\nWhere 'name' is the name of the metadata key and 'value' is the\ncorresponding value.\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#create-container\n",
+        "operationId": "createOrUpdateCollection",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Collection Name",
+              "maxLength": 255,
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "collection_name",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Collection has been created."
+          },
+          "202": {
+            "description": "Collection has been updated."
+          },
+          "400": {
+            "description": "Bad request."
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "507": {
+            "description": "Insufficient storage."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "DataSink"
+        ],
+        "summary": "Delete Collection",
+        "description": "Delete an empty collection.",
+        "operationId": "deleteCollection",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Collection Name",
+              "maxLength": 255,
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "collection_name",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Collection has been deleted."
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "404": {
+            "description": "Collection not found."
+          },
+          "409": {
+            "description": "Collection is not empty."
+          },
+          "422": {
+            "description": "Validation error."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "503": {
+            "description": "Service unavailable."
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      },
+      "head": {
+        "tags": [
+          "DataSource"
+        ],
+        "summary": "Get Collection Metadata",
+        "description": "Get the metadata for a collection.",
+        "operationId": "getCollectionMetadata",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Collection Name",
+              "maxLength": 255,
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "collection_name",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Normal response."
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "404": {
+            "description": "Not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
+    "/data/": {
+      "put": {
+        "tags": [
+          "DataSink"
+        ],
+        "summary": "Create Collection",
+        "description": "Create a collection.\n\nTo add custom metadata, add keys to the header of the form:\n\n- X-Object-Meta-name: value\n\nWhere 'name' is the name of the metadata key and 'value' is the\ncorresponding value.\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#create-container\n",
+        "operationId": "createCollection",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Collection Name",
+              "maxLength": 255,
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "collection_name",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Collection has been created."
+          },
+          "400": {
+            "description": "Bad request."
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "507": {
+            "description": "Insufficient storage."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
+    "/data/{collection_name}/": {
+      "put": {
+        "tags": [
+          "DataSink"
+        ],
+        "summary": "Create Dataset",
+        "description": "Create a dataset.\n\nTo add custom metadata, add keys to the header of the form:\n\n- X-Object-Meta-name: value\n\nWhere 'name' is the name of the metadata key and 'value' is the\ncorresponding value.\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#create-or-replace-object\n",
+        "operationId": "createDataset",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Collection Name",
+              "maxLength": 255,
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "collection_name",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Dataset Name",
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "dataset_name",
+            "in": "query"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_createDataset"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatasetCreateResponse"
                 }
               }
             }
@@ -256,8 +620,419 @@
           "401": {
             "description": "Not authenticated."
           },
+          "500": {
+            "description": "Internal server error."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "507": {
+            "description": "Insufficient storage."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "DataSink"
+        ],
+        "summary": "Create Dataset Metadata",
+        "description": "Create or replace dataset metadata.\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#create-or-update-object-metadata",
+        "operationId": "createDatasetMetadata",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Collection Name",
+              "maxLength": 255,
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "collection_name",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Dataset Name",
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "dataset_name",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Dataset metadata has been created."
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
+    "/data/{collection_name}/{dataset_name}": {
+      "get": {
+        "tags": [
+          "DataSource"
+        ],
+        "summary": "Get Dataset",
+        "description": "Get a dataset.\n\nReturns the object as part of the request body and metadata as part of the\nresponse headers.\n\nIn addition to the standard response header keys (Content-Type and\nContent-Length), the header may also contain metadata key-value pairs in the\nform of:\n\n- X-Object-Meta-name: value\n\nWhere 'name' is the name of the metadata key and 'value' is the\ncorresponding value.\n\nExample response header for a plain-text file:\n- Content-Type: text/plain;charset=UTF-8\n- Content-Length: 1234\n- X-Object-Meta-my-key: some-value\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#get-object-content-and-metadata",
+        "operationId": "getDataset",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Collection Name",
+              "maxLength": 255,
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "collection_name",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Dataset Name",
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "dataset_name",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
           "404": {
             "description": "Not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "DataSink"
+        ],
+        "summary": "Create Or Replace Dataset",
+        "description": "Create or replace a dataset.\n\nTo add custom metadata, add keys to the header of the form:\n\n- X-Object-Meta-name: value\n\nWhere 'name' is the name of the metadata key and 'value' is the\ncorresponding value.\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#create-or-replace-object\n",
+        "operationId": "createOrReplaceDataset",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Collection Name",
+              "maxLength": 255,
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "collection_name",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Dataset Name",
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "dataset_name",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_createOrReplaceDataset"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatasetCreateResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "507": {
+            "description": "Insufficient storage."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "DataSink"
+        ],
+        "summary": "Delete Dataset",
+        "description": "Delete a dataset with the given dataset id.\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#delete-object",
+        "operationId": "deleteDataset",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Collection Name",
+              "maxLength": 255,
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "collection_name",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Dataset Name",
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "dataset_name",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "404": {
+            "description": "Not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      },
+      "head": {
+        "tags": [
+          "DataSource"
+        ],
+        "summary": "Get Dataset Metadata",
+        "description": "Get dataset metadata.\n\nReturns the dataset metadata in the response header in the form of:\n\n- X-Object-Meta-name: value\n\nWhere 'name' is the name of the metadata key and 'value' is the\ncorresponding value.\n\nExample response header for a plain-text file:\n- Content-Type: text/plain;charset=UTF-8\n- Content-Length: 1234\n- X-Object-Meta-my-key: some-value\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#show-object-metadata",
+        "operationId": "getDatasetMetadata",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Collection Name",
+              "maxLength": 255,
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "collection_name",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Dataset Name",
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "dataset_name",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "404": {
+            "description": "Not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
+    "datasets/{collection_name}/{dataset_name}": {
+      "post": {
+        "tags": [
+          "DataSink"
+        ],
+        "summary": "Create Or Replace Dataset Metadata",
+        "description": "Create or replace dataset metadata.\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#create-or-update-object-metadata",
+        "operationId": "createOrReplaceDatasetMetadata",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Collection Name",
+              "maxLength": 255,
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "collection_name",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Dataset Name",
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "dataset_name",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Dataset metadata has been created/updated."
+          },
+          "401": {
+            "description": "Not authenticated."
           },
           "500": {
             "description": "Internal server error."
@@ -675,8 +1450,80 @@
   },
   "components": {
     "schemas": {
+      "Body_createDataset": {
+        "title": "Body_createDataset",
+        "required": [
+          "file"
+        ],
+        "type": "object",
+        "properties": {
+          "file": {
+            "title": "File",
+            "type": "string",
+            "format": "binary"
+          }
+        }
+      },
+      "Body_createOrReplaceDataset": {
+        "title": "Body_createOrReplaceDataset",
+        "required": [
+          "file"
+        ],
+        "type": "object",
+        "properties": {
+          "file": {
+            "title": "File",
+            "type": "string",
+            "format": "binary"
+          }
+        }
+      },
+      "CollectionListItemModel": {
+        "title": "CollectionListItemModel",
+        "required": [
+          "count",
+          "bytes",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "bytes": {
+            "title": "Bytes",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "maxLength": 255,
+            "minLength": 1,
+            "type": "string"
+          },
+          "last_modified": {
+            "title": "Last Modified",
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
       "DatasetCreateResponse": {
         "title": "DatasetCreateResponse",
+        "required": [
+          "last_modified"
+        ],
+        "type": "object",
+        "properties": {
+          "last_modified": {
+            "title": "Last Modified",
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "DatasetModel": {
+        "title": "DatasetModel",
         "required": [
           "id"
         ],
@@ -684,15 +1531,27 @@
         "properties": {
           "id": {
             "title": "Id",
+            "minLength": 1,
+            "type": "string"
+          },
+          "hash": {
+            "title": "Hash",
+            "type": "string"
+          },
+          "bytes": {
+            "title": "Bytes",
+            "type": "integer"
+          },
+          "content_type": {
+            "title": "Content Type",
+            "type": "string"
+          },
+          "last_modified": {
+            "title": "Last Modified",
             "type": "string",
-            "format": "uuid4"
+            "format": "date-time"
           }
         }
-      },
-      "DatasetModel": {
-        "title": "DatasetModel",
-        "type": "object",
-        "properties": {}
       },
       "GlobalSearchResponse": {
         "title": "GlobalSearchResponse",
