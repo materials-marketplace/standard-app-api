@@ -9,7 +9,7 @@ from databases.interfaces import Record
 from fastapi import UploadFile
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, and_, select
 
-from marketplace_standard_app_api.models.object_storage import (
+from ..models.object_storage import (
     CollectionListItemModel,
     CollectionListResponse,
     CollectionName,
@@ -17,7 +17,6 @@ from marketplace_standard_app_api.models.object_storage import (
     DatasetModel,
     DatasetName,
 )
-
 from .common import metadata
 
 collections = sqlalchemy.Table(
