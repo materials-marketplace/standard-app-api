@@ -7,11 +7,6 @@ from ..models.system import GlobalSearchResponse
 
 router = APIRouter(
     tags=["System"],
-    responses={
-        401: {"description": "Not authenticated."},
-        500: {"description": "Internal server error."},
-        503: {"description": "Service unavailable."},
-    },
 )
 
 

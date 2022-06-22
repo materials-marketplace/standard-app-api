@@ -5,9 +5,6 @@ router = APIRouter(
     tags=["FrontPage"],
     responses={
         404: {"description": "Not found."},
-        401: {"description": "Not authenticated."},
-        500: {"description": "Internal server error."},
-        503: {"description": "Service unavailable."},
     },
 )
 

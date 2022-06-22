@@ -40,6 +40,11 @@ api = MarketPlaceAPI(
     },
     license_info={"name": "MIT", "url": "https://opensource.org/licenses/MIT"},
     dependencies=[Depends(AuthTokenBearer())],
+    responses={
+        401: {"description": "Not authenticated."},
+        500: {"description": "Internal server error."},
+        503: {"description": "Service unavailable."},
+    },
 )
 api.middleware("http")(catch_authentication_request_errors_middleware)
 

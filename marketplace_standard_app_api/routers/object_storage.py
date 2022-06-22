@@ -14,10 +14,7 @@ from ..models.object_storage import (
 router = APIRouter(
     prefix="/data",
     responses={
-        401: {"description": "Not authenticated."},
-        500: {"description": "Internal server error."},
         501: {"description": "Not implemented."},
-        503: {"description": "Service unavailable."},
     },
 )
 
