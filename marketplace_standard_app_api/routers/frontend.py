@@ -1,12 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import HTMLResponse
 
-router = APIRouter()
-
-
-@router.get(
-    "/",
-    operation_id="frontend",
+router = APIRouter(
     tags=["FrontPage"],
     responses={
         404: {"description": "Not found."},
@@ -14,6 +9,12 @@ router = APIRouter()
         500: {"description": "Internal server error."},
         503: {"description": "Service unavailable."},
     },
+)
+
+
+@router.get(
+    "/",
+    operation_id="frontend",
     response_class=HTMLResponse,
 )
 async def frontpage() -> HTMLResponse:

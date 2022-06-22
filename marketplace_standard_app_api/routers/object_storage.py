@@ -11,7 +11,15 @@ from ..models.object_storage import (
     DatasetName,
 )
 
-router = APIRouter(prefix="/data")
+router = APIRouter(
+    prefix="/data",
+    responses={
+        401: {"description": "Not authenticated."},
+        500: {"description": "Internal server error."},
+        501: {"description": "Not implemented."},
+        503: {"description": "Service unavailable."},
+    },
+)
 
 
 @router.get(
@@ -21,10 +29,6 @@ router = APIRouter(prefix="/data")
     response_model=CollectionListResponse,
     responses={
         204: {"description": "No collections found."},
-        401: {"description": "Not authenticated."},
-        500: {"description": "Internal server error."},
-        501: {"description": "Not implemented."},
-        503: {"description": "Service unavailable."},
     },
 )
 async def list_collections(
@@ -41,11 +45,7 @@ async def list_collections(
     response_model=DatasetListResponse,
     responses={
         204: {"description": "No datasets found."},
-        401: {"description": "Not authenticated."},
         404: {"description": "Container not found."},
-        500: {"description": "Internal server error."},
-        501: {"description": "Not implemented."},
-        503: {"description": "Service unavailable."},
     },
 )
 async def list_datasets(
@@ -80,10 +80,6 @@ https://docs.openstack.org/api-ref/object-store/index.html#create-container
         201: {"description": "Collection has been created."},
         202: {"description": "Collection has been updated."},
         400: {"description": "Bad request."},
-        401: {"description": "Not authenticated."},
-        500: {"description": "Internal server error."},
-        501: {"description": "Not implemented."},
-        503: {"description": "Service unavailable."},
         507: {"description": "Insufficient storage."},
     },
     description="Create or update a collection.\n" + CREATE_COLLECTION_DESCRIPTION,
@@ -98,10 +94,6 @@ https://docs.openstack.org/api-ref/object-store/index.html#create-container
     responses={
         201: {"description": "Collection has been created."},
         400: {"description": "Bad request."},
-        401: {"description": "Not authenticated."},
-        500: {"description": "Internal server error."},
-        501: {"description": "Not implemented."},
-        503: {"description": "Service unavailable."},
         507: {"description": "Insufficient storage."},
     },
     description="Create a collection.\n" + CREATE_COLLECTION_DESCRIPTION,
@@ -122,11 +114,7 @@ async def create_collection(
     status_code=204,
     responses={
         204: {"description": "Normal response."},
-        401: {"description": "Not authenticated."},
         404: {"description": "Not found."},
-        500: {"description": "Internal server error."},
-        501: {"description": "Not implemented."},
-        503: {"description": "Service unavailable."},
     },
 )
 async def get_collection_metadata(collection_name: CollectionName) -> Response:
@@ -143,13 +131,9 @@ async def get_collection_metadata(collection_name: CollectionName) -> Response:
     status_code=204,
     responses={
         204: {"description": "Collection has been deleted."},
-        401: {"description": "Not authenticated."},
         404: {"description": "Collection not found."},
         409: {"description": "Collection is not empty."},
         422: {"description": "Validation error."},
-        500: {"description": "Internal server error."},
-        501: {"description": "Not implemented."},
-        503: {"description": "Service unavailable."},
     },
 )
 async def delete_collection(collection_name: CollectionName) -> Response:
@@ -179,10 +163,6 @@ https://docs.openstack.org/api-ref/object-store/index.html#create-or-replace-obj
     response_model=DatasetCreateResponse,
     status_code=201,
     responses={
-        401: {"description": "Not authenticated."},
-        500: {"description": "Internal server error."},
-        501: {"description": "Not implemented."},
-        503: {"description": "Service unavailable."},
         507: {"description": "Insufficient storage."},
     },
     description="Create or replace a dataset.\n" + CREATE_DATASET_DESCRIPTION,
@@ -194,10 +174,6 @@ https://docs.openstack.org/api-ref/object-store/index.html#create-or-replace-obj
     response_model=DatasetCreateResponse,
     status_code=201,
     responses={
-        401: {"description": "Not authenticated."},
-        500: {"description": "Internal server error."},
-        501: {"description": "Not implemented."},
-        503: {"description": "Service unavailable."},
         507: {"description": "Insufficient storage."},
     },
     description="Create a dataset.\n" + CREATE_DATASET_DESCRIPTION,
@@ -221,10 +197,6 @@ async def create_dataset(
     response_class=Response,
     responses={
         202: {"description": "Dataset metadata has been created."},
-        401: {"description": "Not authenticated."},
-        500: {"description": "Internal server error."},
-        501: {"description": "Not implemented."},
-        503: {"description": "Service unavailable."},
     },
 )
 @router.post(
@@ -236,10 +208,6 @@ async def create_dataset(
     response_class=Response,
     responses={
         202: {"description": "Dataset metadata has been created/updated."},
-        401: {"description": "Not authenticated."},
-        500: {"description": "Internal server error."},
-        501: {"description": "Not implemented."},
-        503: {"description": "Service unavailable."},
     },
 )
 async def create_or_replace_dataset_metadata(
@@ -262,11 +230,7 @@ async def create_or_replace_dataset_metadata(
     status_code=200,
     response_class=Response,
     responses={
-        401: {"description": "Not authenticated."},
         404: {"description": "Not found."},
-        500: {"description": "Internal server error."},
-        501: {"description": "Not implemented."},
-        503: {"description": "Service unavailable."},
     },
 )
 async def get_dataset_metadata(
@@ -300,11 +264,7 @@ async def get_dataset_metadata(
     tags=["DataSource"],
     response_class=Response,
     responses={
-        401: {"description": "Not authenticated."},
         404: {"description": "Not found."},
-        500: {"description": "Internal server error."},
-        501: {"description": "Not implemented."},
-        503: {"description": "Service unavailable."},
     },
 )
 async def get_dataset(
@@ -343,11 +303,7 @@ async def get_dataset(
     tags=["DataSink"],
     status_code=204,
     responses={
-        401: {"description": "Not authenticated."},
         404: {"description": "Not found."},
-        500: {"description": "Internal server error."},
-        501: {"description": "Not implemented."},
-        503: {"description": "Service unavailable."},
     },
 )
 async def delete_dataset(

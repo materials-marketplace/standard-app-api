@@ -13,20 +13,22 @@ from ..models.transformation import (
     TransformationUpdateResponse,
 )
 
-router = APIRouter()
-
-
-@router.post(
-    "/transformations",
-    operation_id="newTransformation",
+router = APIRouter(
+    prefix="/transformations",
     tags=["Transformation"],
-    response_model=TransformationCreateResponse,
     responses={
         401: {"description": "Not authenticated."},
         500: {"description": "Internal server error."},
         501: {"description": "Not implemented."},
         503: {"description": "Service unavailable."},
     },
+)
+
+
+@router.post(
+    "",
+    operation_id="newTransformation",
+    response_model=TransformationCreateResponse,
 )
 async def create_transformation(
     transformation: NewTransformationModel,
@@ -45,16 +47,11 @@ async def create_transformation(
 
 
 @router.get(
-    "/transformations/{transformation_id}",
+    "/{transformation_id}",
     operation_id="getTransformation",
-    tags=["Transformation"],
     response_model=TransformationModel,
     responses={
-        401: {"description": "Not authenticated."},
         404: {"description": "Not found."},
-        500: {"description": "Internal server error."},
-        501: {"description": "Not implemented."},
-        503: {"description": "Service unavailable."},
     },
 )
 async def get_transformation(
@@ -65,16 +62,11 @@ async def get_transformation(
 
 
 @router.delete(
-    "/transformations/{transformation_id}",
+    "/{transformation_id}",
     operation_id="deleteTransformation",
-    tags=["Transformation"],
     status_code=204,
     responses={
-        401: {"description": "Not authenticated."},
         404: {"description": "Not found."},
-        500: {"description": "Internal server error."},
-        501: {"description": "Not implemented."},
-        503: {"description": "Service unavailable."},
     },
 )
 async def delete_transformation(
@@ -85,19 +77,14 @@ async def delete_transformation(
 
 
 @router.patch(
-    "/transformations/{transformation_id}",
+    "/{transformation_id}",
     operation_id="updateTransformation",
-    tags=["Transformation"],
     response_model=TransformationUpdateResponse,
     responses={
-        401: {"description": "Not authenticated."},
         404: {"description": "Not found."},
         409: {
             "description": "The requested state is unavailable (example: trying to stop an already completed transformation)."
         },
-        500: {"description": "Internal server error."},
-        501: {"description": "Not implemented."},
-        503: {"description": "Service unavailable."},
     },
 )
 async def update_transformation(
@@ -114,16 +101,11 @@ async def update_transformation(
 
 
 @router.get(
-    "/transformations/{transformation_id}/state",
+    "/{transformation_id}/state",
     operation_id="getTransformationState",
-    tags=["Transformation"],
     response_model=TransformationStateResponse,
     responses={
-        401: {"description": "Not authenticated."},
         404: {"description": "Not found."},
-        500: {"description": "Internal server error."},
-        501: {"description": "Not implemented."},
-        503: {"description": "Service unavailable."},
     },
 )
 async def get_transformation_state(
@@ -134,16 +116,9 @@ async def get_transformation_state(
 
 
 @router.get(
-    "/transformations",
+    "",
     operation_id="getTransformationList",
-    tags=["Transformation"],
     response_model=TransformationListResponse,
-    responses={
-        401: {"description": "Not authenticated."},
-        500: {"description": "Internal server error."},
-        501: {"description": "Not implemented."},
-        503: {"description": "Service unavailable."},
-    },
 )
 async def list_transformation(
     limit: int = 100, offset: int = 0

@@ -5,19 +5,22 @@ from fastapi.responses import HTMLResponse
 
 from ..models.system import GlobalSearchResponse
 
-router = APIRouter()
+router = APIRouter(
+    tags=["System"],
+    responses={
+        401: {"description": "Not authenticated."},
+        500: {"description": "Internal server error."},
+        503: {"description": "Service unavailable."},
+    },
+)
 
 
 @router.get(
     "/globalSearch",
     operation_id="globalSearch",
-    tags=["System"],
     responses={
-        401: {"description": "Not authenticated."},
         422: {"description": "Validation error."},
-        500: {"description": "Internal server error."},
         501: {"description": "Not implemented."},
-        503: {"description": "Service unavailable."},
     },
     response_model=GlobalSearchResponse,
 )
@@ -31,13 +34,7 @@ async def global_search(
 @router.get(
     "/health",
     operation_id="heartbeat",
-    tags=["System"],
     response_class=HTMLResponse,
-    responses={
-        401: {"description": "Not authenticated."},
-        500: {"description": "Internal server error."},
-        503: {"description": "Service unavailable."},
-    },
 )
 async def heartbeat() -> HTMLResponse:
     """Check whether the application is running and available."""
