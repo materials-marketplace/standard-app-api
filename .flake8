@@ -5,4 +5,5 @@ ignore =
     E203  # Whitespace before ':', preferred formatting for black.
 per-file-ignores =
     marketplace_standard_app_api/main.py: U100  # Most function arguments are not used.
+    marketplace_standard_app_api/routers/*.py: U100  # Most function arguments are not used.
     tests/*: U100, U101
