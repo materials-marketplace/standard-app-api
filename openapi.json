@@ -863,6 +863,69 @@
           }
         ]
       },
+      "post": {
+        "tags": [
+          "DataSink"
+        ],
+        "summary": "Create Or Replace Dataset Metadata",
+        "description": "Create or replace dataset metadata.\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#create-or-update-object-metadata",
+        "operationId": "createOrReplaceDatasetMetadata",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Collection Name",
+              "maxLength": 255,
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "collection_name",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Dataset Name",
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "dataset_name",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Dataset metadata has been created/updated."
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      },
       "delete": {
         "tags": [
           "DataSink"
@@ -968,71 +1031,6 @@
           },
           "404": {
             "description": "Not found."
-          },
-          "500": {
-            "description": "Internal server error."
-          },
-          "501": {
-            "description": "Not implemented."
-          },
-          "503": {
-            "description": "Service unavailable."
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "AuthTokenBearer": []
-          }
-        ]
-      }
-    },
-    "datasets/{collection_name}/{dataset_name}": {
-      "post": {
-        "tags": [
-          "DataSink"
-        ],
-        "summary": "Create Or Replace Dataset Metadata",
-        "description": "Create or replace dataset metadata.\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#create-or-update-object-metadata",
-        "operationId": "createOrReplaceDatasetMetadata",
-        "parameters": [
-          {
-            "required": true,
-            "schema": {
-              "title": "Collection Name",
-              "maxLength": 255,
-              "minLength": 1,
-              "type": "string"
-            },
-            "name": "collection_name",
-            "in": "path"
-          },
-          {
-            "required": true,
-            "schema": {
-              "title": "Dataset Name",
-              "minLength": 1,
-              "type": "string"
-            },
-            "name": "dataset_name",
-            "in": "path"
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Dataset metadata has been created/updated."
-          },
-          "401": {
-            "description": "Not authenticated."
           },
           "500": {
             "description": "Internal server error."

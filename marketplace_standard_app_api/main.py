@@ -328,7 +328,7 @@ async def create_dataset(
     },
 )
 @api.post(
-    "datasets/{collection_name}/{dataset_name}",
+    "/data/{collection_name}/{dataset_name}",
     operation_id="createOrReplaceDatasetMetadata",
     name="Create or Replace Dataset Metadata",
     tags=["DataSink"],
