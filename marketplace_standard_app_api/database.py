@@ -16,7 +16,6 @@ _ENGINE = None
 # See also: https://docs.sqlalchemy.org/en/14/dialects/sqlite.html#foreign-key-support
 # @event.listens_for(Engine, "connect")
 # def set_sqlite_pragma(dbapi_connection, connection_record):
-#     print("SET SQLITE PRAGMA")
 #     cursor = dbapi_connection.cursor()
 #     cursor.execute("PRAGMA foreign_keys=ON")
 #     cursor.close()
