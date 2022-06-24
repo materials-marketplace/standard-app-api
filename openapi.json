@@ -34,9 +34,6 @@
               }
             }
           },
-          "404": {
-            "description": "Not found."
-          },
           "401": {
             "description": "Not authenticated."
           },
@@ -45,6 +42,9 @@
           },
           "503": {
             "description": "Service unavailable."
+          },
+          "404": {
+            "description": "Not found."
           }
         },
         "security": [
@@ -107,17 +107,17 @@
           "401": {
             "description": "Not authenticated."
           },
-          "422": {
-            "description": "Validation error."
-          },
           "500": {
             "description": "Internal server error."
           },
-          "501": {
-            "description": "Not implemented."
-          },
           "503": {
             "description": "Service unavailable."
+          },
+          "422": {
+            "description": "Validation error."
+          },
+          "501": {
+            "description": "Not implemented."
           }
         },
         "security": [
@@ -209,20 +209,20 @@
               }
             }
           },
-          "204": {
-            "description": "No collections found."
-          },
           "401": {
             "description": "Not authenticated."
           },
           "500": {
             "description": "Internal server error."
           },
+          "503": {
+            "description": "Service unavailable."
+          },
           "501": {
             "description": "Not implemented."
           },
-          "503": {
-            "description": "Service unavailable."
+          "204": {
+            "description": "No collections found."
           },
           "422": {
             "description": "Validation Error",
@@ -298,23 +298,23 @@
               }
             }
           },
-          "204": {
-            "description": "No datasets found."
-          },
           "401": {
             "description": "Not authenticated."
-          },
-          "404": {
-            "description": "Container not found."
           },
           "500": {
             "description": "Internal server error."
           },
+          "503": {
+            "description": "Service unavailable."
+          },
           "501": {
             "description": "Not implemented."
           },
-          "503": {
-            "description": "Service unavailable."
+          "204": {
+            "description": "No datasets found."
+          },
+          "404": {
+            "description": "Container not found."
           },
           "422": {
             "description": "Validation Error",
@@ -357,23 +357,23 @@
           "201": {
             "description": "Collection has been created."
           },
-          "202": {
-            "description": "Collection has been updated."
-          },
-          "400": {
-            "description": "Bad request."
-          },
           "401": {
             "description": "Not authenticated."
           },
           "500": {
             "description": "Internal server error."
           },
+          "503": {
+            "description": "Service unavailable."
+          },
           "501": {
             "description": "Not implemented."
           },
-          "503": {
-            "description": "Service unavailable."
+          "202": {
+            "description": "Collection has been updated."
+          },
+          "400": {
+            "description": "Bad request."
           },
           "507": {
             "description": "Insufficient storage."
@@ -422,6 +422,15 @@
           "401": {
             "description": "Not authenticated."
           },
+          "500": {
+            "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
           "404": {
             "description": "Collection not found."
           },
@@ -430,15 +439,6 @@
           },
           "422": {
             "description": "Validation error."
-          },
-          "500": {
-            "description": "Internal server error."
-          },
-          "501": {
-            "description": "Not implemented."
-          },
-          "503": {
-            "description": "Service unavailable."
           }
         },
         "security": [
@@ -474,17 +474,17 @@
           "401": {
             "description": "Not authenticated."
           },
-          "404": {
-            "description": "Not found."
-          },
           "500": {
             "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
           },
           "501": {
             "description": "Not implemented."
           },
-          "503": {
-            "description": "Service unavailable."
+          "404": {
+            "description": "Not found."
           },
           "422": {
             "description": "Validation Error",
@@ -529,20 +529,20 @@
           "201": {
             "description": "Collection has been created."
           },
-          "400": {
-            "description": "Bad request."
-          },
           "401": {
             "description": "Not authenticated."
           },
           "500": {
             "description": "Internal server error."
           },
+          "503": {
+            "description": "Service unavailable."
+          },
           "501": {
             "description": "Not implemented."
           },
-          "503": {
-            "description": "Service unavailable."
+          "400": {
+            "description": "Bad request."
           },
           "507": {
             "description": "Insufficient storage."
@@ -623,11 +623,11 @@
           "500": {
             "description": "Internal server error."
           },
-          "501": {
-            "description": "Not implemented."
-          },
           "503": {
             "description": "Service unavailable."
+          },
+          "501": {
+            "description": "Not implemented."
           },
           "507": {
             "description": "Insufficient storage."
@@ -689,11 +689,11 @@
           "500": {
             "description": "Internal server error."
           },
-          "501": {
-            "description": "Not implemented."
-          },
           "503": {
             "description": "Service unavailable."
+          },
+          "501": {
+            "description": "Not implemented."
           },
           "422": {
             "description": "Validation Error",
@@ -751,17 +751,17 @@
           "401": {
             "description": "Not authenticated."
           },
-          "404": {
-            "description": "Not found."
-          },
           "500": {
             "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
           },
           "501": {
             "description": "Not implemented."
           },
-          "503": {
-            "description": "Service unavailable."
+          "404": {
+            "description": "Not found."
           },
           "422": {
             "description": "Validation Error",
@@ -837,11 +837,11 @@
           "500": {
             "description": "Internal server error."
           },
-          "501": {
-            "description": "Not implemented."
-          },
           "503": {
             "description": "Service unavailable."
+          },
+          "501": {
+            "description": "Not implemented."
           },
           "507": {
             "description": "Insufficient storage."
@@ -903,11 +903,11 @@
           "500": {
             "description": "Internal server error."
           },
-          "501": {
-            "description": "Not implemented."
-          },
           "503": {
             "description": "Service unavailable."
+          },
+          "501": {
+            "description": "Not implemented."
           },
           "422": {
             "description": "Validation Error",
@@ -963,17 +963,17 @@
           "401": {
             "description": "Not authenticated."
           },
-          "404": {
-            "description": "Not found."
-          },
           "500": {
             "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
           },
           "501": {
             "description": "Not implemented."
           },
-          "503": {
-            "description": "Service unavailable."
+          "404": {
+            "description": "Not found."
           },
           "422": {
             "description": "Validation Error",
@@ -1029,17 +1029,17 @@
           "401": {
             "description": "Not authenticated."
           },
-          "404": {
-            "description": "Not found."
-          },
           "500": {
             "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
           },
           "501": {
             "description": "Not implemented."
           },
-          "503": {
-            "description": "Service unavailable."
+          "404": {
+            "description": "Not found."
           },
           "422": {
             "description": "Validation Error",
@@ -1106,11 +1106,11 @@
           "500": {
             "description": "Internal server error."
           },
-          "501": {
-            "description": "Not implemented."
-          },
           "503": {
             "description": "Service unavailable."
+          },
+          "501": {
+            "description": "Not implemented."
           },
           "422": {
             "description": "Validation Error",
@@ -1163,11 +1163,11 @@
           "500": {
             "description": "Internal server error."
           },
-          "501": {
-            "description": "Not implemented."
-          },
           "503": {
             "description": "Service unavailable."
+          },
+          "501": {
+            "description": "Not implemented."
           },
           "422": {
             "description": "Validation Error",
@@ -1221,17 +1221,17 @@
           "401": {
             "description": "Not authenticated."
           },
-          "404": {
-            "description": "Not found."
-          },
           "500": {
             "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
           },
           "501": {
             "description": "Not implemented."
           },
-          "503": {
-            "description": "Service unavailable."
+          "404": {
+            "description": "Not found."
           },
           "422": {
             "description": "Validation Error",
@@ -1276,17 +1276,17 @@
           "401": {
             "description": "Not authenticated."
           },
-          "404": {
-            "description": "Not found."
-          },
           "500": {
             "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
           },
           "501": {
             "description": "Not implemented."
           },
-          "503": {
-            "description": "Service unavailable."
+          "404": {
+            "description": "Not found."
           },
           "422": {
             "description": "Validation Error",
@@ -1348,20 +1348,20 @@
           "401": {
             "description": "Not authenticated."
           },
+          "500": {
+            "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
           "404": {
             "description": "Not found."
           },
           "409": {
             "description": "The requested state is unavailable (example: trying to stop an already completed transformation)."
-          },
-          "500": {
-            "description": "Internal server error."
-          },
-          "501": {
-            "description": "Not implemented."
-          },
-          "503": {
-            "description": "Service unavailable."
           },
           "422": {
             "description": "Validation Error",
@@ -1415,17 +1415,17 @@
           "401": {
             "description": "Not authenticated."
           },
-          "404": {
-            "description": "Not found."
-          },
           "500": {
             "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
           },
           "501": {
             "description": "Not implemented."
           },
-          "503": {
-            "description": "Service unavailable."
+          "404": {
+            "description": "Not found."
           },
           "422": {
             "description": "Validation Error",
