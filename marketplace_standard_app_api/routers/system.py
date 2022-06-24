@@ -20,7 +20,7 @@ router = APIRouter(
     response_model=GlobalSearchResponse,
 )
 async def global_search(
-    query: str, limit: Optional[int] = 100, offset: Optional[int] = 0
+    q: str, limit: Optional[int] = 100, offset: Optional[int] = 0
 ) -> GlobalSearchResponse:
     """Respond to global search queries."""
     raise HTTPException(status_code=501, detail="Not implemented.")

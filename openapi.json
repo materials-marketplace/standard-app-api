@@ -66,10 +66,10 @@
           {
             "required": true,
             "schema": {
-              "title": "Query",
+              "title": "Q",
               "type": "string"
             },
-            "name": "query",
+            "name": "q",
             "in": "query"
           },
           {
