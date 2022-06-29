@@ -1316,12 +1316,12 @@
           {
             "required": true,
             "schema": {
-              "title": "Id",
+              "title": "Transformation Id",
               "type": "string",
               "format": "uuid4"
             },
-            "name": "id",
-            "in": "query"
+            "name": "transformation_id",
+            "in": "path"
           }
         ],
         "requestBody": {

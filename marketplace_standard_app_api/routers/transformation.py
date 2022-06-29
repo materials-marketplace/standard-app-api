@@ -1,6 +1,7 @@
-from typing import Optional
+from dataclasses import asdict
+from uuid import UUID
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Response
 
 from ..models.transformation import (
     NewTransformationModel,
@@ -8,10 +9,15 @@ from ..models.transformation import (
     TransformationId,
     TransformationListResponse,
     TransformationModel,
+    TransformationState,
     TransformationStateResponse,
     TransformationUpdateModel,
     TransformationUpdateResponse,
 )
+from ..reference.simulation_controller import Simulation, SimulationManager
+
+simulation_manager = SimulationManager()
+
 
 router = APIRouter(
     prefix="/transformations",
@@ -40,7 +46,10 @@ async def create_transformation(
 
     Note that the parameters of an existing transformation can not be changed.
     """
-    raise HTTPException(status_code=501, detail="Not implemented.")
+    transformation_id = TransformationId(
+        UUID(simulation_manager.create_simulation(transformation.parameters))
+    )
+    return TransformationCreateResponse(id=transformation_id)
 
 
 @router.get(
@@ -55,7 +64,16 @@ async def get_transformation(
     transformation_id: TransformationId,
 ) -> TransformationModel:
     """Retrieve an existing transformation."""
-    raise HTTPException(status_code=501, detail="Not implemented.")
+    try:
+        simulation = simulation_manager._get_simulation(str(transformation_id))
+    except KeyError:
+        raise HTTPException(404, "Not found.")
+    status = simulation_manager.get_simulation_state(job_id=str(transformation_id))
+    return TransformationModel(
+        id=transformation_id,
+        parameters=asdict(simulation.config),
+        state=status.name,
+    )
 
 
 @router.delete(
@@ -68,9 +86,13 @@ async def get_transformation(
 )
 async def delete_transformation(
     transformation_id: TransformationId,
-) -> Optional[HTTPException]:
+) -> Response:
     """Delete an existing transformation."""
-    raise HTTPException(status_code=501, detail="Not implemented.")
+    try:
+        simulation_manager.delete_simulation(job_id=str(transformation_id))
+        return Response(status_code=204)
+    except KeyError:
+        raise HTTPException(404, "Not found.")
 
 
 @router.patch(
@@ -85,7 +107,7 @@ async def delete_transformation(
     },
 )
 async def update_transformation(
-    id: TransformationId, update: TransformationUpdateModel
+    transformation_id: TransformationId, update: TransformationUpdateModel
 ) -> TransformationUpdateResponse:
     """Update an existing transformation.
 
@@ -94,7 +116,18 @@ async def update_transformation(
     changed from CREATED to RUNNING or from RUNNING to STOPPED.  All other state
     update requests will result in a 409 conflict error.
     """
-    raise HTTPException(status_code=501, detail="Not implemented.")
+    try:
+        status = simulation_manager.get_simulation_state(job_id=str(transformation_id))
+    except KeyError:
+        raise HTTPException(404, "Not found.")
+    if update.state is TransformationState.RUNNING and status.name == "CREATED":
+        simulation_manager.run_simulation(job_id=str(transformation_id))
+        return TransformationUpdateResponse(id=transformation_id, state=update.state)
+    elif update.state is TransformationState.STOPPED and status.name == "RUNNING":
+        simulation_manager.stop_simulation(job_id=str(transformation_id))
+        return TransformationUpdateResponse(id=transformation_id, state=update.state)
+
+    raise HTTPException(409, "The requested state is unavailable.")
 
 
 @router.get(
@@ -109,7 +142,11 @@ async def get_transformation_state(
     transformation_id: TransformationId,
 ) -> TransformationStateResponse:
     """Retrieve the state of a transformation."""
-    raise HTTPException(status_code=501, detail="Not implemented.")
+    try:
+        status = simulation_manager.get_simulation_state(job_id=str(transformation_id))
+        return TransformationStateResponse(id=transformation_id, state=status.name)
+    except KeyError:
+        raise HTTPException(404, "Not found.")
 
 
 @router.get(
@@ -121,4 +158,16 @@ async def list_transformation(
     limit: int = 100, offset: int = 0
 ) -> TransformationListResponse:
     """Retrieve a list of transformations."""
-    raise HTTPException(status_code=501, detail="Not implemented.")
+    simulation_ids = simulation_manager.get_simulation_list()[offset : offset + limit]
+    simulations: list[Simulation] = [
+        simulation_manager._get_simulation(sim_id) for sim_id in simulation_ids
+    ]
+
+    return TransformationListResponse(
+        items=[
+            TransformationModel(
+                id=simulation.job_id, parameters=asdict(simulation.config)
+            )
+            for simulation in simulations
+        ]
+    )

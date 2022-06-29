@@ -1,21 +1,13 @@
 import json
 
 import pytest
-from fastapi import Request
-from fastapi.testclient import TestClient
-
-import marketplace_standard_app_api.database
-import marketplace_standard_app_api.routers.object_storage
-from marketplace_standard_app_api import api
-from marketplace_standard_app_api.main import auth_token_bearer
 
 
-async def _fake_auth_token_bearer(request: Request):
-    return None
+@pytest.fixture(autouse=True)
+def _mock_paths(tmp_path, monkeypatch):
+    import marketplace_standard_app_api.database
+    import marketplace_standard_app_api.routers.object_storage
 
-
-@pytest.fixture
-def client(tmp_path, monkeypatch):
     db_path = tmp_path / "test.db"
     monkeypatch.setattr(
         marketplace_standard_app_api.database,
@@ -27,17 +19,6 @@ def client(tmp_path, monkeypatch):
         "DATA_DIR",
         tmp_path / "data",
     )
-
-    api.dependency_overrides[auth_token_bearer] = _fake_auth_token_bearer
-    client = TestClient(api)
-    with client:
-        yield client
-    api.dependency_overrides = {}
-
-
-def test_frontend(client):
-    response = client.get("/")
-    assert response.status_code == 501
 
 
 @pytest.fixture
