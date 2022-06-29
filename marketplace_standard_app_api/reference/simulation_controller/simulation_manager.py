@@ -1,7 +1,7 @@
 import logging
 
 from ..simulation_controller.simulation import Simulation
-from ..simulation_controller.utils import SimulationStatus
+from ..simulation_controller.utils import SimulationState
 
 
 class SimulationManager:
@@ -86,18 +86,18 @@ class SimulationManager:
         self._get_simulation(job_id).delete()
         self._delete_simulation(job_id)
 
-    def get_simulation_status(self, job_id: str) -> SimulationStatus:
-        """Return the status of a particular simulation.
+    def get_simulation_state(self, job_id: str) -> SimulationState:
+        """Return the state of a particular simulation.
 
         Args:
             job_id: id of the simulation
 
         Returns:
-            SimulationStatus: status of the simulation
+            SimulationState: state of the simulation
         """
-        return self._get_simulation(job_id).status
+        return self._get_simulation(job_id).state
 
-    def get_simulation_list(self) -> list:
+    def get_simulation_list(self) -> list[str]:
         """Returns unique ids of all the simulations.
 
         Returns:

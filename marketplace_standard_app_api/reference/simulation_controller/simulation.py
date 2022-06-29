@@ -7,7 +7,7 @@ import uuid
 from ..simulation_controller.utils import (
     SIMULATIONS_FOLDER_PATH,
     SimulationConfig,
-    SimulationStatus,
+    SimulationState,
     create_input_files,
 )
 
@@ -17,16 +17,17 @@ class Simulation:
 
     def __init__(self, request_obj: dict):
         self.job_id: str = str(uuid.uuid4())
-        self.simulationPath = os.path.join(SIMULATIONS_FOLDER_PATH, self.job_id)
-        create_input_files(self.simulationPath, SimulationConfig(request_obj))
-        self._status: SimulationStatus = SimulationStatus.CREATED
+        self.path = SIMULATIONS_FOLDER_PATH / self.job_id
+        self.config = SimulationConfig(**request_obj)
+        create_input_files(self.path, self.config)
+        self._state: SimulationState = SimulationState.CREATED
         self._process = None
         logging.info(
             f"Simulation '{self.job_id}' with " f"configuration {request_obj} created."
         )
 
     @property
-    def status(self) -> SimulationStatus:
+    def state(self) -> SimulationState:
         """Getter for the status.
 
         If the simulation is running, the process is checked for completion.
@@ -34,21 +35,21 @@ class Simulation:
         Returns:
             SimulationStatus: status of the simulation
         """
-        if self._status == SimulationStatus.INPROGRESS:
+        if self._state == SimulationState.RUNNING:
             process_status = self.process.poll()
             if process_status is None:
-                return SimulationStatus.INPROGRESS
+                return SimulationState.RUNNING
             elif process_status == 0:
                 logging.info(f"Simulation '{self.job_id}' is now completed.")
-                self.status = SimulationStatus.COMPLETED
+                self.state = SimulationState.COMPLETED
             else:
                 logging.error(f"Error occurred in simulation '{self.job_id}'.")
-                self.status = SimulationStatus.ERROR
-        return self._status
+                self.state = SimulationState.FAILED
+        return self._state
 
-    @status.setter
-    def status(self, value: SimulationStatus):
-        self._status = value
+    @state.setter
+    def state(self, value: SimulationState):
+        self._state = value
 
     @property
     def process(self):
@@ -68,17 +69,16 @@ class Simulation:
         Raises:
             RuntimeError: when the simulation is already in progress
         """
-        if self.status == SimulationStatus.INPROGRESS:
+        if self.state == SimulationState.RUNNING:
             msg = f"Simulation '{self.job_id}' already in progress."
             logging.error(msg)
             raise RuntimeError(msg)
-        outputPath = os.path.join(self.simulationPath, "output")
-        if not os.path.isdir(outputPath):
-            os.mkdir(outputPath)
-        os.chdir(self.simulationPath)
+        output_path = self.path / "output"
+        output_path.mkdir(parents=True, exist_ok=True)
 
-        self.process = subprocess.Popen(["sleep", "600"], stdout=subprocess.PIPE)
-        self.status = SimulationStatus.INPROGRESS
+        os.chdir(self.path)
+        self.process = subprocess.Popen(["sleep", "3"], stdout=subprocess.PIPE)
+        self.state = SimulationState.RUNNING
         logging.info(f"Simulation '{self.job_id}' started successfully.")
 
     def stop(self):
@@ -93,7 +93,7 @@ class Simulation:
             raise RuntimeError(msg)
 
         self.process.terminate()
-        self.status = SimulationStatus.STOPPED
+        self.state = SimulationState.STOPPED
         self.process = None
         logging.info(f"Simulation '{self.job_id}' stopped successfully.")
 
@@ -104,9 +104,9 @@ class Simulation:
         Raises:
             RuntimeError: if deleting a running simulation
         """
-        if self.status == SimulationStatus.INPROGRESS:
+        if self.state == SimulationState.RUNNING:
             msg = f"Simulation '{self.job_id}' is running. Stop it before deleting it."
             logging.error(msg)
             raise RuntimeError(msg)
-        shutil.rmtree(self.simulationPath)
+        shutil.rmtree(self.path)
         logging.info(f"Simulation '{self.job_id}' and related files deleted.")
