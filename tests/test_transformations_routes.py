@@ -24,7 +24,7 @@ def test_access_non_existing_transformation(client):
     assert not response.ok
 
 
-def test_create_and_runtransformation(client):
+def test_transformation_lifecycle(client):
     response = client.get("transformations")
     assert len(response.json()["items"]) == 0
     assert response.status_code == 200
