@@ -22,6 +22,7 @@ router = APIRouter(
 @router.get(
     "",
     operation_id="listCollections",
+    summary="List all collections",
     tags=["DataSource", "DataSink"],
     response_model=CollectionListResponse,
     responses={
@@ -38,6 +39,7 @@ async def list_collections(
 @router.get(
     "/{collection_name}",
     operation_id="listDatasets",
+    summary="List all datasets in a collection",
     tags=["DataSource"],
     response_model=DatasetListResponse,
     responses={
@@ -70,6 +72,7 @@ https://docs.openstack.org/api-ref/object-store/index.html#create-container
     "/{collection_name}",
     name="Create or update Collection",
     operation_id="createOrUpdateCollection",
+    summary="Create or update a collection",
     tags=["DataSink"],
     status_code=201,
     response_class=Response,
@@ -83,8 +86,9 @@ https://docs.openstack.org/api-ref/object-store/index.html#create-container
 )
 @router.put(
     "/",
-    operation_id="createCollection",
     name="Create Collection",
+    operation_id="createCollection",
+    summary="Create a collection",
     tags=["DataSink"],
     status_code=201,
     response_class=Response,
@@ -106,6 +110,7 @@ async def create_collection(
     "/{collection_name}",
     name="Get Collection Metadata",
     operation_id="getCollectionMetadata",
+    summary="Get a collection's metadata",
     tags=["DataSource"],
     response_class=Response,
     status_code=204,
@@ -123,6 +128,7 @@ async def get_collection_metadata(collection_name: CollectionName) -> Response:
     "/{collection_name}",
     name="Delete Collection",
     operation_id="deleteCollection",
+    summary="Delete an empty collection",
     tags=["DataSink"],
     response_class=Response,
     status_code=204,
@@ -156,6 +162,7 @@ https://docs.openstack.org/api-ref/object-store/index.html#create-or-replace-obj
     "/{collection_name}/{dataset_name}",
     name="Create or Replace Dataset",
     operation_id="createOrReplaceDataset",
+    summary="Create or replace a dataset",
     tags=["DataSink"],
     response_model=DatasetCreateResponse,
     status_code=201,
@@ -166,7 +173,9 @@ https://docs.openstack.org/api-ref/object-store/index.html#create-or-replace-obj
 )
 @router.put(
     "/{collection_name}/",
+    name="Create a dataset",
     operation_id="createDataset",
+    summary="Create a dataset",
     tags=["DataSink"],
     response_model=DatasetCreateResponse,
     status_code=201,
@@ -187,8 +196,9 @@ async def create_dataset(
 
 @router.post(
     "/{collection_name}/",
-    operation_id="createDatasetMetadata",
     name="Create Dataset Metadata",
+    operation_id="createDatasetMetadata",
+    summary="Create a dataset's metadata",
     tags=["DataSink"],
     status_code=202,
     response_class=Response,
@@ -198,8 +208,9 @@ async def create_dataset(
 )
 @router.post(
     "/{collection_name}/{dataset_name}",
-    operation_id="createOrReplaceDatasetMetadata",
     name="Create or Replace Dataset Metadata",
+    operation_id="createOrReplaceDatasetMetadata",
+    summary="Create or replace a dataset's metadata",
     tags=["DataSink"],
     status_code=202,
     response_class=Response,
@@ -222,7 +233,9 @@ async def create_or_replace_dataset_metadata(
 
 @router.head(
     "/{collection_name}/{dataset_name}",
+    name="Get Dataset Metadata",
     operation_id="getDatasetMetadata",
+    summary="Get a dataset's metadata",
     tags=["DataSource"],
     status_code=200,
     response_class=Response,
@@ -257,7 +270,9 @@ async def get_dataset_metadata(
 
 @router.get(
     "/{collection_name}/{dataset_name}",
+    name="Get Dataset",
     operation_id="getDataset",
+    summary="Get a dataset",
     tags=["DataSource"],
     response_class=Response,
     responses={
@@ -296,7 +311,9 @@ async def get_dataset(
 
 @router.delete(
     "/{collection_name}/{dataset_name}",
+    name="Delete Dataset",
     operation_id="deleteDataset",
+    summary="Delete a dataset",
     tags=["DataSink"],
     status_code=204,
     responses={

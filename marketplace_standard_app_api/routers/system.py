@@ -13,6 +13,7 @@ router = APIRouter(
 @router.get(
     "/globalSearch",
     operation_id="globalSearch",
+    summary="Respond to global search queries",
     responses={
         422: {"description": "Validation error."},
         501: {"description": "Not implemented."},
@@ -29,6 +30,7 @@ async def global_search(
 @router.get(
     "/health",
     operation_id="heartbeat",
+    summary="Check if the application is running and available",
     response_class=HTMLResponse,
 )
 async def heartbeat() -> HTMLResponse:
