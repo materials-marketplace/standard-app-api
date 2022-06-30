@@ -12,6 +12,7 @@ router = APIRouter(
 @router.get(
     "/",
     operation_id="frontend",
+    summary="Open the frontend of the app",
     response_class=HTMLResponse,
 )
 async def frontpage() -> HTMLResponse:

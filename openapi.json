@@ -20,7 +20,7 @@
         "tags": [
           "FrontPage"
         ],
-        "summary": "Frontpage",
+        "summary": "Open the frontend of the app",
         "description": "Open the frontpage of the app.",
         "operationId": "frontend",
         "responses": {
@@ -59,7 +59,7 @@
         "tags": [
           "System"
         ],
-        "summary": "Global Search",
+        "summary": "Respond to global search queries",
         "description": "Respond to global search queries.",
         "operationId": "globalSearch",
         "parameters": [
@@ -132,7 +132,7 @@
         "tags": [
           "System"
         ],
-        "summary": "Heartbeat",
+        "summary": "Check if the application is running and available",
         "description": "Check whether the application is running and available.",
         "operationId": "heartbeat",
         "responses": {
@@ -169,7 +169,7 @@
           "DataSource",
           "DataSink"
         ],
-        "summary": "List Collections",
+        "summary": "List all collections",
         "description": "List all collections.",
         "operationId": "listCollections",
         "parameters": [
@@ -247,7 +247,7 @@
         "tags": [
           "DataSource"
         ],
-        "summary": "List Datasets",
+        "summary": "List all datasets in a collection",
         "description": "List all datasets.",
         "operationId": "listDatasets",
         "parameters": [
@@ -337,7 +337,7 @@
         "tags": [
           "DataSink"
         ],
-        "summary": "Create Or Update Collection",
+        "summary": "Create or update a collection",
         "description": "Create or update a collection.\n\nTo add custom metadata, add keys to the header of the form:\n\n- X-Object-Meta-name: value\n\nWhere 'name' is the name of the metadata key and 'value' is the\ncorresponding value.\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#create-container\n",
         "operationId": "createOrUpdateCollection",
         "parameters": [
@@ -399,7 +399,7 @@
         "tags": [
           "DataSink"
         ],
-        "summary": "Delete Collection",
+        "summary": "Delete an empty collection",
         "description": "Delete an empty collection.",
         "operationId": "deleteCollection",
         "parameters": [
@@ -451,7 +451,7 @@
         "tags": [
           "DataSource"
         ],
-        "summary": "Get Collection Metadata",
+        "summary": "Get a collection's metadata",
         "description": "Get the metadata for a collection.",
         "operationId": "getCollectionMetadata",
         "parameters": [
@@ -509,7 +509,7 @@
         "tags": [
           "DataSink"
         ],
-        "summary": "Create Collection",
+        "summary": "Create a collection",
         "description": "Create a collection.\n\nTo add custom metadata, add keys to the header of the form:\n\n- X-Object-Meta-name: value\n\nWhere 'name' is the name of the metadata key and 'value' is the\ncorresponding value.\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#create-container\n",
         "operationId": "createCollection",
         "parameters": [
@@ -570,7 +570,7 @@
         "tags": [
           "DataSink"
         ],
-        "summary": "Create Dataset",
+        "summary": "Create a dataset",
         "description": "Create a dataset.\n\nTo add custom metadata, add keys to the header of the form:\n\n- X-Object-Meta-name: value\n\nWhere 'name' is the name of the metadata key and 'value' is the\ncorresponding value.\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#create-or-replace-object\n",
         "operationId": "createDataset",
         "parameters": [
@@ -653,7 +653,7 @@
         "tags": [
           "DataSink"
         ],
-        "summary": "Create Dataset Metadata",
+        "summary": "Create a dataset's metadata",
         "description": "Create or replace dataset metadata.\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#create-or-update-object-metadata",
         "operationId": "createDatasetMetadata",
         "parameters": [
@@ -718,7 +718,7 @@
         "tags": [
           "DataSource"
         ],
-        "summary": "Get Dataset",
+        "summary": "Get a dataset",
         "description": "Get a dataset.\n\nReturns the object as part of the request body and metadata as part of the\nresponse headers.\n\nIn addition to the standard response header keys (Content-Type and\nContent-Length), the header may also contain metadata key-value pairs in the\nform of:\n\n- X-Object-Meta-name: value\n\nWhere 'name' is the name of the metadata key and 'value' is the\ncorresponding value.\n\nExample response header for a plain-text file:\n- Content-Type: text/plain;charset=UTF-8\n- Content-Length: 1234\n- X-Object-Meta-my-key: some-value\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#get-object-content-and-metadata",
         "operationId": "getDataset",
         "parameters": [
@@ -784,7 +784,7 @@
         "tags": [
           "DataSink"
         ],
-        "summary": "Create Or Replace Dataset",
+        "summary": "Create or replace a dataset",
         "description": "Create or replace a dataset.\n\nTo add custom metadata, add keys to the header of the form:\n\n- X-Object-Meta-name: value\n\nWhere 'name' is the name of the metadata key and 'value' is the\ncorresponding value.\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#create-or-replace-object\n",
         "operationId": "createOrReplaceDataset",
         "parameters": [
@@ -867,7 +867,7 @@
         "tags": [
           "DataSink"
         ],
-        "summary": "Create Or Replace Dataset Metadata",
+        "summary": "Create or replace a dataset's metadata",
         "description": "Create or replace dataset metadata.\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#create-or-update-object-metadata",
         "operationId": "createOrReplaceDatasetMetadata",
         "parameters": [
@@ -930,7 +930,7 @@
         "tags": [
           "DataSink"
         ],
-        "summary": "Delete Dataset",
+        "summary": "Delete a dataset",
         "description": "Delete a dataset with the given dataset id.\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#delete-object",
         "operationId": "deleteDataset",
         "parameters": [
@@ -996,7 +996,7 @@
         "tags": [
           "DataSource"
         ],
-        "summary": "Get Dataset Metadata",
+        "summary": "Get a dataset's metadata",
         "description": "Get dataset metadata.\n\nReturns the dataset metadata in the response header in the form of:\n\n- X-Object-Meta-name: value\n\nWhere 'name' is the name of the metadata key and 'value' is the\ncorresponding value.\n\nExample response header for a plain-text file:\n- Content-Type: text/plain;charset=UTF-8\n- Content-Length: 1234\n- X-Object-Meta-my-key: some-value\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#show-object-metadata",
         "operationId": "getDatasetMetadata",
         "parameters": [
@@ -1064,7 +1064,7 @@
         "tags": [
           "Transformation"
         ],
-        "summary": "List Transformation",
+        "summary": "List all transformations",
         "description": "Retrieve a list of transformations.",
         "operationId": "getTransformationList",
         "parameters": [
@@ -1133,7 +1133,7 @@
         "tags": [
           "Transformation"
         ],
-        "summary": "Create Transformation",
+        "summary": "Create a new transformation",
         "description": "Create a new transformation.\n\nBy default when creating a new transformation resource its state is set to\nCREATED, meaning it is created on the remote system, but is not yet\nexecuted. To execute a transformation either set the state field directly to\nRUNNING when creating the transformation or toggle it later via the\nupdateTransformation operation.\n\nNote that the parameters of an existing transformation can not be changed.",
         "operationId": "newTransformation",
         "requestBody": {
@@ -1192,7 +1192,7 @@
         "tags": [
           "Transformation"
         ],
-        "summary": "Get Transformation",
+        "summary": "Get a transformation",
         "description": "Retrieve an existing transformation.",
         "operationId": "getTransformation",
         "parameters": [
@@ -1254,7 +1254,7 @@
         "tags": [
           "Transformation"
         ],
-        "summary": "Delete Transformation",
+        "summary": "Delete a transformation",
         "description": "Delete an existing transformation.",
         "operationId": "deleteTransformation",
         "parameters": [
@@ -1309,7 +1309,7 @@
         "tags": [
           "Transformation"
         ],
-        "summary": "Update Transformation",
+        "summary": "Update a transformation",
         "description": "Update an existing transformation.\n\nUsed to change the state of a transformation. When a transformation is first\ncreated it is either in a CREATED or RUNNING state. The state can then be\nchanged from CREATED to RUNNING or from RUNNING to STOPPED.  All other state\nupdate requests will result in a 409 conflict error.",
         "operationId": "updateTransformation",
         "parameters": [
@@ -1386,7 +1386,7 @@
         "tags": [
           "Transformation"
         ],
-        "summary": "Get Transformation State",
+        "summary": "Get the state of a transformation",
         "description": "Retrieve the state of a transformation.",
         "operationId": "getTransformationState",
         "parameters": [

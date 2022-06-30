@@ -25,6 +25,7 @@ router = APIRouter(
 @router.post(
     "",
     operation_id="newTransformation",
+    summary="Create a new transformation",
     response_model=TransformationCreateResponse,
 )
 async def create_transformation(
@@ -46,6 +47,7 @@ async def create_transformation(
 @router.get(
     "/{transformation_id}",
     operation_id="getTransformation",
+    summary="Get a transformation",
     response_model=TransformationModel,
     responses={
         404: {"description": "Not found."},
@@ -61,6 +63,7 @@ async def get_transformation(
 @router.delete(
     "/{transformation_id}",
     operation_id="deleteTransformation",
+    summary="Delete a transformation",
     status_code=204,
     responses={
         404: {"description": "Not found."},
@@ -76,6 +79,7 @@ async def delete_transformation(
 @router.patch(
     "/{transformation_id}",
     operation_id="updateTransformation",
+    summary="Update a transformation",
     response_model=TransformationUpdateResponse,
     responses={
         404: {"description": "Not found."},
@@ -100,6 +104,7 @@ async def update_transformation(
 @router.get(
     "/{transformation_id}/state",
     operation_id="getTransformationState",
+    summary="Get the state of a transformation",
     response_model=TransformationStateResponse,
     responses={
         404: {"description": "Not found."},
@@ -115,6 +120,7 @@ async def get_transformation_state(
 @router.get(
     "",
     operation_id="getTransformationList",
+    summary="List all transformations",
     response_model=TransformationListResponse,
 )
 async def list_transformation(
