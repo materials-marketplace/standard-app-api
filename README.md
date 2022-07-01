@@ -5,7 +5,7 @@
 This repository contains the specification of the Materials MarketPlace Standard App API.
 The API is used as basis for the interaction between apps on the Materials MarketPlace platform.
 
-This repository contains the API version: 0.1.0.
+This repository contains the API version: 0.2.0.
 
 ## Authors
 
