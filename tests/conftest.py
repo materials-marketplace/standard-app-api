@@ -12,7 +12,7 @@ from pathlib import Path
 
 import pytest
 
-from marketplace_standard_app_api import api
+from marketplace_standard_app_api.main import api
 
 
 @pytest.fixture
