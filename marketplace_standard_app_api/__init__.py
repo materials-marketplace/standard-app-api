@@ -8,7 +8,6 @@ used to both template MarketPlace applications and lint their published APIs
 during the registration process.
 """
 
-from .main import api
 from .version import __version__
 
-__all__ = ["api", "__version__"]
+__all__ = ["__version__"]
