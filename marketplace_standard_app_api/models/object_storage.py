@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 from pydantic import BaseModel, ConstrainedStr
 
@@ -36,3 +36,17 @@ class DatasetModel(BaseModel):
 
 
 DatasetListResponse = List[DatasetModel]
+
+
+class MappingName(ConstrainedStr):
+    min_length = 1
+    max_length = 255
+
+
+class MappingModel(BaseModel):
+    name: MappingName
+    type: str
+    properties: List[Dict[str, str]]
+
+
+MappingListResponse = List[MappingName]

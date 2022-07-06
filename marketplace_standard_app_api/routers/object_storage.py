@@ -9,6 +9,8 @@ from ..models.object_storage import (
     DatasetCreateResponse,
     DatasetListResponse,
     DatasetName,
+    MappingListResponse,
+    MappingModel,
 )
 
 router = APIRouter(
@@ -329,4 +331,36 @@ async def delete_dataset(
     storage API:
     https://docs.openstack.org/api-ref/object-store/index.html#delete-object
     """
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+
+@router.get(
+    "/mappings",
+    operation_id="listMappings",
+    summary="List all the mappings",
+    tags=["DataSource", "DataSink"],
+    response_model=MappingListResponse,
+    responses={
+        204: {"description": "No mappings found."},
+    },
+)
+async def list_mappings(
+    limit: int = 100, offset: int = 0
+) -> Union[MappingListResponse, Response]:
+    """List all mappings."""
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+
+@router.get(
+    "/mappings/{mapping_id}",
+    operation_id="getMapping",
+    summary="Get a specific mapping",
+    tags=["DataSource", "DataSink"],
+    response_model=MappingModel,
+    responses={
+        404: {"description": "Not found."},
+    },
+)
+async def get_mapping(mapping_id) -> Union[MappingModel, Response]:
+    """Get a mapping."""
     raise HTTPException(status_code=501, detail="Not implemented.")

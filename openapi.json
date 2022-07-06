@@ -1059,6 +1059,150 @@
         ]
       }
     },
+    "/data/mappings": {
+      "get": {
+        "tags": [
+          "DataSource",
+          "DataSink"
+        ],
+        "summary": "List all the mappings",
+        "description": "List all mappings.",
+        "operationId": "listMappings",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "type": "integer",
+              "default": 100
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Offset",
+              "type": "integer",
+              "default": 0
+            },
+            "name": "offset",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Listmappings",
+                  "type": "array",
+                  "items": {
+                    "maxLength": 255,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "204": {
+            "description": "No mappings found."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
+    "/data/mappings/{mapping_id}": {
+      "get": {
+        "tags": [
+          "DataSource",
+          "DataSink"
+        ],
+        "summary": "Get a specific mapping",
+        "description": "Get a mapping.",
+        "operationId": "getMapping",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Mapping Id"
+            },
+            "name": "mapping_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MappingModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "404": {
+            "description": "Not found."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
     "/transformations": {
       "get": {
         "tags": [
@@ -1606,6 +1750,37 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ValidationError"
+            }
+          }
+        }
+      },
+      "MappingModel": {
+        "title": "MappingModel",
+        "required": [
+          "name",
+          "type",
+          "properties"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "maxLength": 255,
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": {
+            "title": "Type",
+            "type": "string"
+          },
+          "properties": {
+            "title": "Properties",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
             }
           }
         }
