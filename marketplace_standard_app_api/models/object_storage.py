@@ -40,12 +40,10 @@ DatasetListResponse = List[DatasetModel]
 
 class MappingName(ConstrainedStr):
     min_length = 1
-    max_length = 255
 
 
 class MappingModel(BaseModel):
     name: MappingName
-    type: str
     properties: List[Dict[str, str]]
 
 

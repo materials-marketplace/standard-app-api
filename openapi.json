@@ -1099,7 +1099,6 @@
                   "title": "Response Listmappings",
                   "type": "array",
                   "items": {
-                    "maxLength": 255,
                     "minLength": 1,
                     "type": "string"
                   }
@@ -1758,19 +1757,13 @@
         "title": "MappingModel",
         "required": [
           "name",
-          "type",
           "properties"
         ],
         "type": "object",
         "properties": {
           "name": {
             "title": "Name",
-            "maxLength": 255,
             "minLength": 1,
-            "type": "string"
-          },
-          "type": {
-            "title": "Type",
             "type": "string"
           },
           "properties": {
