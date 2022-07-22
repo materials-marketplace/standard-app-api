@@ -1059,15 +1059,15 @@
         ]
       }
     },
-    "/data/mappings": {
+    "/data/semanticMappings": {
       "get": {
         "tags": [
           "DataSource",
           "DataSink"
         ],
-        "summary": "List all the mappings",
-        "description": "List all mappings.",
-        "operationId": "listMappings",
+        "summary": "List all semantic mappings",
+        "description": "List all semantic mappings.",
+        "operationId": "listSemanticMappings",
         "parameters": [
           {
             "required": false,
@@ -1096,7 +1096,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Response Listmappings",
+                  "title": "Response Listsemanticmappings",
                   "type": "array",
                   "items": {
                     "minLength": 1,
@@ -1139,22 +1139,22 @@
         ]
       }
     },
-    "/data/mappings/{mapping_id}": {
+    "/data/semanticMappings/{semantic_mapping_id}": {
       "get": {
         "tags": [
           "DataSource",
           "DataSink"
         ],
-        "summary": "Get a specific mapping",
-        "description": "Get a mapping.",
-        "operationId": "getMapping",
+        "summary": "Get a specific semantic mapping",
+        "description": "Get a semantic mapping.",
+        "operationId": "getSemanticMapping",
         "parameters": [
           {
             "required": true,
             "schema": {
-              "title": "Mapping Id"
+              "title": "Semantic Mapping Id"
             },
-            "name": "mapping_id",
+            "name": "semantic_mapping_id",
             "in": "path"
           }
         ],
@@ -1164,7 +1164,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MappingModel"
+                  "$ref": "#/components/schemas/SemanticMappingModel"
                 }
               }
             }
@@ -1753,8 +1753,30 @@
           }
         }
       },
-      "MappingModel": {
-        "title": "MappingModel",
+      "NewTransformationModel": {
+        "title": "NewTransformationModel",
+        "required": [
+          "parameters"
+        ],
+        "type": "object",
+        "properties": {
+          "parameters": {
+            "title": "Parameters",
+            "type": "object"
+          },
+          "state": {
+            "title": "State",
+            "enum": [
+              "CREATED",
+              "RUNNING"
+            ],
+            "type": "string",
+            "default": "CREATED"
+          }
+        }
+      },
+      "SemanticMappingModel": {
+        "title": "SemanticMappingModel",
         "required": [
           "name",
           "properties"
@@ -1775,28 +1797,6 @@
                 "type": "string"
               }
             }
-          }
-        }
-      },
-      "NewTransformationModel": {
-        "title": "NewTransformationModel",
-        "required": [
-          "parameters"
-        ],
-        "type": "object",
-        "properties": {
-          "parameters": {
-            "title": "Parameters",
-            "type": "object"
-          },
-          "state": {
-            "title": "State",
-            "enum": [
-              "CREATED",
-              "RUNNING"
-            ],
-            "type": "string",
-            "default": "CREATED"
           }
         }
       },

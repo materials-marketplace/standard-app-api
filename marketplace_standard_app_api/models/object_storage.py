@@ -38,13 +38,13 @@ class DatasetModel(BaseModel):
 DatasetListResponse = List[DatasetModel]
 
 
-class MappingName(ConstrainedStr):
+class SemanticMappingName(ConstrainedStr):
     min_length = 1
 
 
-class MappingModel(BaseModel):
-    name: MappingName
+class SemanticMappingModel(BaseModel):
+    name: SemanticMappingName
     properties: List[Dict[str, str]]
 
 
-MappingListResponse = List[MappingName]
+SemanticMappingListResponse = List[SemanticMappingName]

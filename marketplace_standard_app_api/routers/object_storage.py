@@ -9,8 +9,8 @@ from ..models.object_storage import (
     DatasetCreateResponse,
     DatasetListResponse,
     DatasetName,
-    MappingListResponse,
-    MappingModel,
+    SemanticMappingListResponse,
+    SemanticMappingModel,
 )
 
 router = APIRouter(
@@ -335,32 +335,34 @@ async def delete_dataset(
 
 
 @router.get(
-    "/mappings",
-    operation_id="listMappings",
-    summary="List all the mappings",
+    "/semanticMappings",
+    operation_id="listSemanticMappings",
+    summary="List all semantic mappings",
     tags=["DataSource", "DataSink"],
-    response_model=MappingListResponse,
+    response_model=SemanticMappingListResponse,
     responses={
         204: {"description": "No mappings found."},
     },
 )
-async def list_mappings(
+async def list_semantic_mappings(
     limit: int = 100, offset: int = 0
-) -> Union[MappingListResponse, Response]:
-    """List all mappings."""
+) -> Union[SemanticMappingListResponse, Response]:
+    """List all semantic mappings."""
     raise HTTPException(status_code=501, detail="Not implemented.")
 
 
 @router.get(
-    "/mappings/{mapping_id}",
-    operation_id="getMapping",
-    summary="Get a specific mapping",
+    "/semanticMappings/{semantic_mapping_id}",
+    operation_id="getSemanticMapping",
+    summary="Get a specific semantic mapping",
     tags=["DataSource", "DataSink"],
-    response_model=MappingModel,
+    response_model=SemanticMappingModel,
     responses={
         404: {"description": "Not found."},
     },
 )
-async def get_mapping(mapping_id) -> Union[MappingModel, Response]:
-    """Get a mapping."""
+async def get_semantic_mapping(
+    semantic_mapping_id,
+) -> Union[SemanticMappingModel, Response]:
+    """Get a semantic mapping."""
     raise HTTPException(status_code=501, detail="Not implemented.")
