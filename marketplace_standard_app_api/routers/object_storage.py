@@ -1,8 +1,11 @@
+import uuid
+from pathlib import Path
 from typing import Optional, Union
 
 from fastapi import APIRouter, HTTPException, Request, UploadFile
 from fastapi.responses import Response
 
+from ..database import get_database
 from ..models.object_storage import (
     CollectionListResponse,
     CollectionName,
@@ -10,6 +13,10 @@ from ..models.object_storage import (
     DatasetListResponse,
     DatasetName,
 )
+from ..reference import object_storage
+
+DATA_DIR = Path.cwd() / "data"
+
 
 router = APIRouter(
     prefix="/data",
@@ -33,7 +40,8 @@ async def list_collections(
     limit: int = 100, offset: int = 0
 ) -> Union[CollectionListResponse, Response]:
     """List all collections."""
-    raise HTTPException(status_code=501, detail="Not implemented.")
+    collections = await object_storage.list_collections(get_database(), limit, offset)
+    return collections or Response(status_code=204)
 
 
 @router.get(
@@ -51,7 +59,21 @@ async def list_datasets(
     collection_name: CollectionName, limit: int = 100, offset: int = 0
 ) -> Union[DatasetListResponse, Response]:
     """List all datasets."""
-    raise HTTPException(status_code=501, detail="Not implemented.")
+    try:
+        datasets, headers = await object_storage.list_datasets(
+            get_database(), collection_name, limit, offset
+        )
+        if datasets:
+            return Response(
+                content="{{ {} }}".format(
+                    ",".join([dataset.json() for dataset in datasets])
+                ),
+                headers=headers,
+            )
+        else:
+            return Response(status_code=204, headers=headers)
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Collection not found.")
 
 
 CREATE_COLLECTION_DESCRIPTION = """
@@ -103,7 +125,14 @@ async def create_collection(
     request: Request, collection_name: CollectionName = None
 ) -> Response:
     """Create a new or replace an existing collection."""
-    raise HTTPException(status_code=501, detail="Not implemented.")
+    # TODO: Support updates.
+    if collection_name is None:
+        collection_name = CollectionName(str(uuid.uuid4()))
+
+    await object_storage.create_collection(
+        get_database(), collection_name, request.headers
+    )
+    return Response(status_code=201, content=collection_name)
 
 
 @router.head(
@@ -121,7 +150,13 @@ async def create_collection(
 )
 async def get_collection_metadata(collection_name: CollectionName) -> Response:
     """Get the metadata for a collection."""
-    raise HTTPException(status_code=501, detail="Not implemented.")
+    try:
+        headers = await object_storage.get_collection_metadata_headers(
+            get_database(), collection_name
+        )
+        return Response(status_code=204, headers=headers)
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Collection not found.")
 
 
 @router.delete(
@@ -141,7 +176,11 @@ async def get_collection_metadata(collection_name: CollectionName) -> Response:
 )
 async def delete_collection(collection_name: CollectionName) -> Response:
     """Delete an empty collection."""
-    raise HTTPException(status_code=501, detail="Not implemented.")
+    try:
+        await object_storage.delete_collection(get_database(), collection_name)
+        return Response(status_code=204, content="Collection has been deleted.")
+    except object_storage.ConflictError as error:
+        raise HTTPException(status_code=409, detail=str(error))
 
 
 CREATE_DATASET_DESCRIPTION = """
@@ -191,7 +230,18 @@ async def create_dataset(
     dataset_name: Optional[DatasetName] = None,
 ) -> Union[DatasetCreateResponse, Response]:
     """Create a new or replace an existing dataset."""
-    raise HTTPException(status_code=501, detail="Not implemented.")
+    if dataset_name is None:
+        dataset_name = DatasetName(str(uuid.uuid4()))
+
+    await object_storage.create_dataset(
+        get_database(),
+        DATA_DIR,
+        collection_name,
+        dataset_name,
+        file,
+        dict(request.headers),
+    )
+    return Response(status_code=201, content=dataset_name)
 
 
 @router.post(
@@ -265,7 +315,13 @@ async def get_dataset_metadata(
     https://docs.openstack.org/api-ref/object-store/index.html#show-object-metadata
     """
     # return Response(content=None, headers={"X-Object-Meta-my-key": "some-value"})
-    raise HTTPException(status_code=501, detail="Not implemented.")
+    try:
+        headers = await object_storage.get_dataset_metadata_headers(
+            get_database(), collection_name, dataset_name
+        )
+        return Response(status_code=200, headers=headers)
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Not found.")
 
 
 @router.get(
@@ -305,8 +361,13 @@ async def get_dataset(
     storage API:
     https://docs.openstack.org/api-ref/object-store/index.html#get-object-content-and-metadata
     """
-    # return Response(content=data, headers={"X-Object-Meta-my-key": "some-value"})
-    raise HTTPException(status_code=501, detail="Not implemented.")
+    try:
+        content, headers = await object_storage.get_dataset(
+            get_database(), DATA_DIR, collection_name, dataset_name
+        )
+        return Response(content=content, headers=headers)
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Not found.")
 
 
 @router.delete(
@@ -329,4 +390,7 @@ async def delete_dataset(
     storage API:
     https://docs.openstack.org/api-ref/object-store/index.html#delete-object
     """
-    raise HTTPException(status_code=501, detail="Not implemented.")
+    await object_storage.delete_dataset(
+        get_database(), DATA_DIR, collection_name, dataset_name
+    )
+    return Response(status_code=204)

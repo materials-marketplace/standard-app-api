@@ -11,6 +11,8 @@ classifiers = ["License :: OSI Approved :: MIT License"]
 dynamic = ["version", "description"]
 requires-python = ">=3.8,<4"
 dependencies = [
+  "SQLAlchemy==1.4.37",
+  "databases[aiosqlite]==0.6.0",
   "email-validator==1.2.1",
   "fastapi==0.75.2",
   "pydantic==1.9.0",
@@ -40,7 +42,7 @@ name = "marketplace_standard_app_api"
 
 
 [tool.mypy]
-plugins = ["pydantic.mypy"]
+plugins = ["pydantic.mypy", "sqlalchemy.ext.mypy.plugin"]
 
 [tool.bumpver]
 current_version = "v0.2.0"

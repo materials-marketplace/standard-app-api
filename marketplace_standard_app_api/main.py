@@ -4,6 +4,8 @@ import requests
 from fastapi import Depends, FastAPI, Request
 from fastapi.responses import Response
 
+from .database import get_database, get_engine
+from .reference.common import metadata
 from .routers import frontend, object_storage, system, transformation
 from .security import AuthTokenBearer
 from .version import __version__
@@ -19,6 +21,9 @@ async def catch_authentication_request_errors_middleware(
         if error.response.status_code == 401:
             return Response("Not authenticated.", status_code=401)
         raise
+
+
+auth_token_bearer = AuthTokenBearer()
 
 
 class MarketPlaceAPI(FastAPI):
@@ -39,7 +44,7 @@ api = MarketPlaceAPI(
         "email": "dirk.helm@iwm.fraunhofer.de",
     },
     license_info={"name": "MIT", "url": "https://opensource.org/licenses/MIT"},
-    dependencies=[Depends(AuthTokenBearer())],
+    dependencies=[Depends(auth_token_bearer)],
     responses={
         401: {"description": "Not authenticated."},
         500: {"description": "Internal server error."},
@@ -48,7 +53,21 @@ api = MarketPlaceAPI(
 )
 api.middleware("http")(catch_authentication_request_errors_middleware)
 
+
 api.include_router(frontend.router)
 api.include_router(system.router)
 api.include_router(object_storage.router)
 api.include_router(transformation.router)
+
+
+@api.on_event("startup")
+async def startup():
+    database = get_database()
+    engine = get_engine()
+    metadata.create_all(engine)
+    await database.connect()
+
+
+@api.on_event("shutdown")
+async def shutdown():
+    await get_database().disconnect()
