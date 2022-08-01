@@ -9,6 +9,8 @@ from ..models.object_storage import (
     DatasetCreateResponse,
     DatasetListResponse,
     DatasetName,
+    SemanticMappingListResponse,
+    SemanticMappingModel,
 )
 
 router = APIRouter(
@@ -329,4 +331,38 @@ async def delete_dataset(
     storage API:
     https://docs.openstack.org/api-ref/object-store/index.html#delete-object
     """
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+
+@router.get(
+    "/semanticMappings",
+    operation_id="listSemanticMappings",
+    summary="List all semantic mappings",
+    tags=["DataSource", "DataSink"],
+    response_model=SemanticMappingListResponse,
+    responses={
+        204: {"description": "No mappings found."},
+    },
+)
+async def list_semantic_mappings(
+    limit: int = 100, offset: int = 0
+) -> Union[SemanticMappingListResponse, Response]:
+    """List all semantic mappings."""
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+
+@router.get(
+    "/semanticMappings/{semantic_mapping_id}",
+    operation_id="getSemanticMapping",
+    summary="Get a specific semantic mapping",
+    tags=["DataSource", "DataSink"],
+    response_model=SemanticMappingModel,
+    responses={
+        404: {"description": "Not found."},
+    },
+)
+async def get_semantic_mapping(
+    semantic_mapping_id,
+) -> Union[SemanticMappingModel, Response]:
+    """Get a semantic mapping."""
     raise HTTPException(status_code=501, detail="Not implemented.")

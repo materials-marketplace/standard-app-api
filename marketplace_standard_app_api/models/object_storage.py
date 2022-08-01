@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 from pydantic import BaseModel, ConstrainedStr
 
@@ -36,3 +36,15 @@ class DatasetModel(BaseModel):
 
 
 DatasetListResponse = List[DatasetModel]
+
+
+class SemanticMappingName(ConstrainedStr):
+    min_length = 1
+
+
+class SemanticMappingModel(BaseModel):
+    name: SemanticMappingName
+    properties: List[Dict[str, str]]
+
+
+SemanticMappingListResponse = List[SemanticMappingName]
