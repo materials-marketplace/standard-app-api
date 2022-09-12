@@ -1,10 +1,10 @@
 from http.client import HTTPException
-from fastapi import APIRouter, Request, Depends
 
-from optimade.server.routers.versions import CsvResponse
+from fastapi import APIRouter, Depends, Request
 from optimade.models import StructureResponseMany, StructureResponseOne
-from optimade.server.schemas import ERROR_RESPONSES
 from optimade.server.query_params import EntryListingQueryParams, SingleEntryQueryParams
+from optimade.server.routers.versions import CsvResponse
+from optimade.server.schemas import ERROR_RESPONSES
 
 router = APIRouter(
     prefix="/optimade",
@@ -14,18 +14,20 @@ router = APIRouter(
     },
 )
 
+
 @router.get(
     "/versions",
     operation_id="getOptimadeVersions",
     response_class=CsvResponse,
     summary="Get the versions of optimade.",
     responses={
-        404: {"description": "Not found"},   
+        404: {"description": "Not found"},
     },
 )
 def get_versions(request: Request) -> CsvResponse:
     """Respond with the text/csv representation for the served versions."""
     raise HTTPException(status_code=501, detail="Not implemented.")
+
 
 @router.get(
     "/structures",
@@ -40,6 +42,7 @@ def get_structures(
 ) -> StructureResponseMany:
     """Retrieve a list of optimade structures by querying."""
     raise HTTPException(status_code=501, detail="Not implemented.")
+
 
 @router.get(
     "/structures/{entry_id}",
