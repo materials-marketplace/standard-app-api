@@ -20,6 +20,8 @@ In case that the definition within the Python module and the OpenAPI JSON-file a
 
 Tip: You can use the `marketplace-standard-app-api show` command to generate the OpenAPI file from the Python module (requires the `cli` extra).
 
+Click [here](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/materials-marketplace/standard-app-api/main/openapi.json) to preview the latest development version of the API.
+
 ## Installation
 
 Note: Users should use the [MarketPlace Python SDK](https://github.com/materials-marketplace/python-sdk) for app development.
