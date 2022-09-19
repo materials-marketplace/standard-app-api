@@ -4,7 +4,7 @@ import requests
 from fastapi import Depends, FastAPI, Request
 from fastapi.responses import Response
 
-from .routers import frontend, object_storage, system, transformation
+from .routers import frontend, object_storage, optimade, system, transformation
 from .security import AuthTokenBearer
 from .version import __version__
 
@@ -52,3 +52,4 @@ api.include_router(frontend.router)
 api.include_router(system.router)
 api.include_router(object_storage.router)
 api.include_router(transformation.router)
+api.include_router(optimade.router)
