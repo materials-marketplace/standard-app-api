@@ -102,7 +102,7 @@ https://docs.openstack.org/api-ref/object-store/index.html#create-container
     description="Create a collection.\n" + CREATE_COLLECTION_DESCRIPTION,
 )
 async def create_collection(
-    request: Request, collection_name: CollectionName = None
+    request: Request, collection_name: Optional[CollectionName] = None
 ) -> Response:
     """Create a new or replace an existing collection."""
     raise HTTPException(status_code=501, detail="Not implemented.")
