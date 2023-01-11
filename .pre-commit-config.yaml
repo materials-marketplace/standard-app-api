@@ -21,7 +21,7 @@ repos:
           - id: black
 
     - repo: https://github.com/pycqa/isort
-      rev: 5.10.1
+      rev: 5.11.4
       hooks:
           - id: isort
             args: [--profile, black, --filter-files]
@@ -53,7 +53,7 @@ repos:
             args: [--config-file=pyproject.toml]
 
     - repo: https://github.com/sirosen/check-jsonschema
-      rev: 0.19.2
+      rev: 0.20.0
       hooks:
           - id: check-github-workflows
 
