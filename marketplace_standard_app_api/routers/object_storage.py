@@ -108,8 +108,8 @@ async def create_collection(
     raise HTTPException(status_code=501, detail="Not implemented.")
 
 
-@router.head(
-    "/{collection_name}",
+@router.get(
+    "/metadata/{collection_name}",
     name="Get Collection Metadata",
     operation_id="getCollectionMetadata",
     summary="Get a collection's metadata",
@@ -197,7 +197,7 @@ async def create_dataset(
 
 
 @router.post(
-    "/{collection_name}/",
+    "/metadata/{collection_name}/",
     name="Create Dataset Metadata",
     operation_id="createDatasetMetadata",
     summary="Create a dataset's metadata",
@@ -209,7 +209,7 @@ async def create_dataset(
     },
 )
 @router.post(
-    "/{collection_name}/{dataset_name}",
+    "/metadata/{collection_name}/{dataset_name}",
     name="Create or Replace Dataset Metadata",
     operation_id="createOrReplaceDatasetMetadata",
     summary="Create or replace a dataset's metadata",
@@ -225,16 +225,13 @@ async def create_or_replace_dataset_metadata(
     dataset_name: Optional[DatasetName] = None,
 ) -> Response:
     """Create or replace dataset metadata.
-
-    Note: This operation is in compliance with the OpenStack Swift object
-    storage API:
-    https://docs.openstack.org/api-ref/object-store/index.html#create-or-update-object-metadata
+        Creates or updates the meta data information of DCAT object stored as triples
     """
     raise HTTPException(status_code=501, detail="Not implemented.")
 
 
-@router.head(
-    "/{collection_name}/{dataset_name}",
+@router.get(
+    "/metadata/{collection_name}/{dataset_name}",
     name="Get Dataset Metadata",
     operation_id="getDatasetMetadata",
     summary="Get a dataset's metadata",
@@ -250,21 +247,7 @@ async def get_dataset_metadata(
 ) -> Response:
     """Get dataset metadata.
 
-    Returns the dataset metadata in the response header in the form of:
-
-    - X-Object-Meta-name: value
-
-    Where 'name' is the name of the metadata key and 'value' is the
-    corresponding value.
-
-    Example response header for a plain-text file:
-    - Content-Type: text/plain;charset=UTF-8
-    - Content-Length: 1234
-    - X-Object-Meta-my-key: some-value
-
-    Note: This operation is in compliance with the OpenStack Swift object
-    storage API:
-    https://docs.openstack.org/api-ref/object-store/index.html#show-object-metadata
+    Returns the dataset metadata as response:
     """
     # return Response(content=None, headers={"X-Object-Meta-my-key": "some-value"})
     raise HTTPException(status_code=501, detail="Not implemented.")
@@ -365,4 +348,35 @@ async def get_semantic_mapping(
     semantic_mapping_id,
 ) -> Union[SemanticMappingModel, Response]:
     """Get a semantic mapping."""
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+
+@router.post(
+    "/query",
+    operation_id="query",
+    summary="execute a search query on triple store",
+    tags=["DataSource", "DataSink"],
+    responses={
+        400: {"description": "improper query."},
+    },
+)
+async def query(
+    limit: int = 100, offset: int = 0
+):
+    """returns matching triples"""
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+@router.post(
+    "/queryDataset/{collection_name}/{dataset_name}",
+    operation_id="queryDataset",
+    summary="execute a search query on specific dataset in triple store ",
+    tags=["DataSource", "DataSink"],
+    responses={
+        400: {"description": "improper query."},
+    },
+)
+async def query_dataset(
+    limit: int = 100, offset: int = 0
+):
+    """returns matching triples"""
     raise HTTPException(status_code=501, detail="Not implemented.")
