@@ -41,7 +41,7 @@ async def list_collections(
 @router.get(
     "/{collection_name}",
     operation_id="listDatasets",
-    summary="List all datasets in a collection",
+    summary="List all datasets in a collection.",
     tags=["DataSource"],
     response_model=DatasetListResponse,
     responses={
@@ -225,7 +225,7 @@ async def create_or_replace_dataset_metadata(
     dataset_name: Optional[DatasetName] = None,
 ) -> Response:
     """Create or replace dataset metadata.
-        Creates or updates the meta data information of DCAT object stored as triples
+    Creates or updates the meta data information of DCAT object stored as triples
     """
     raise HTTPException(status_code=501, detail="Not implemented.")
 
@@ -360,11 +360,10 @@ async def get_semantic_mapping(
         400: {"description": "improper query."},
     },
 )
-async def query(
-    limit: int = 100, offset: int = 0
-):
+async def query(limit: int = 100, offset: int = 0):
     """returns matching triples"""
     raise HTTPException(status_code=501, detail="Not implemented.")
+
 
 @router.post(
     "/queryDataset/{collection_name}/{dataset_name}",
@@ -375,8 +374,6 @@ async def query(
         400: {"description": "improper query."},
     },
 )
-async def query_dataset(
-    limit: int = 100, offset: int = 0
-):
+async def query_dataset(limit: int = 100, offset: int = 0):
     """returns matching triples"""
     raise HTTPException(status_code=501, detail="Not implemented.")

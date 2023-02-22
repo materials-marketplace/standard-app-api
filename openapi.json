@@ -247,7 +247,7 @@
         "tags": [
           "DataSource"
         ],
-        "summary": "List all datasets in a collection",
+        "summary": "List all datasets in a collection.",
         "description": "List all datasets.",
         "operationId": "listDatasets",
         "parameters": [
@@ -446,62 +446,6 @@
             "AuthTokenBearer": []
           }
         ]
-      },
-      "head": {
-        "tags": [
-          "DataSource"
-        ],
-        "summary": "Get a collection's metadata",
-        "description": "Get the metadata for a collection.",
-        "operationId": "getCollectionMetadata",
-        "parameters": [
-          {
-            "required": true,
-            "schema": {
-              "title": "Collection Name",
-              "maxLength": 255,
-              "minLength": 1,
-              "type": "string"
-            },
-            "name": "collection_name",
-            "in": "path"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Normal response."
-          },
-          "401": {
-            "description": "Not authenticated."
-          },
-          "500": {
-            "description": "Internal server error."
-          },
-          "503": {
-            "description": "Service unavailable."
-          },
-          "501": {
-            "description": "Not implemented."
-          },
-          "404": {
-            "description": "Not found."
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "AuthTokenBearer": []
-          }
-        ]
       }
     },
     "/data/": {
@@ -546,6 +490,64 @@
           },
           "507": {
             "description": "Insufficient storage."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
+    "/data/metadata/{collection_name}": {
+      "get": {
+        "tags": [
+          "DataSource"
+        ],
+        "summary": "Get a collection's metadata",
+        "description": "Get the metadata for a collection.",
+        "operationId": "getCollectionMetadata",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Collection Name",
+              "maxLength": 255,
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "collection_name",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Normal response."
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "404": {
+            "description": "Not found."
           },
           "422": {
             "description": "Validation Error",
@@ -631,69 +633,6 @@
           },
           "507": {
             "description": "Insufficient storage."
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "AuthTokenBearer": []
-          }
-        ]
-      },
-      "post": {
-        "tags": [
-          "DataSink"
-        ],
-        "summary": "Create a dataset's metadata",
-        "description": "Create or replace dataset metadata.\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#create-or-update-object-metadata",
-        "operationId": "createDatasetMetadata",
-        "parameters": [
-          {
-            "required": true,
-            "schema": {
-              "title": "Collection Name",
-              "maxLength": 255,
-              "minLength": 1,
-              "type": "string"
-            },
-            "name": "collection_name",
-            "in": "path"
-          },
-          {
-            "required": false,
-            "schema": {
-              "title": "Dataset Name",
-              "minLength": 1,
-              "type": "string"
-            },
-            "name": "dataset_name",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Dataset metadata has been created."
-          },
-          "401": {
-            "description": "Not authenticated."
-          },
-          "500": {
-            "description": "Internal server error."
-          },
-          "503": {
-            "description": "Service unavailable."
-          },
-          "501": {
-            "description": "Not implemented."
           },
           "422": {
             "description": "Validation Error",
@@ -863,69 +802,6 @@
           }
         ]
       },
-      "post": {
-        "tags": [
-          "DataSink"
-        ],
-        "summary": "Create or replace a dataset's metadata",
-        "description": "Create or replace dataset metadata.\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#create-or-update-object-metadata",
-        "operationId": "createOrReplaceDatasetMetadata",
-        "parameters": [
-          {
-            "required": true,
-            "schema": {
-              "title": "Collection Name",
-              "maxLength": 255,
-              "minLength": 1,
-              "type": "string"
-            },
-            "name": "collection_name",
-            "in": "path"
-          },
-          {
-            "required": true,
-            "schema": {
-              "title": "Dataset Name",
-              "minLength": 1,
-              "type": "string"
-            },
-            "name": "dataset_name",
-            "in": "path"
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Dataset metadata has been created/updated."
-          },
-          "401": {
-            "description": "Not authenticated."
-          },
-          "500": {
-            "description": "Internal server error."
-          },
-          "503": {
-            "description": "Service unavailable."
-          },
-          "501": {
-            "description": "Not implemented."
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "AuthTokenBearer": []
-          }
-        ]
-      },
       "delete": {
         "tags": [
           "DataSink"
@@ -991,13 +867,15 @@
             "AuthTokenBearer": []
           }
         ]
-      },
-      "head": {
+      }
+    },
+    "/data/metadata/{collection_name}/{dataset_name}": {
+      "get": {
         "tags": [
           "DataSource"
         ],
         "summary": "Get a dataset's metadata",
-        "description": "Get dataset metadata.\n\nReturns the dataset metadata in the response header in the form of:\n\n- X-Object-Meta-name: value\n\nWhere 'name' is the name of the metadata key and 'value' is the\ncorresponding value.\n\nExample response header for a plain-text file:\n- Content-Type: text/plain;charset=UTF-8\n- Content-Length: 1234\n- X-Object-Meta-my-key: some-value\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#show-object-metadata",
+        "description": "Get dataset metadata.\n\nReturns the dataset metadata as response:",
         "operationId": "getDatasetMetadata",
         "parameters": [
           {
@@ -1040,6 +918,134 @@
           },
           "404": {
             "description": "Not found."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "DataSink"
+        ],
+        "summary": "Create or replace a dataset's metadata",
+        "description": "Create or replace dataset metadata.\nCreates or updates the meta data information of DCAT object stored as triples",
+        "operationId": "createOrReplaceDatasetMetadata",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Collection Name",
+              "maxLength": 255,
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "collection_name",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Dataset Name",
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "dataset_name",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Dataset metadata has been created/updated."
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
+    "/data/metadata/{collection_name}/": {
+      "post": {
+        "tags": [
+          "DataSink"
+        ],
+        "summary": "Create a dataset's metadata",
+        "description": "Create or replace dataset metadata.\nCreates or updates the meta data information of DCAT object stored as triples",
+        "operationId": "createDatasetMetadata",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Collection Name",
+              "maxLength": 255,
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "collection_name",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Dataset Name",
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "dataset_name",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Dataset metadata has been created."
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "501": {
+            "description": "Not implemented."
           },
           "422": {
             "description": "Validation Error",
@@ -1183,6 +1189,152 @@
           },
           "404": {
             "description": "Not found."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
+    "/data/query": {
+      "post": {
+        "tags": [
+          "DataSource",
+          "DataSink"
+        ],
+        "summary": "execute a search query on triple store",
+        "description": "returns matching triples",
+        "operationId": "query",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "type": "integer",
+              "default": 100
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Offset",
+              "type": "integer",
+              "default": 0
+            },
+            "name": "offset",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "400": {
+            "description": "improper query."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
+    "/data/queryDataset/{collection_name}/{dataset_name}": {
+      "post": {
+        "tags": [
+          "DataSource",
+          "DataSink"
+        ],
+        "summary": "execute a search query on specific dataset in triple store ",
+        "description": "returns matching triples",
+        "operationId": "queryDataset",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "type": "integer",
+              "default": 100
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Offset",
+              "type": "integer",
+              "default": 0
+            },
+            "name": "offset",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "400": {
+            "description": "improper query."
           },
           "422": {
             "description": "Validation Error",
