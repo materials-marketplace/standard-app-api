@@ -161,7 +161,7 @@ https://docs.openstack.org/api-ref/object-store/index.html#create-or-replace-obj
 
 
 @router.put(
-    "/{collection_name}/{dataset_name}",
+    "/{collection_name}/{dataset_name}/",
     name="Create or Replace Dataset",
     operation_id="createOrReplaceDataset",
     summary="Create or replace a dataset",
