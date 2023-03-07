@@ -20,13 +20,6 @@ router = APIRouter(
     },
 )
 
-meta_router = APIRouter(
-    prefix="/metadata",
-    responses={
-        501: {"description": "Not implemented."},
-    },
-)
-
 
 @router.get(
     "",
@@ -115,8 +108,8 @@ async def create_collection(
     raise HTTPException(status_code=501, detail="Not implemented.")
 
 
-@meta_router.get(
-    "/{collection_name}",
+@router.get(
+    "/metadata/collection/{collection_name}",
     name="Get Collection Metadata",
     operation_id="getCollectionMetadata",
     summary="Get a collection's metadata",
@@ -181,7 +174,7 @@ https://docs.openstack.org/api-ref/object-store/index.html#create-or-replace-obj
     description="Create or replace a dataset.\n" + CREATE_DATASET_DESCRIPTION,
 )
 @router.put(
-    "/{collection_name}",
+    "/{collection_name}/",
     name="Create a dataset",
     operation_id="createDataset",
     summary="Create a dataset",
@@ -203,8 +196,8 @@ async def create_dataset(
     raise HTTPException(status_code=501, detail="Not implemented.")
 
 
-@meta_router.post(
-    "/{collection_name}",
+@router.post(
+    "/metadata/dataset/{collection_name}/",
     name="Create Dataset Metadata",
     operation_id="createDatasetMetadata",
     summary="Create a dataset's metadata",
@@ -215,8 +208,8 @@ async def create_dataset(
         202: {"description": "Dataset metadata has been created."},
     },
 )
-@meta_router.post(
-    "/{collection_name}/{dataset_name}",
+@router.post(
+    "/metadata/dataset/{collection_name}/{dataset_name}",
     name="Create or Replace Dataset Metadata",
     operation_id="createOrReplaceDatasetMetadata",
     summary="Create or replace a dataset's metadata",
@@ -237,8 +230,8 @@ async def create_or_replace_dataset_metadata(
     raise HTTPException(status_code=501, detail="Not implemented.")
 
 
-@meta_router.get(
-    "/{collection_name}/{dataset_name}",
+@router.get(
+    "/metadata/dataset/{collection_name}/{dataset_name}",
     name="Get Dataset Metadata",
     operation_id="getDatasetMetadata",
     summary="Get a dataset's metadata",
