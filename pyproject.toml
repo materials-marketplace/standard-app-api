@@ -11,11 +11,10 @@ classifiers = ["License :: OSI Approved :: MIT License"]
 dynamic = ["version", "description"]
 requires-python = ">=3.8,<4"
 dependencies = [
-  "email-validator==1.2.1",
-  "fastapi<=0.95, >0.75",
-  "pydantic<=1.10, >1.9",
-  "python-multipart<=0.0.6, >0.0.5",
-  "requests<=2.28, >2.26.0",
+  "email-validator<2.0, >=1.2.1",
+  "fastapi<1.0, >0.75",
+  "python-multipart<=0.1, >0.0.5",
+  "requests<3.0, >2.26.0",
 ]
 
 [project.urls]
