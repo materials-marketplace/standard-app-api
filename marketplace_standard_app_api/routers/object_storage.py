@@ -41,7 +41,7 @@ async def list_collections(
 @router.get(
     "/{collection_name}",
     operation_id="listDatasets",
-    summary="List all datasets in a collection.",
+    summary="List all datasets in a collection",
     tags=["DataSource"],
     response_model=DatasetListResponse,
     responses={
@@ -108,8 +108,8 @@ async def create_collection(
     raise HTTPException(status_code=501, detail="Not implemented.")
 
 
-@router.get(
-    "/metadata/collection/{collection_name}",
+@router.head(
+    "/{collection_name}",
     name="Get Collection Metadata",
     operation_id="getCollectionMetadata",
     summary="Get a collection's metadata",
@@ -197,7 +197,7 @@ async def create_dataset(
 
 
 @router.post(
-    "/metadata/dataset/{collection_name}/",
+    "/{collection_name}/",
     name="Create Dataset Metadata",
     operation_id="createDatasetMetadata",
     summary="Create a dataset's metadata",
@@ -209,7 +209,7 @@ async def create_dataset(
     },
 )
 @router.post(
-    "/metadata/dataset/{collection_name}/{dataset_name}",
+    "/{collection_name}/{dataset_name}",
     name="Create or Replace Dataset Metadata",
     operation_id="createOrReplaceDatasetMetadata",
     summary="Create or replace a dataset's metadata",
@@ -225,13 +225,16 @@ async def create_or_replace_dataset_metadata(
     dataset_name: Optional[DatasetName] = None,
 ) -> Response:
     """Create or replace dataset metadata.
-    Creates or updates the meta data information of DCAT object stored as triples
+
+    Note: This operation is in compliance with the OpenStack Swift object
+    storage API:
+    https://docs.openstack.org/api-ref/object-store/index.html#create-or-update-object-metadata
     """
     raise HTTPException(status_code=501, detail="Not implemented.")
 
 
-@router.get(
-    "/metadata/dataset/{collection_name}/{dataset_name}",
+@router.head(
+    "/{collection_name}/{dataset_name}",
     name="Get Dataset Metadata",
     operation_id="getDatasetMetadata",
     summary="Get a dataset's metadata",
@@ -247,7 +250,21 @@ async def get_dataset_metadata(
 ) -> Response:
     """Get dataset metadata.
 
-    Returns the dataset metadata as response:
+    Returns the dataset metadata in the response header in the form of:
+
+    - X-Object-Meta-name: value
+
+    Where 'name' is the name of the metadata key and 'value' is the
+    corresponding value.
+
+    Example response header for a plain-text file:
+    - Content-Type: text/plain;charset=UTF-8
+    - Content-Length: 1234
+    - X-Object-Meta-my-key: some-value
+
+    Note: This operation is in compliance with the OpenStack Swift object
+    storage API:
+    https://docs.openstack.org/api-ref/object-store/index.html#show-object-metadata
     """
     # return Response(content=None, headers={"X-Object-Meta-my-key": "some-value"})
     raise HTTPException(status_code=501, detail="Not implemented.")
@@ -351,29 +368,53 @@ async def get_semantic_mapping(
     raise HTTPException(status_code=501, detail="Not implemented.")
 
 
+@router.get(
+    "/dcat/{collection_name}",
+    name="Get DCAT Collection Metadata",
+    operation_id="getCollectionDCAT",
+    summary="Get a collection's DCAT metadata",
+    tags=["DataSource"],
+    response_class=Response,
+    status_code=204,
+    responses={
+        204: {"description": "Normal response."},
+        404: {"description": "Not found."},
+    },
+)
+async def get_collection_DCAT(collection_name: CollectionName) -> Response:
+    """Get the DCAT metadata for a collection."""
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+
+@router.get(
+    "/dcat/{collection_name}/{dataset_name}",
+    name="Get DCAT Dataset Metadata",
+    operation_id="getDatasetDCAT",
+    summary="Get a dataset's DCAT metadata",
+    tags=["DataSource"],
+    response_class=Response,
+    status_code=204,
+    responses={
+        204: {"description": "Normal response."},
+        404: {"description": "Not found."},
+    },
+)
+async def get_dataset_DCAT(
+    collection_name: CollectionName, dataset_name: DatasetName
+) -> Response:
+    """Get the DCAT metadata for a dataset."""
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+
 @router.post(
     "/query",
     operation_id="query",
-    summary="execute a search query on triple store",
-    tags=["DataSource", "DataSink"],
+    summary="execute a search query on datastore",
+    tags=["DataSource"],
     responses={
         400: {"description": "improper query."},
     },
 )
 async def query(limit: int = 100, offset: int = 0):
-    """returns matching triples"""
-    raise HTTPException(status_code=501, detail="Not implemented.")
-
-
-@router.post(
-    "/queryDataset/{collection_name}/{dataset_name}",
-    operation_id="queryDataset",
-    summary="execute a search query on specific dataset in triple store ",
-    tags=["DataSource", "DataSink"],
-    responses={
-        400: {"description": "improper query."},
-    },
-)
-async def query_dataset(limit: int = 100, offset: int = 0):
     """returns matching triples"""
     raise HTTPException(status_code=501, detail="Not implemented.")
