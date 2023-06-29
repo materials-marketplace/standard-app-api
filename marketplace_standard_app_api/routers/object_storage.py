@@ -375,9 +375,9 @@ async def get_semantic_mapping(
     summary="Get a collection's DCAT metadata",
     tags=["DataSource"],
     response_class=Response,
-    status_code=204,
+    status_code=200,
     responses={
-        204: {"description": "Normal response."},
+        200: {"description": "Normal response."},
         404: {"description": "Not found."},
     },
 )
@@ -393,9 +393,9 @@ async def get_collection_dcat(collection_name: CollectionName) -> Response:
     summary="Get a dataset's DCAT metadata",
     tags=["DataSource"],
     response_class=Response,
-    status_code=204,
+    status_code=200,
     responses={
-        204: {"description": "Normal response."},
+        200: {"description": "Normal response."},
         404: {"description": "Not found."},
     },
 )

@@ -1216,7 +1216,7 @@
           }
         ],
         "responses": {
-          "204": {
+          "200": {
             "description": "Normal response."
           },
           "401": {
@@ -1284,7 +1284,7 @@
           }
         ],
         "responses": {
-          "204": {
+          "200": {
             "description": "Normal response."
           },
           "401": {
