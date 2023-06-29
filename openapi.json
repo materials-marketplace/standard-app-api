@@ -1201,7 +1201,7 @@
         ],
         "summary": "Get a collection's DCAT metadata",
         "description": "Get the DCAT metadata for a collection.",
-        "operationId": "getCollectionDCAT",
+        "operationId": "getCollectionDcat",
         "parameters": [
           {
             "required": true,
@@ -1259,7 +1259,7 @@
         ],
         "summary": "Get a dataset's DCAT metadata",
         "description": "Get the DCAT metadata for a dataset.",
-        "operationId": "getDatasetDCAT",
+        "operationId": "getDatasetDcat",
         "parameters": [
           {
             "required": true,
