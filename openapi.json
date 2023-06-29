@@ -200,11 +200,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Response Listcollections",
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CollectionListItemModel"
-                  }
+                  "$ref": "#/components/schemas/CollectionResponseModel"
                 }
               }
             }
@@ -289,11 +285,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Response Listdatasets",
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DatasetModel"
-                  }
+                  "$ref": "#/components/schemas/DatasetResponseModel"
                 }
               }
             }
@@ -1400,6 +1392,78 @@
         ]
       }
     },
+    "/data/query/{collection_name}/{dataset_name}": {
+      "post": {
+        "tags": [
+          "DataSource"
+        ],
+        "summary": "execute a search query on specific dataset in datastore",
+        "description": "returns matching triples",
+        "operationId": "queryDataset",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "type": "integer",
+              "default": 100
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Offset",
+              "type": "integer",
+              "default": 0
+            },
+            "name": "offset",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "400": {
+            "description": "improper query."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
     "/transformations": {
       "get": {
         "tags": [
@@ -1820,8 +1884,6 @@
       "CollectionListItemModel": {
         "title": "CollectionListItemModel",
         "required": [
-          "count",
-          "bytes",
           "name"
         ],
         "type": "object",
@@ -1847,6 +1909,22 @@
           }
         }
       },
+      "CollectionResponseModel": {
+        "title": "CollectionResponseModel",
+        "required": [
+          "items"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "title": "Items",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CollectionListItemModel"
+            }
+          }
+        }
+      },
       "DatasetCreateResponse": {
         "title": "DatasetCreateResponse",
         "required": [
@@ -1858,18 +1936,26 @@
             "title": "Last Modified",
             "type": "string",
             "format": "date-time"
+          },
+          "dataset_id": {
+            "title": "Dataset Id",
+            "type": "string"
+          },
+          "collection_id": {
+            "title": "Collection Id",
+            "type": "string"
           }
         }
       },
       "DatasetModel": {
         "title": "DatasetModel",
         "required": [
-          "id"
+          "name"
         ],
         "type": "object",
         "properties": {
-          "id": {
-            "title": "Id",
+          "name": {
+            "title": "Name",
             "minLength": 1,
             "type": "string"
           },
@@ -1889,6 +1975,22 @@
             "title": "Last Modified",
             "type": "string",
             "format": "date-time"
+          }
+        }
+      },
+      "DatasetResponseModel": {
+        "title": "DatasetResponseModel",
+        "required": [
+          "items"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "title": "Items",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DatasetModel"
+            }
           }
         }
       },

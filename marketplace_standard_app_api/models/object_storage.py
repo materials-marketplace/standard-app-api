@@ -10,13 +10,19 @@ class CollectionName(ConstrainedStr):
 
 
 class CollectionListItemModel(BaseModel):
-    count: int
-    bytes: int
+    count: Optional[int]
+    bytes: Optional[int]
     name: CollectionName
     last_modified: Optional[datetime]
 
 
-CollectionListResponse = List[CollectionListItemModel]
+class CollectionResponseModel(BaseModel):
+    items: List[CollectionListItemModel]
+
+
+class CollectionCreateResponse(BaseModel):
+    last_modified: datetime
+    collection_id: Optional[str]
 
 
 class DatasetName(ConstrainedStr):
@@ -25,17 +31,20 @@ class DatasetName(ConstrainedStr):
 
 class DatasetCreateResponse(BaseModel):
     last_modified: datetime
+    dataset_id: Optional[str]
+    collection_id: Optional[str]
 
 
 class DatasetModel(BaseModel):
-    id: DatasetName
+    name: DatasetName
     hash: Optional[str]
     bytes: Optional[int]
     content_type: Optional[str]
     last_modified: Optional[datetime]
 
 
-DatasetListResponse = List[DatasetModel]
+class DatasetResponseModel(BaseModel):
+    items: List[DatasetModel]
 
 
 class SemanticMappingName(ConstrainedStr):
