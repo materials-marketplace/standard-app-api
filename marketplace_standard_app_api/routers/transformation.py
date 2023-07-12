@@ -1,6 +1,5 @@
-from typing import Optional
-
 from fastapi import APIRouter, HTTPException
+from fastapi.responses import Response
 
 from ..models.transformation import (
     NewTransformationModel,
@@ -71,7 +70,7 @@ async def get_transformation(
 )
 async def delete_transformation(
     transformation_id: TransformationId,
-) -> Optional[HTTPException]:
+) -> Response:
     """Delete an existing transformation."""
     raise HTTPException(status_code=501, detail="Not implemented.")
 

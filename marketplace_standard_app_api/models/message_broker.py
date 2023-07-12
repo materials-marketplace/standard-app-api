@@ -4,10 +4,10 @@ from pydantic import BaseModel, Field
 
 
 class MessageBrokerRequestModel(BaseModel):
-    endpoint: str = Field(None, description="API endpoint of the application")
+    endpoint: str = Field("", description="API endpoint of the application")
     query_params: Optional[Dict[str, str]] = Field(None, description="Query parameters")
     headers: Optional[Dict[str, str]] = Field(None, description="Request headers")
-    method: str = Field(None, description="The HTTP request method")
+    method: str = Field("", description="The HTTP request method")
     body: Optional[str] = Field(None, description="The request message body")
 
 

@@ -12,7 +12,7 @@
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
     },
-    "version": "0.3.0"
+    "version": "0.4.0"
   },
   "paths": {
     "/": {
@@ -330,7 +330,7 @@
           "DataSink"
         ],
         "summary": "Create or update a collection",
-        "description": "Create or update a collection.\n\nTo add custom metadata, add keys to the header of the form:\n\n- X-Object-Meta-name: value\n\nWhere 'name' is the name of the metadata key and 'value' is the\ncorresponding value.\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#create-container\n",
+        "description": "Create or update a collection.\n\nTo add custom metadata, add keys to the header of the form:\n\n- X-Object-Meta-name: value\n\nWhere 'name' is the name of the metadata key and 'value' is the\ncorresponding value.\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#create-container",
         "operationId": "createOrUpdateCollection",
         "parameters": [
           {
@@ -502,7 +502,7 @@
           "DataSink"
         ],
         "summary": "Create a collection",
-        "description": "Create a collection.\n\nTo add custom metadata, add keys to the header of the form:\n\n- X-Object-Meta-name: value\n\nWhere 'name' is the name of the metadata key and 'value' is the\ncorresponding value.\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#create-container\n",
+        "description": "Create a collection.\n\nTo add custom metadata, add keys to the header of the form:\n\n- X-Object-Meta-name: value\n\nWhere 'name' is the name of the metadata key and 'value' is the\ncorresponding value.\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#create-container",
         "operationId": "createCollection",
         "parameters": [
           {
@@ -563,7 +563,7 @@
           "DataSink"
         ],
         "summary": "Create a dataset",
-        "description": "Create a dataset.\n\nTo add custom metadata, add keys to the header of the form:\n\n- X-Object-Meta-name: value\n\nWhere 'name' is the name of the metadata key and 'value' is the\ncorresponding value.\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#create-or-replace-object\n",
+        "description": "Create a dataset.\n\nTo add custom metadata, add keys to the header of the form:\n\n- X-Object-Meta-name: value\n\nWhere 'name' is the name of the metadata key and 'value' is the\ncorresponding value.\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#create-or-replace-object",
         "operationId": "createDataset",
         "parameters": [
           {
@@ -777,7 +777,7 @@
           "DataSink"
         ],
         "summary": "Create or replace a dataset",
-        "description": "Create or replace a dataset.\n\nTo add custom metadata, add keys to the header of the form:\n\n- X-Object-Meta-name: value\n\nWhere 'name' is the name of the metadata key and 'value' is the\ncorresponding value.\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#create-or-replace-object\n",
+        "description": "Create or replace a dataset.\n\nTo add custom metadata, add keys to the header of the form:\n\n- X-Object-Meta-name: value\n\nWhere 'name' is the name of the metadata key and 'value' is the\ncorresponding value.\n\nNote: This operation is in compliance with the OpenStack Swift object\nstorage API:\nhttps://docs.openstack.org/api-ref/object-store/index.html#create-or-replace-object",
         "operationId": "createOrReplaceDataset",
         "parameters": [
           {

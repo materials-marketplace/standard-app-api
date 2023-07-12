@@ -11,11 +11,10 @@ classifiers = ["License :: OSI Approved :: MIT License"]
 dynamic = ["version", "description"]
 requires-python = ">=3.8,<4"
 dependencies = [
-  "email-validator==1.2.1",
-  "fastapi==0.75.2",
-  "pydantic==1.9.0",
-  "python-multipart==0.0.5",
-  "requests==2.26.0",
+  "email-validator<2.0, >=1.2.1",
+  "fastapi<1.0, >0.75",
+  "python-multipart<=0.1, >0.0.5",
+  "requests<3.0, >2.26.0",
 ]
 
 [project.urls]
@@ -43,7 +42,7 @@ name = "marketplace_standard_app_api"
 plugins = ["pydantic.mypy"]
 
 [tool.bumpver]
-current_version = "v0.3.0"
+current_version = "v0.4.0"
 version_pattern = "vMAJOR.MINOR.PATCH"
 commit_message = "bump version {old_version} -> {new_version}"
 commit = true
