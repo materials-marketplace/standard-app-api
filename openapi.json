@@ -1194,14 +1194,14 @@
         ]
       }
     },
-    "/data/dcat/{collection_name}": {
+    "/data/metadata/dcat/{collection_name}": {
       "get": {
         "tags": [
           "DataSource"
         ],
         "summary": "Get a collection's DCAT metadata",
         "description": "Get the DCAT metadata for a collection.",
-        "operationId": "getCollectionDcat",
+        "operationId": "getCollectionMetadataDcat",
         "parameters": [
           {
             "required": true,
@@ -1217,7 +1217,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Normal response."
+            "description": "Successful Response"
           },
           "401": {
             "description": "Not authenticated."
@@ -1252,14 +1252,14 @@
         ]
       }
     },
-    "/data/dcat/{collection_name}/{dataset_name}": {
+    "/data/metadata/dcat/{collection_name}/{dataset_name}": {
       "get": {
         "tags": [
           "DataSource"
         ],
         "summary": "Get a dataset's DCAT metadata",
         "description": "Get the DCAT metadata for a dataset.",
-        "operationId": "getDatasetDcat",
+        "operationId": "getDatasetMetadataDcat",
         "parameters": [
           {
             "required": true,
@@ -1285,7 +1285,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Normal response."
+            "description": "Successful Response"
           },
           "401": {
             "description": "Not authenticated."
@@ -1881,8 +1881,8 @@
           }
         }
       },
-      "CollectionListItemModel": {
-        "title": "CollectionListItemModel",
+      "CollectionModel": {
+        "title": "CollectionModel",
         "required": [
           "name"
         ],
@@ -1894,6 +1894,10 @@
           },
           "bytes": {
             "title": "Bytes",
+            "type": "integer"
+          },
+          "id": {
+            "title": "Id",
             "type": "integer"
           },
           "name": {
@@ -1920,7 +1924,7 @@
             "title": "Items",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/CollectionListItemModel"
+              "$ref": "#/components/schemas/CollectionModel"
             }
           }
         }
@@ -1936,14 +1940,6 @@
             "title": "Last Modified",
             "type": "string",
             "format": "date-time"
-          },
-          "dataset_id": {
-            "title": "Dataset Id",
-            "type": "string"
-          },
-          "collection_id": {
-            "title": "Collection Id",
-            "type": "string"
           }
         }
       },

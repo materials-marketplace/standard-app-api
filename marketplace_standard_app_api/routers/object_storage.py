@@ -369,37 +369,33 @@ async def get_semantic_mapping(
 
 
 @router.get(
-    "/dcat/{collection_name}",
+    "/metadata/dcat/{collection_name}",
     name="Get DCAT Collection Metadata",
-    operation_id="getCollectionDcat",
+    operation_id="getCollectionMetadataDcat",
     summary="Get a collection's DCAT metadata",
     tags=["DataSource"],
     response_class=Response,
-    status_code=200,
     responses={
-        200: {"description": "Normal response."},
         404: {"description": "Not found."},
     },
 )
-async def get_collection_dcat(collection_name: CollectionName) -> Response:
+async def get_collection_metadata_dcat(collection_name: CollectionName) -> Response:
     """Get the DCAT metadata for a collection."""
     raise HTTPException(status_code=501, detail="Not implemented.")
 
 
 @router.get(
-    "/dcat/{collection_name}/{dataset_name}",
+    "/metadata/dcat/{collection_name}/{dataset_name}",
     name="Get DCAT Dataset Metadata",
-    operation_id="getDatasetDcat",
+    operation_id="getDatasetMetadataDcat",
     summary="Get a dataset's DCAT metadata",
     tags=["DataSource"],
     response_class=Response,
-    status_code=200,
     responses={
-        200: {"description": "Normal response."},
         404: {"description": "Not found."},
     },
 )
-async def get_dataset_dcat(
+async def get_dataset_metadata_dcat(
     collection_name: CollectionName, dataset_name: DatasetName
 ) -> Response:
     """Get the DCAT metadata for a dataset."""
