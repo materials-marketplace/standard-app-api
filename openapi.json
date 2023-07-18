@@ -1898,7 +1898,7 @@
           },
           "id": {
             "title": "Id",
-            "type": "integer"
+            "type": "string"
           },
           "name": {
             "title": "Name",

@@ -12,7 +12,7 @@ class CollectionName(ConstrainedStr):
 class CollectionModel(BaseModel):
     count: Optional[int]
     bytes: Optional[int]
-    id: Optional[int]
+    id: Optional[str]
     name: CollectionName
     last_modified: Optional[datetime]
 
