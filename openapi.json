@@ -251,8 +251,6 @@
             "required": true,
             "schema": {
               "title": "Collection Name",
-              "maxLength": 255,
-              "minLength": 1,
               "type": "string"
             },
             "name": "collection_name",
@@ -337,8 +335,6 @@
             "required": true,
             "schema": {
               "title": "Collection Name",
-              "maxLength": 255,
-              "minLength": 1,
               "type": "string"
             },
             "name": "collection_name",
@@ -399,8 +395,6 @@
             "required": true,
             "schema": {
               "title": "Collection Name",
-              "maxLength": 255,
-              "minLength": 1,
               "type": "string"
             },
             "name": "collection_name",
@@ -451,8 +445,6 @@
             "required": true,
             "schema": {
               "title": "Collection Name",
-              "maxLength": 255,
-              "minLength": 1,
               "type": "string"
             },
             "name": "collection_name",
@@ -509,8 +501,6 @@
             "required": false,
             "schema": {
               "title": "Collection Name",
-              "maxLength": 255,
-              "minLength": 1,
               "type": "string"
             },
             "name": "collection_name",
@@ -570,8 +560,6 @@
             "required": true,
             "schema": {
               "title": "Collection Name",
-              "maxLength": 255,
-              "minLength": 1,
               "type": "string"
             },
             "name": "collection_name",
@@ -581,7 +569,6 @@
             "required": false,
             "schema": {
               "title": "Dataset Name",
-              "minLength": 1,
               "type": "string"
             },
             "name": "dataset_name",
@@ -653,8 +640,6 @@
             "required": true,
             "schema": {
               "title": "Collection Name",
-              "maxLength": 255,
-              "minLength": 1,
               "type": "string"
             },
             "name": "collection_name",
@@ -664,7 +649,6 @@
             "required": false,
             "schema": {
               "title": "Dataset Name",
-              "minLength": 1,
               "type": "string"
             },
             "name": "dataset_name",
@@ -718,8 +702,6 @@
             "required": true,
             "schema": {
               "title": "Collection Name",
-              "maxLength": 255,
-              "minLength": 1,
               "type": "string"
             },
             "name": "collection_name",
@@ -729,7 +711,6 @@
             "required": true,
             "schema": {
               "title": "Dataset Name",
-              "minLength": 1,
               "type": "string"
             },
             "name": "dataset_name",
@@ -784,8 +765,6 @@
             "required": true,
             "schema": {
               "title": "Collection Name",
-              "maxLength": 255,
-              "minLength": 1,
               "type": "string"
             },
             "name": "collection_name",
@@ -795,7 +774,6 @@
             "required": true,
             "schema": {
               "title": "Dataset Name",
-              "minLength": 1,
               "type": "string"
             },
             "name": "dataset_name",
@@ -867,8 +845,6 @@
             "required": true,
             "schema": {
               "title": "Collection Name",
-              "maxLength": 255,
-              "minLength": 1,
               "type": "string"
             },
             "name": "collection_name",
@@ -878,7 +854,6 @@
             "required": true,
             "schema": {
               "title": "Dataset Name",
-              "minLength": 1,
               "type": "string"
             },
             "name": "dataset_name",
@@ -930,8 +905,6 @@
             "required": true,
             "schema": {
               "title": "Collection Name",
-              "maxLength": 255,
-              "minLength": 1,
               "type": "string"
             },
             "name": "collection_name",
@@ -941,7 +914,6 @@
             "required": true,
             "schema": {
               "title": "Dataset Name",
-              "minLength": 1,
               "type": "string"
             },
             "name": "dataset_name",
@@ -996,8 +968,6 @@
             "required": true,
             "schema": {
               "title": "Collection Name",
-              "maxLength": 255,
-              "minLength": 1,
               "type": "string"
             },
             "name": "collection_name",
@@ -1007,7 +977,6 @@
             "required": true,
             "schema": {
               "title": "Dataset Name",
-              "minLength": 1,
               "type": "string"
             },
             "name": "dataset_name",
@@ -1091,7 +1060,6 @@
                   "title": "Response Listsemanticmappings",
                   "type": "array",
                   "items": {
-                    "minLength": 1,
                     "type": "string"
                   }
                 }
@@ -1207,8 +1175,6 @@
             "required": true,
             "schema": {
               "title": "Collection Name",
-              "maxLength": 255,
-              "minLength": 1,
               "type": "string"
             },
             "name": "collection_name",
@@ -1265,8 +1231,6 @@
             "required": true,
             "schema": {
               "title": "Collection Name",
-              "maxLength": 255,
-              "minLength": 1,
               "type": "string"
             },
             "name": "collection_name",
@@ -1276,7 +1240,6 @@
             "required": true,
             "schema": {
               "title": "Dataset Name",
-              "minLength": 1,
               "type": "string"
             },
             "name": "dataset_name",
@@ -1902,8 +1865,6 @@
           },
           "name": {
             "title": "Name",
-            "maxLength": 255,
-            "minLength": 1,
             "type": "string"
           },
           "last_modified": {
@@ -1952,7 +1913,6 @@
         "properties": {
           "name": {
             "title": "Name",
-            "minLength": 1,
             "type": "string"
           },
           "hash": {
@@ -2081,7 +2041,6 @@
         "properties": {
           "name": {
             "title": "Name",
-            "minLength": 1,
             "type": "string"
           },
           "properties": {
