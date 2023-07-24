@@ -12,7 +12,7 @@ dynamic = ["version", "description"]
 requires-python = ">=3.8,<4"
 dependencies = [
   "email-validator<=2.0, >=1.2.1",
-  "fastapi<1.0, >0.75",
+  "fastapi<=0.95.1, >0.75",
   "python-multipart<=0.1, >0.0.5",
   "requests<3.0, >2.26.0",
 ]
