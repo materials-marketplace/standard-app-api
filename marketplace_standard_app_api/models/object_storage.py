@@ -1,22 +1,12 @@
 from datetime import datetime
 from typing import Dict, List, Optional
 
-from pydantic import BaseModel
-from pydantic.types import constr
-from typing_extensions import Annotated
+from pydantic import BaseModel, ConstrainedStr
 
-CollectionName = Annotated[
-    str,
-    constr(min_length=1, max_length=255),
-]
-DatasetName = Annotated[
-    str,
-    constr(min_length=1),
-]
-SemanticMappingName = Annotated[
-    str,
-    constr(min_length=1),
-]
+
+class CollectionName(ConstrainedStr):
+    min_length = 1
+    max_length = 255
 
 
 class CollectionModel(BaseModel):
@@ -36,6 +26,10 @@ class CollectionCreateResponse(BaseModel):
     collection_id: Optional[str]
 
 
+class DatasetName(ConstrainedStr):
+    min_length = 1
+
+
 class DatasetCreateResponse(BaseModel):
     last_modified: datetime
 
@@ -50,6 +44,10 @@ class DatasetModel(BaseModel):
 
 class DatasetResponseModel(BaseModel):
     items: List[DatasetModel]
+
+
+class SemanticMappingName(ConstrainedStr):
+    min_length = 1
 
 
 class SemanticMappingModel(BaseModel):
