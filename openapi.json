@@ -200,11 +200,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Response Listcollections",
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CollectionListItemModel"
-                  }
+                  "$ref": "#/components/schemas/CollectionResponseModel"
                 }
               }
             }
@@ -289,11 +285,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Response Listdatasets",
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DatasetModel"
-                  }
+                  "$ref": "#/components/schemas/DatasetResponseModel"
                 }
               }
             }
@@ -1202,6 +1194,276 @@
         ]
       }
     },
+    "/data/metadata/dcat/{collection_name}": {
+      "get": {
+        "tags": [
+          "DataSource"
+        ],
+        "summary": "Get a collection's DCAT metadata",
+        "description": "Get the DCAT metadata for a collection.",
+        "operationId": "getCollectionMetadataDcat",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Collection Name",
+              "maxLength": 255,
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "collection_name",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "404": {
+            "description": "Not found."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
+    "/data/metadata/dcat/{collection_name}/{dataset_name}": {
+      "get": {
+        "tags": [
+          "DataSource"
+        ],
+        "summary": "Get a dataset's DCAT metadata",
+        "description": "Get the DCAT metadata for a dataset.",
+        "operationId": "getDatasetMetadataDcat",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Collection Name",
+              "maxLength": 255,
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "collection_name",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Dataset Name",
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "dataset_name",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "404": {
+            "description": "Not found."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
+    "/data/query": {
+      "post": {
+        "tags": [
+          "DataSource"
+        ],
+        "summary": "execute a search query on datastore",
+        "description": "returns matching triples",
+        "operationId": "query",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "type": "integer",
+              "default": 100
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Offset",
+              "type": "integer",
+              "default": 0
+            },
+            "name": "offset",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "400": {
+            "description": "improper query."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
+    "/data/query/{collection_name}/{dataset_name}": {
+      "post": {
+        "tags": [
+          "DataSource"
+        ],
+        "summary": "execute a search query on specific dataset in datastore",
+        "description": "returns matching triples",
+        "operationId": "queryDataset",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "type": "integer",
+              "default": 100
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Offset",
+              "type": "integer",
+              "default": 0
+            },
+            "name": "offset",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "400": {
+            "description": "improper query."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
     "/transformations": {
       "get": {
         "tags": [
@@ -1619,11 +1881,9 @@
           }
         }
       },
-      "CollectionListItemModel": {
-        "title": "CollectionListItemModel",
+      "CollectionModel": {
+        "title": "CollectionModel",
         "required": [
-          "count",
-          "bytes",
           "name"
         ],
         "type": "object",
@@ -1636,6 +1896,10 @@
             "title": "Bytes",
             "type": "integer"
           },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
           "name": {
             "title": "Name",
             "maxLength": 255,
@@ -1646,6 +1910,22 @@
             "title": "Last Modified",
             "type": "string",
             "format": "date-time"
+          }
+        }
+      },
+      "CollectionResponseModel": {
+        "title": "CollectionResponseModel",
+        "required": [
+          "items"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "title": "Items",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CollectionModel"
+            }
           }
         }
       },
@@ -1666,12 +1946,12 @@
       "DatasetModel": {
         "title": "DatasetModel",
         "required": [
-          "id"
+          "name"
         ],
         "type": "object",
         "properties": {
-          "id": {
-            "title": "Id",
+          "name": {
+            "title": "Name",
             "minLength": 1,
             "type": "string"
           },
@@ -1691,6 +1971,22 @@
             "title": "Last Modified",
             "type": "string",
             "format": "date-time"
+          }
+        }
+      },
+      "DatasetResponseModel": {
+        "title": "DatasetResponseModel",
+        "required": [
+          "items"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "title": "Items",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DatasetModel"
+            }
           }
         }
       },

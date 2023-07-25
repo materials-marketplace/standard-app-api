@@ -4,11 +4,11 @@ from fastapi import APIRouter, HTTPException, Request, UploadFile
 from fastapi.responses import Response
 
 from ..models.object_storage import (
-    CollectionListResponse,
     CollectionName,
+    CollectionResponseModel,
     DatasetCreateResponse,
-    DatasetListResponse,
     DatasetName,
+    DatasetResponseModel,
     SemanticMappingListResponse,
     SemanticMappingModel,
 )
@@ -26,14 +26,14 @@ router = APIRouter(
     operation_id="listCollections",
     summary="List all collections",
     tags=["DataSource", "DataSink"],
-    response_model=CollectionListResponse,
+    response_model=CollectionResponseModel,
     responses={
         204: {"description": "No collections found."},
     },
 )
 async def list_collections(
     limit: int = 100, offset: int = 0
-) -> Union[CollectionListResponse, Response]:
+) -> Union[CollectionResponseModel, Response]:
     """List all collections."""
     raise HTTPException(status_code=501, detail="Not implemented.")
 
@@ -43,7 +43,7 @@ async def list_collections(
     operation_id="listDatasets",
     summary="List all datasets in a collection",
     tags=["DataSource"],
-    response_model=DatasetListResponse,
+    response_model=DatasetResponseModel,
     responses={
         204: {"description": "No datasets found."},
         404: {"description": "Container not found."},
@@ -51,7 +51,7 @@ async def list_collections(
 )
 async def list_datasets(
     collection_name: CollectionName, limit: int = 100, offset: int = 0
-) -> Union[DatasetListResponse, Response]:
+) -> Union[DatasetResponseModel, Response]:
     """List all datasets."""
     raise HTTPException(status_code=501, detail="Not implemented.")
 
@@ -365,4 +365,66 @@ async def get_semantic_mapping(
     semantic_mapping_id,
 ) -> Union[SemanticMappingModel, Response]:
     """Get a semantic mapping."""
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+
+@router.get(
+    "/metadata/dcat/{collection_name}",
+    name="Get DCAT Collection Metadata",
+    operation_id="getCollectionMetadataDcat",
+    summary="Get a collection's DCAT metadata",
+    tags=["DataSource"],
+    response_class=Response,
+    responses={
+        404: {"description": "Not found."},
+    },
+)
+async def get_collection_metadata_dcat(collection_name: CollectionName) -> Response:
+    """Get the DCAT metadata for a collection."""
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+
+@router.get(
+    "/metadata/dcat/{collection_name}/{dataset_name}",
+    name="Get DCAT Dataset Metadata",
+    operation_id="getDatasetMetadataDcat",
+    summary="Get a dataset's DCAT metadata",
+    tags=["DataSource"],
+    response_class=Response,
+    responses={
+        404: {"description": "Not found."},
+    },
+)
+async def get_dataset_metadata_dcat(
+    collection_name: CollectionName, dataset_name: DatasetName
+) -> Response:
+    """Get the DCAT metadata for a dataset."""
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+
+@router.post(
+    "/query",
+    operation_id="query",
+    summary="execute a search query on datastore",
+    tags=["DataSource"],
+    responses={
+        400: {"description": "improper query."},
+    },
+)
+async def query(limit: int = 100, offset: int = 0):
+    """returns matching triples"""
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+
+@router.post(
+    "/query/{collection_name}/{dataset_name}",
+    operation_id="queryDataset",
+    summary="execute a search query on specific dataset in datastore",
+    tags=["DataSource"],
+    responses={
+        400: {"description": "improper query."},
+    },
+)
+async def query_dataset(limit: int = 100, offset: int = 0):
+    """returns matching triples"""
     raise HTTPException(status_code=501, detail="Not implemented.")
