@@ -1,11 +1,16 @@
 from enum import Enum
 from typing import List, Literal, NewType, Optional
 
-from pydantic import UUID4, BaseModel
+from pydantic import UUID4, BaseModel, ConstrainedStr
 
 ApplicationId = NewType("ApplicationId", UUID4)
 
 TransformationId = NewType("TransformationId", UUID4)
+
+
+class ModelName(ConstrainedStr):
+    min_length = 1
+    max_length = 255
 
 
 class TransformationState(str, Enum):
@@ -35,6 +40,10 @@ class NewTransformationModel(BaseModel):
 
 class TransformationCreateResponse(BaseModel):
     id: TransformationId
+
+
+class ModelCreateResponse(BaseModel):
+    id: Optional[TransformationId] = None
 
 
 class TransformationModel(BaseModel):
@@ -67,3 +76,14 @@ class TransformationStateResponse(BaseModel):
 
 class TransformationListResponse(BaseModel):
     items: List[TransformationModel]
+
+
+class RegisteredModels(BaseModel):
+    message: Optional[str] = None
+    registered_models: List[ModelName]
+
+
+class NewModel(BaseModel):
+    parameters: dict
+
+    modelname: NewTransformationStates = TransformationState.CREATED

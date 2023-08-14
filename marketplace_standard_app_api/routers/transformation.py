@@ -1,8 +1,11 @@
 from fastapi import APIRouter, HTTPException
-from fastapi.responses import Response
+from fastapi.responses import JSONResponse, Response
 
 from ..models.transformation import (
+    ModelCreateResponse,
+    ModelName,
     NewTransformationModel,
+    RegisteredModels,
     TransformationCreateResponse,
     TransformationId,
     TransformationListResponse,
@@ -126,4 +129,76 @@ async def list_transformation(
     limit: int = 100, offset: int = 0
 ) -> TransformationListResponse:
     """Retrieve a list of transformations."""
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+
+@router.get(
+    "/{transformation_id}/log",
+    operation_id="getTransformationLog",
+    summary="Get logs for a transformation",
+    responses={
+        404: {"description": "Not found."},
+    },
+)
+async def get_transformation_log(
+    transformation_id: TransformationId,
+) -> Response:
+    """Retrieve an existing transformation log."""
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+
+@router.post(
+    "/models/{modelname}",
+    operation_id="newModel",
+    summary="Create a new model",
+    response_model=ModelCreateResponse,
+)
+async def create_model(
+    modelname: ModelName,
+) -> ModelCreateResponse:
+    """Create a new model."""
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+
+@router.get(
+    "/models/get_schema/{modelname}",
+    operation_id="getSchema",
+    summary="Retreive schema of a model registered in the app.",
+    responses={
+        404: {"description": "Not found."},
+    },
+)
+async def get_schema(
+    modelname: ModelName,
+) -> JSONResponse:
+    """Retreive schema of a model registered in the app."""
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+
+@router.get(
+    "/models/get_example/{modelname}",
+    operation_id="getExample",
+    summary="Retrieve an example for a model registered in the app.",
+    responses={
+        404: {"description": "Not found."},
+    },
+)
+async def get_example(
+    modelname: ModelName,
+) -> JSONResponse:
+    """Retrieve an example for a model registered in the app."""
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+
+@router.get(
+    "/models",
+    operation_id="getModels",
+    summary="Return the list of models.",
+    response_model=RegisteredModels,
+    responses={
+        404: {"description": "Not found."},
+    },
+)
+async def get_models(limit: int = 100, offset: int = 0) -> RegisteredModels:
+    """Return the list of registered models."""
     raise HTTPException(status_code=501, detail="Not implemented.")

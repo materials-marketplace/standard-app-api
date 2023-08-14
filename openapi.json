@@ -1464,6 +1464,142 @@
         ]
       }
     },
+    "/data/cache/upload": {
+      "post": {
+        "tags": [
+          "DataSink"
+        ],
+        "summary": "Upload data to store as a cache.",
+        "description": "Store a data in cache.",
+        "operationId": "uploadDataCache",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Uuid",
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": "uuid",
+            "in": "query"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_uploadDataCache"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadDataResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "507": {
+            "description": "Insufficient storage."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
+    "/data/cache/download/{uuid}": {
+      "get": {
+        "tags": [
+          "DataSource"
+        ],
+        "summary": "Download data from cache.",
+        "description": "Return matching data.",
+        "operationId": "downloadDataCache",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Uuid",
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": "uuid",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "404": {
+            "description": "Not found."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
     "/transformations": {
       "get": {
         "tags": [
@@ -1849,6 +1985,330 @@
           }
         ]
       }
+    },
+    "/transformations/{transformation_id}/log": {
+      "get": {
+        "tags": [
+          "Transformation"
+        ],
+        "summary": "Get logs for a transformation",
+        "description": "Retrieve an existing transformation log.",
+        "operationId": "getTransformationLog",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Transformation Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "transformation_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "404": {
+            "description": "Not found."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
+    "/transformations/models/{modelname}": {
+      "post": {
+        "tags": [
+          "Transformation"
+        ],
+        "summary": "Create a new model",
+        "description": "Create a new model.",
+        "operationId": "newModel",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Modelname",
+              "maxLength": 255,
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "modelname",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelCreateResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
+    "/transformations/models/get_schema/{modelname}": {
+      "get": {
+        "tags": [
+          "Transformation"
+        ],
+        "summary": "Retreive schema of a model registered in the app.",
+        "description": "Retreive schema of a model registered in the app.",
+        "operationId": "getSchema",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Modelname",
+              "maxLength": 255,
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "modelname",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "404": {
+            "description": "Not found."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
+    "/transformations/models/get_example/{modelname}": {
+      "get": {
+        "tags": [
+          "Transformation"
+        ],
+        "summary": "Retrieve an example for a model registered in the app.",
+        "description": "Retrieve an example for a model registered in the app.",
+        "operationId": "getExample",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Modelname",
+              "maxLength": 255,
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "modelname",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "404": {
+            "description": "Not found."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
+    "/transformations/models": {
+      "get": {
+        "tags": [
+          "Transformation"
+        ],
+        "summary": "Return the list of models.",
+        "description": "Return the list of registered models.",
+        "operationId": "getModels",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "type": "integer",
+              "default": 100
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Offset",
+              "type": "integer",
+              "default": 0
+            },
+            "name": "offset",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegisteredModels"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "404": {
+            "description": "Not found."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -1869,6 +2329,20 @@
       },
       "Body_createOrReplaceDataset": {
         "title": "Body_createOrReplaceDataset",
+        "required": [
+          "file"
+        ],
+        "type": "object",
+        "properties": {
+          "file": {
+            "title": "File",
+            "type": "string",
+            "format": "binary"
+          }
+        }
+      },
+      "Body_uploadDataCache": {
+        "title": "Body_uploadDataCache",
         "required": [
           "file"
         ],
@@ -2049,6 +2523,17 @@
           }
         }
       },
+      "ModelCreateResponse": {
+        "title": "ModelCreateResponse",
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid4"
+          }
+        }
+      },
       "NewTransformationModel": {
         "title": "NewTransformationModel",
         "required": [
@@ -2068,6 +2553,28 @@
             ],
             "type": "string",
             "default": "CREATED"
+          }
+        }
+      },
+      "RegisteredModels": {
+        "title": "RegisteredModels",
+        "required": [
+          "registered_models"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "registered_models": {
+            "title": "Registered Models",
+            "type": "array",
+            "items": {
+              "maxLength": 255,
+              "minLength": 1,
+              "type": "string"
+            }
           }
         }
       },
@@ -2217,6 +2724,21 @@
             "type": "string"
           }
         }
+      },
+      "UploadDataResponse": {
+        "title": "UploadDataResponse",
+        "required": [
+          "cache_id"
+        ],
+        "type": "object",
+        "properties": {
+          "cache_id": {
+            "title": "Cache Id",
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "description": "Body of the data upload response"
       },
       "ValidationError": {
         "title": "ValidationError",

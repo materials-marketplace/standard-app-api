@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import Dict, List, Optional
+from uuid import UUID
 
 from pydantic import BaseModel, ConstrainedStr
 
@@ -56,3 +57,9 @@ class SemanticMappingModel(BaseModel):
 
 
 SemanticMappingListResponse = List[SemanticMappingName]
+
+
+class UploadDataResponse(BaseModel):
+    """Body of the data upload response"""
+
+    cache_id: UUID
