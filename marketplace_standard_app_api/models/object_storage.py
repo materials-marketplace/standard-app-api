@@ -2,7 +2,6 @@ from datetime import datetime
 from typing import Dict, List, Optional
 from uuid import UUID
 
-from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, ConstrainedStr
 
 
@@ -64,11 +63,3 @@ class UploadDataResponse(BaseModel):
     """Body of the data upload response"""
 
     cache_id: UUID
-
-
-class CustomResponse(StreamingResponse):
-    def __init__(self, *args, **kwargs):
-        print("=========================")
-        print(args)
-        print(kwargs)
-        super().__init__(*args, **kwargs)

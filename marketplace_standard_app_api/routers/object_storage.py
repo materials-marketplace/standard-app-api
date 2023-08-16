@@ -7,7 +7,6 @@ from fastapi.responses import Response
 from ..models.object_storage import (
     CollectionName,
     CollectionResponseModel,
-    CustomResponse,
     DatasetCreateResponse,
     DatasetName,
     DatasetResponseModel,
@@ -458,11 +457,11 @@ async def upload_data_cache(
     operation_id="downloadDataCache",
     summary="Download data from cache.",
     tags=["DataSource"],
-    # response_class=CustomResponse,
+    response_class=Response,
     responses={
         404: {"description": "Not found."},
     },
 )
-async def download_data_cache(uuid: UUID) -> CustomResponse:
+async def download_data_cache(uuid: UUID) -> Response:
     """Return matching data."""
     raise HTTPException(status_code=501, detail="Not implemented.")
