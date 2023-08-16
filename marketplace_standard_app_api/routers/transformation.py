@@ -112,9 +112,7 @@ async def update_transformation(
         404: {"description": "Not found."},
     },
 )
-async def get_transformation_state(
-    transformation_id: TransformationId,
-) -> TransformationStateResponse:
+async def get_transformation_state() -> TransformationStateResponse:
     """Retrieve the state of a transformation."""
     raise HTTPException(status_code=501, detail="Not implemented.")
 

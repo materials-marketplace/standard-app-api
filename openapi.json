@@ -1560,12 +1560,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
+            "description": "Successful Response"
           },
           "401": {
             "description": "Not authenticated."
@@ -1930,18 +1925,6 @@
         "summary": "Get the state of a transformation",
         "description": "Retrieve the state of a transformation.",
         "operationId": "getTransformationState",
-        "parameters": [
-          {
-            "required": true,
-            "schema": {
-              "title": "Transformation Id",
-              "type": "string",
-              "format": "uuid4"
-            },
-            "name": "transformation_id",
-            "in": "path"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -1967,16 +1950,6 @@
           },
           "404": {
             "description": "Not found."
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
           }
         },
         "security": [
