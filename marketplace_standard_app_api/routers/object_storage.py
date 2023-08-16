@@ -2,7 +2,7 @@ from typing import Optional, Union
 from uuid import UUID
 
 from fastapi import APIRouter, HTTPException, Request, UploadFile
-from fastapi.responses import Response
+from fastapi.responses import Response, StreamingResponse
 
 from ..models.object_storage import (
     CollectionName,
@@ -457,11 +457,11 @@ async def upload_data_cache(
     operation_id="downloadDataCache",
     summary="Download data from cache.",
     tags=["DataSource"],
-    response_class=Response,
+    response_class=StreamingResponse,
     responses={
         404: {"description": "Not found."},
     },
 )
-async def download_data_cache(uuid: UUID) -> Response:
+async def download_data_cache(uuid: UUID) -> StreamingResponse:
     """Return matching data."""
     raise HTTPException(status_code=501, detail="Not implemented.")
