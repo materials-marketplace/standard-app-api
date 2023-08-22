@@ -1,5 +1,4 @@
 from typing import Optional, Union
-from uuid import UUID
 
 from fastapi import APIRouter, HTTPException, Request, UploadFile
 from fastapi.responses import Response
@@ -12,7 +11,6 @@ from ..models.object_storage import (
     DatasetResponseModel,
     SemanticMappingListResponse,
     SemanticMappingModel,
-    UploadDataResponse,
 )
 
 router = APIRouter(
@@ -429,39 +427,4 @@ async def query(limit: int = 100, offset: int = 0):
 )
 async def query_dataset(limit: int = 100, offset: int = 0):
     """returns matching triples"""
-    raise HTTPException(status_code=501, detail="Not implemented.")
-
-
-@router.post(
-    "/cache/upload",
-    operation_id="uploadDataCache",
-    summary="Upload data to store as a cache.",
-    tags=["DataSink"],
-    response_model=UploadDataResponse,
-    status_code=201,
-    responses={
-        507: {"description": "Insufficient storage."},
-    },
-    description="Store a data in cache.",
-)
-async def upload_data_cache(
-    request: Request, file: UploadFile, uuid: Optional[UUID] = None
-) -> UploadDataResponse:
-    """Stores data in cache."""
-    raise HTTPException(status_code=501, detail="Not implemented.")
-
-
-@router.get(
-    "/cache/download/{uuid}",
-    name="Get data from the cache",
-    operation_id="downloadDataCache",
-    summary="Download data from cache.",
-    tags=["DataSource"],
-    response_class=Response,
-    responses={
-        404: {"description": "Not found."},
-    },
-)
-async def download_data_cache(uuid: UUID) -> Response:
-    """Return matching data."""
     raise HTTPException(status_code=501, detail="Not implemented.")

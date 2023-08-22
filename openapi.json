@@ -1464,137 +1464,6 @@
         ]
       }
     },
-    "/data/cache/upload": {
-      "post": {
-        "tags": [
-          "DataSink"
-        ],
-        "summary": "Upload data to store as a cache.",
-        "description": "Store a data in cache.",
-        "operationId": "uploadDataCache",
-        "parameters": [
-          {
-            "required": false,
-            "schema": {
-              "title": "Uuid",
-              "type": "string",
-              "format": "uuid"
-            },
-            "name": "uuid",
-            "in": "query"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "$ref": "#/components/schemas/Body_uploadDataCache"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UploadDataResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Not authenticated."
-          },
-          "500": {
-            "description": "Internal server error."
-          },
-          "503": {
-            "description": "Service unavailable."
-          },
-          "501": {
-            "description": "Not implemented."
-          },
-          "507": {
-            "description": "Insufficient storage."
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "AuthTokenBearer": []
-          }
-        ]
-      }
-    },
-    "/data/cache/download/{uuid}": {
-      "get": {
-        "tags": [
-          "DataSource"
-        ],
-        "summary": "Download data from cache.",
-        "description": "Return matching data.",
-        "operationId": "downloadDataCache",
-        "parameters": [
-          {
-            "required": true,
-            "schema": {
-              "title": "Uuid",
-              "type": "string",
-              "format": "uuid"
-            },
-            "name": "uuid",
-            "in": "path"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response"
-          },
-          "401": {
-            "description": "Not authenticated."
-          },
-          "500": {
-            "description": "Internal server error."
-          },
-          "503": {
-            "description": "Service unavailable."
-          },
-          "501": {
-            "description": "Not implemented."
-          },
-          "404": {
-            "description": "Not found."
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "AuthTokenBearer": []
-          }
-        ]
-      }
-    },
     "/transformations": {
       "get": {
         "tags": [
@@ -2314,20 +2183,6 @@
           }
         }
       },
-      "Body_uploadDataCache": {
-        "title": "Body_uploadDataCache",
-        "required": [
-          "file"
-        ],
-        "type": "object",
-        "properties": {
-          "file": {
-            "title": "File",
-            "type": "string",
-            "format": "binary"
-          }
-        }
-      },
       "CollectionModel": {
         "title": "CollectionModel",
         "required": [
@@ -2697,21 +2552,6 @@
             "type": "string"
           }
         }
-      },
-      "UploadDataResponse": {
-        "title": "UploadDataResponse",
-        "required": [
-          "cache_id"
-        ],
-        "type": "object",
-        "properties": {
-          "cache_id": {
-            "title": "Cache Id",
-            "type": "string",
-            "format": "uuid"
-          }
-        },
-        "description": "Body of the data upload response"
       },
       "ValidationError": {
         "title": "ValidationError",
