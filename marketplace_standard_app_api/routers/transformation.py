@@ -2,7 +2,6 @@ from fastapi import APIRouter, HTTPException
 from fastapi.responses import JSONResponse, Response
 
 from ..models.transformation import (
-    ModelCreateResponse,
     ModelName,
     NewTransformationModel,
     RegisteredModels,
@@ -142,19 +141,6 @@ async def get_transformation_log(
     transformation_id: TransformationId,
 ) -> Response:
     """Retrieve an existing transformation log."""
-    raise HTTPException(status_code=501, detail="Not implemented.")
-
-
-@router.post(
-    "/models/{modelname}",
-    operation_id="newModel",
-    summary="Create a new model",
-    response_model=ModelCreateResponse,
-)
-async def create_model(
-    modelname: ModelName,
-) -> ModelCreateResponse:
-    """Create a new model."""
     raise HTTPException(status_code=501, detail="Not implemented.")
 
 

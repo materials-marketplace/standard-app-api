@@ -32,6 +32,7 @@ class DatasetName(ConstrainedStr):
 
 class DatasetCreateResponse(BaseModel):
     last_modified: datetime
+    id: Optional[str]
 
 
 class DatasetModel(BaseModel):

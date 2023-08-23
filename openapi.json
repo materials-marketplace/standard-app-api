@@ -1890,68 +1890,6 @@
         ]
       }
     },
-    "/transformations/models/{modelname}": {
-      "post": {
-        "tags": [
-          "Transformation"
-        ],
-        "summary": "Create a new model",
-        "description": "Create a new model.",
-        "operationId": "newModel",
-        "parameters": [
-          {
-            "required": true,
-            "schema": {
-              "title": "Modelname",
-              "maxLength": 255,
-              "minLength": 1,
-              "type": "string"
-            },
-            "name": "modelname",
-            "in": "path"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ModelCreateResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Not authenticated."
-          },
-          "500": {
-            "description": "Internal server error."
-          },
-          "503": {
-            "description": "Service unavailable."
-          },
-          "501": {
-            "description": "Not implemented."
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "AuthTokenBearer": []
-          }
-        ]
-      }
-    },
     "/transformations/models/get_schema/{modelname}": {
       "get": {
         "tags": [
@@ -2242,6 +2180,10 @@
             "title": "Last Modified",
             "type": "string",
             "format": "date-time"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
           }
         }
       },
@@ -2348,17 +2290,6 @@
             "items": {
               "$ref": "#/components/schemas/ValidationError"
             }
-          }
-        }
-      },
-      "ModelCreateResponse": {
-        "title": "ModelCreateResponse",
-        "type": "object",
-        "properties": {
-          "id": {
-            "title": "Id",
-            "type": "string",
-            "format": "uuid4"
           }
         }
       },

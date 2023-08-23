@@ -42,10 +42,6 @@ class TransformationCreateResponse(BaseModel):
     id: TransformationId
 
 
-class ModelCreateResponse(BaseModel):
-    id: Optional[TransformationId] = None
-
-
 class TransformationModel(BaseModel):
     id: TransformationId
     parameters: dict
