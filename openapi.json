@@ -1794,6 +1794,18 @@
         "summary": "Get the state of a transformation",
         "description": "Retrieve the state of a transformation.",
         "operationId": "getTransformationState",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Transformation Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "transformation_id",
+            "in": "path"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -1819,6 +1831,16 @@
           },
           "404": {
             "description": "Not found."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -1890,7 +1912,7 @@
         ]
       }
     },
-    "/transformations/models/get_schema/{modelname}": {
+    "/transformations/models/{model_name}/schema": {
       "get": {
         "tags": [
           "Transformation"
@@ -1902,12 +1924,12 @@
           {
             "required": true,
             "schema": {
-              "title": "Modelname",
+              "title": "Model Name",
               "maxLength": 255,
               "minLength": 1,
               "type": "string"
             },
-            "name": "modelname",
+            "name": "model_name",
             "in": "path"
           }
         ],
@@ -1953,7 +1975,7 @@
         ]
       }
     },
-    "/transformations/models/get_example/{modelname}": {
+    "/transformations/models/{model_name}/example": {
       "get": {
         "tags": [
           "Transformation"
@@ -1965,12 +1987,12 @@
           {
             "required": true,
             "schema": {
-              "title": "Modelname",
+              "title": "Model Name",
               "maxLength": 255,
               "minLength": 1,
               "type": "string"
             },
-            "name": "modelname",
+            "name": "model_name",
             "in": "path"
           }
         ],

@@ -111,7 +111,9 @@ async def update_transformation(
         404: {"description": "Not found."},
     },
 )
-async def get_transformation_state() -> TransformationStateResponse:
+async def get_transformation_state(
+    transformation_id: TransformationId,
+) -> TransformationStateResponse:
     """Retrieve the state of a transformation."""
     raise HTTPException(status_code=501, detail="Not implemented.")
 
@@ -145,7 +147,7 @@ async def get_transformation_log(
 
 
 @router.get(
-    "/models/get_schema/{modelname}",
+    "/models/{model_name}/schema",
     operation_id="getSchema",
     summary="Retreive schema of a model registered in the app.",
     responses={
@@ -153,14 +155,14 @@ async def get_transformation_log(
     },
 )
 async def get_schema(
-    modelname: ModelName,
+    model_name: ModelName,
 ) -> JSONResponse:
     """Retreive schema of a model registered in the app."""
     raise HTTPException(status_code=501, detail="Not implemented.")
 
 
 @router.get(
-    "/models/get_example/{modelname}",
+    "/models/{model_name}/example",
     operation_id="getExample",
     summary="Retrieve an example for a model registered in the app.",
     responses={
@@ -168,7 +170,7 @@ async def get_schema(
     },
 )
 async def get_example(
-    modelname: ModelName,
+    model_name: ModelName,
 ) -> JSONResponse:
     """Retrieve an example for a model registered in the app."""
     raise HTTPException(status_code=501, detail="Not implemented.")
