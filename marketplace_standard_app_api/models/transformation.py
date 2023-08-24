@@ -77,9 +77,3 @@ class TransformationListResponse(BaseModel):
 class RegisteredModels(BaseModel):
     message: Optional[str] = None
     registered_models: List[ModelName]
-
-
-class NewModel(BaseModel):
-    parameters: dict
-
-    modelname: NewTransformationStates = TransformationState.CREATED
