@@ -1,10 +1,8 @@
 from fastapi import APIRouter, HTTPException
-from fastapi.responses import JSONResponse, Response
+from fastapi.responses import Response
 
 from ..models.transformation import (
-    ModelName,
     NewTransformationModel,
-    RegisteredModels,
     TransformationCreateResponse,
     TransformationId,
     TransformationListResponse,
@@ -128,63 +126,4 @@ async def list_transformation(
     limit: int = 100, offset: int = 0
 ) -> TransformationListResponse:
     """Retrieve a list of transformations."""
-    raise HTTPException(status_code=501, detail="Not implemented.")
-
-
-@router.get(
-    "/{transformation_id}/log",
-    operation_id="getTransformationLog",
-    summary="Get logs for a transformation",
-    responses={
-        404: {"description": "Not found."},
-    },
-)
-async def get_transformation_log(
-    transformation_id: TransformationId,
-) -> Response:
-    """Retrieve an existing transformation log."""
-    raise HTTPException(status_code=501, detail="Not implemented.")
-
-
-@router.get(
-    "/models/{model_name}/schema",
-    operation_id="getSchema",
-    summary="Retreive schema of a model registered in the app.",
-    responses={
-        404: {"description": "Not found."},
-    },
-)
-async def get_schema(
-    model_name: ModelName,
-) -> JSONResponse:
-    """Retreive schema of a model registered in the app."""
-    raise HTTPException(status_code=501, detail="Not implemented.")
-
-
-@router.get(
-    "/models/{model_name}/example",
-    operation_id="getExample",
-    summary="Retrieve an example for a model registered in the app.",
-    responses={
-        404: {"description": "Not found."},
-    },
-)
-async def get_example(
-    model_name: ModelName,
-) -> JSONResponse:
-    """Retrieve an example for a model registered in the app."""
-    raise HTTPException(status_code=501, detail="Not implemented.")
-
-
-@router.get(
-    "/models",
-    operation_id="getModels",
-    summary="Return the list of models.",
-    response_model=RegisteredModels,
-    responses={
-        404: {"description": "Not found."},
-    },
-)
-async def get_models(limit: int = 100, offset: int = 0) -> RegisteredModels:
-    """Return the list of registered models."""
     raise HTTPException(status_code=501, detail="Not implemented.")
