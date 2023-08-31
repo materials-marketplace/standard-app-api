@@ -49,7 +49,7 @@ async def heartbeat() -> HTMLResponse:
 )
 async def get_info() -> JSONResponse:
     """Return information related to the application.
-    
+
     The application developer may decide what information, and define their own
     filter parameters (generally query parameters).
     """
@@ -67,6 +67,7 @@ async def get_info() -> JSONResponse:
 )
 async def get_logs(id: Optional[str], limit: int = 100, offset: int = 0) -> Response:
     """Return application logs.
-    
-    If an id is provided, the logs will be for a specific entity (transformation, collection or dataset)."""
+
+    If an id is provided, the logs will be for a specific entity (transformation, collection or dataset).
+    """
     raise HTTPException(status_code=501, detail="Not implemented.")
