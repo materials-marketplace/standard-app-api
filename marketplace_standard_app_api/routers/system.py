@@ -66,5 +66,7 @@ async def get_info() -> JSONResponse:
     },
 )
 async def get_logs(id: Optional[str], limit: int = 100, offset: int = 0) -> Response:
-    """Return logs from the application."""
+    """Return application logs.
+    
+    If an id is provided, the logs will be for a specific entity (transformation, collection or dataset)."""
     raise HTTPException(status_code=501, detail="Not implemented.")
