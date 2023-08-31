@@ -48,8 +48,10 @@ async def heartbeat() -> HTMLResponse:
     },
 )
 async def get_info() -> JSONResponse:
-    """Return the any information related to application. The user can decide the type of information
-    based on the filter parameters (generally query parameters) provided by the application.
+    """Return information related to the application.
+    
+    The application developer may decide what information, and define their own
+    filter parameters (generally query parameters).
     """
     raise HTTPException(status_code=501, detail="Not implemented.")
 
