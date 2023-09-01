@@ -1,7 +1,7 @@
 from typing import Optional
 
 from fastapi import APIRouter, HTTPException
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse, Response
 
 from ..models.system import GlobalSearchResponse
 
@@ -36,3 +36,38 @@ async def global_search(
 async def heartbeat() -> HTMLResponse:
     """Check whether the application is running and available."""
     return HTMLResponse(content="<html><body>OK</body></html>", status_code=200)
+
+
+@router.get(
+    "/info",
+    operation_id="getInfo",
+    summary="Returns system information.",
+    responses={
+        404: {"description": "Not found."},
+        501: {"description": "Not implemented."},
+    },
+)
+async def get_info() -> JSONResponse:
+    """Return information related to the application.
+
+    The application developer may decide what information, and define their own
+    filter parameters (generally query parameters).
+    """
+    raise HTTPException(status_code=501, detail="Not implemented.")
+
+
+@router.get(
+    "/logs",
+    operation_id="getLogs",
+    summary="Returns logs from the application.",
+    responses={
+        404: {"description": "Not found."},
+        501: {"description": "Not implemented."},
+    },
+)
+async def get_logs(id: Optional[str], limit: int = 100, offset: int = 0) -> Response:
+    """Return application logs.
+
+    If an id is provided, the logs will be for a specific entity (transformation, collection or dataset).
+    """
+    raise HTTPException(status_code=501, detail="Not implemented.")

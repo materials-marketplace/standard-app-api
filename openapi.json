@@ -163,6 +163,127 @@
         ]
       }
     },
+    "/info": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Returns system information.",
+        "description": "Return information related to the application.\n\nThe application developer may decide what information, and define their own\nfilter parameters (generally query parameters).",
+        "operationId": "getInfo",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "404": {
+            "description": "Not found."
+          },
+          "501": {
+            "description": "Not implemented."
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
+    "/logs": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Returns logs from the application.",
+        "description": "Return application logs.\n\nIf an id is provided, the logs will be for a specific entity (transformation, collection or dataset).",
+        "operationId": "getLogs",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            },
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "type": "integer",
+              "default": 100
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Offset",
+              "type": "integer",
+              "default": 0
+            },
+            "name": "offset",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated."
+          },
+          "500": {
+            "description": "Internal server error."
+          },
+          "503": {
+            "description": "Service unavailable."
+          },
+          "404": {
+            "description": "Not found."
+          },
+          "501": {
+            "description": "Not implemented."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthTokenBearer": []
+          }
+        ]
+      }
+    },
     "/data": {
       "get": {
         "tags": [
@@ -1940,6 +2061,10 @@
             "title": "Last Modified",
             "type": "string",
             "format": "date-time"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
           }
         }
       },
