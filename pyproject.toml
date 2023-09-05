@@ -42,7 +42,7 @@ name = "marketplace_standard_app_api"
 plugins = ["pydantic.mypy"]
 
 [tool.bumpver]
-current_version = "v0.5.0"
+current_version = "v0.6.0"
 version_pattern = "vMAJOR.MINOR.PATCH"
 commit_message = "bump version {old_version} -> {new_version}"
 commit = true
