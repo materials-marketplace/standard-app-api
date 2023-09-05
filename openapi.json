@@ -12,7 +12,7 @@
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
     },
-    "version": "0.5.0"
+    "version": "0.6.0"
   },
   "paths": {
     "/": {
@@ -169,7 +169,7 @@
           "System"
         ],
         "summary": "Returns system information.",
-        "description": "Return the any information related to application. The user can decide the type of information\nbased on the filter parameters (generally query parameters) provided by the application.",
+        "description": "Return information related to the application.\n\nThe application developer may decide what information, and define their own\nfilter parameters (generally query parameters).",
         "operationId": "getInfo",
         "responses": {
           "200": {
@@ -209,7 +209,7 @@
           "System"
         ],
         "summary": "Returns logs from the application.",
-        "description": "Return logs from the application.",
+        "description": "Return application logs.\n\nIf an id is provided, the logs will be for a specific entity (transformation, collection or dataset).",
         "operationId": "getLogs",
         "parameters": [
           {
